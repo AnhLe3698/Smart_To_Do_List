@@ -1,0 +1,11 @@
+{
+  "name": "midterm_group_project",
+  "version": "1.0.0",
+  "description": "A fullstack application integrating css, html, JQuery, NodeJS, SASS, PostgreSQL, AJAX, Express and other minor libraries/frameworks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anh Le, Mohamed Khalaf, Carolyn Wang",
+  "license": "ISC"
+}
