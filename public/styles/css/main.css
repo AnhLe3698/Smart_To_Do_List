@@ -1,8 +1,7 @@
 .searchForm {
   display: flex;
   justify-content: center;
-  padding: 5%;
-  
+  padding-top: 80px;
 }
 
 input {
@@ -10,8 +9,8 @@ input {
 }
 
 .toDoBox{
-  padding: 5%;
-  width: 250px;
+  padding: 50px;
+  width: 325px;
 }
 
 .toDoHeader {

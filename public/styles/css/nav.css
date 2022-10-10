@@ -1,0 +1,11 @@
+nav {
+  padding: 20px;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  align-content: stretch;
+  /* when to add more items in nav */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
