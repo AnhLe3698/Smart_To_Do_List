@@ -1,0 +1,38 @@
+.searchForm {
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+input {
+  width: 30%;
+}
+
+.toDoBox{
+  padding: 50px;
+  width: 325px;
+}
+
+.toDoHeader {
+  font-size: larger;
+}
+
+.toDoListBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  flex-flow: wrap column;
+  /* remove indentation and bullet */
+  padding: 0;
+  list-style-type: none; 
+} 
+
+li {
+  border: solid 1px;
+  padding: 5%;
+}

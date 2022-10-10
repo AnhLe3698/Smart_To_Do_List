@@ -1,34 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!--title-->
   <title>Smart To-Do-List</title>
-  
+
   <!--css links-->
   <link rel="stylesheet" href="./styles/css/main.css" type="text/css">
- css">
-
+  <link rel="stylesheet" href="./styles/css/nav.css" type="text/css">
   <link rel="stylesheet" href="./resources/dependencies/bootstrap.min.css" type="text/css">
-  
+
   <!-- resources -->
   <script src="./resources/dependencies/jquery_3.6.1.min.js"></script>
-  
+
 </head>
 
 <body>
 
   <nav>
-
+    <span class="logo">Smart TO DO List</span>
   </nav>
 
   <main>
+    <form action="" name="searchForm" class="searchForm">
+      <input type="text" name="" id="" placeholder="Add item...">
+      <button type="submit">Submit</button>
+    </form>
 
+  <!-- Container for the to-do lists -->
+   <section class="toDoListBox box">
+    <section class="toWatch toDoBox box">
+      <header class="toDoHeader">To Watch Section</header>
+      <section>
+        <ul>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+      </ul>
+      </section>
+    </section>
+
+
+    <section class="toEat toDoBox box">
+      <header class="toDoHeader">To Eat Section</header>
+      <section>
+        <ul>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+      </ul>
+      </section>
+    </section>
+
+    <section class="toRead toDoBox box">
+      <header class="toDoHeader">To Read Section</header>
+      <section>
+        <ul>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+        </ul>
+      </section>
+    </section>
+
+    <section class="toBuy toDoBox box">
+      <header class="toDoHeader">To Buy Section</header>
+      <section>
+        <ul>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+          <li>Item</li>
+        </ul>
+      </section>
+    </section>
+   </section>
   </main>
-
+  <footer>
+    Kevin Le, Mohamed Khalaf, Carolyn Wang
+  </footer>
 </body>
   <script type="text/javascript" src="./scripts/client.js"></script>
 </html>
