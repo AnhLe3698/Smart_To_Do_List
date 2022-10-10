@@ -1,6 +1,21 @@
 .searchForm {
   display: flex;
   justify-content: center;
+  padding: 5%;
+  
+}
+
+input {
+  width: 30%;
+}
+
+.toDoBox{
+  padding: 5%;
+  width: 250px;
+}
+
+.toDoHeader {
+  font-size: larger;
 }
 
 .toDoListBox {
@@ -13,6 +28,13 @@
 ul {
   display: flex;
   flex-flow: wrap column;
+  /* remove indentation and bullet */
+  padding: 0;
+  list-style-type: none; 
+} 
+
+li {
+  border: solid 1px blueviolet;
 }
 
 .box{
