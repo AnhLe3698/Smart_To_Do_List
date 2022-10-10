@@ -1,5 +1,10 @@
-LHL Node Skeleton
+# SMART TO-Do-List
 =========
+
+## Screenshots
+
+### Initial ERD diagram
+!["Log In"](./readme_images/ERD_mockup.png)
 
 ## Project Setup
 
