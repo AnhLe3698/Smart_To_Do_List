@@ -1,0 +1,24 @@
+.searchForm {
+  display: flex;
+  justify-content: center;
+}
+
+.toDoListBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+  flex-flow: wrap column;
+}
+
+.box{
+  border-color: blue;
+  border-width: 1px;
+  border-style: solid;
+  border: 2px solid #00A4BD;
+  padding: 5%;
+}
