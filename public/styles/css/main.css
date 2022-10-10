@@ -34,13 +34,9 @@ ul {
 } 
 
 li {
-  border: solid 1px blueviolet;
+  border: solid 1px;
 }
 
 .box{
-  border-color: blue;
-  border-width: 1px;
-  border-style: solid;
-  border: 2px solid #00A4BD;
   padding: 5%;
 }
