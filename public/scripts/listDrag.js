@@ -1,3 +1,4 @@
+// allows the user to drag the items on the list - Will need to create something to save the state.
 let dragged;
 let id;
 let index;
