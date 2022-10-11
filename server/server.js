@@ -53,3 +53,11 @@ app.use('/users', usersRoutes);
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+// it checkout main
+// git pull orgin main
+// git checkout -b name-of-branch
+
+// feat/api-connection
+// refactor/name0of-refactor
+// fix/name-of-fix
