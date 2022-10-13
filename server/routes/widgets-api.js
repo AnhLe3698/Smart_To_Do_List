@@ -5,25 +5,28 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-const express = require('express');
-const router  = express.Router();
-const db = require('../../database/connection');
+// Commented out since we are no longer using router
+// const express = require('express');
+// Commented out since we are no longer using router
+// const router  = express.Router();
+
+const pool = require('../../database/connection');
 
 //'/api/widgets'
-router.get('/', (req, res) => {
-  const query = `SELECT * FROM widgets`;
-  console.log(query);
-  db.query(query)
-    .then(data => {
-      const widgets = data.rows;
-      res.json({ widgets });
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-});
+// router.get('/', (req, res) => {
+//   const query = `SELECT * FROM widgets`;
+//   console.log(query);
+//   pool.query(query)
+//     .then(data => {
+//       const widgets = data.rows;
+//       res.json({ widgets });
+//     })
+//     .catch(err => {
+//       res
+//         .status(500)
+//         .json({ error: err.message });
+//     });
+// });
 
 module.exports = {
   // This should verify if user is registered by returning true
@@ -32,7 +35,11 @@ module.exports = {
     WHERE email = $1`, [`${email}`])
     .then((result) => {
       if (result) {
-        // Add CODE
+        if(result['rows'].length !== 0) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         // ADD CODE
       }
@@ -95,4 +102,5 @@ module.exports = {
 
 }
 
-module.exports = router;
+// Commented out since we are no longer using router
+// module.exports = router;

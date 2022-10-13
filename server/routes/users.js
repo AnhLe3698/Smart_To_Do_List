@@ -24,6 +24,7 @@ pool.connect();
 const express = require('express');
 const router  = express.Router();
 const searching = require('../helper_functions/searching');
+const db = require('./widgets-api');
 
 router.post('/', (req, res) => {
   const user = req.body;
@@ -45,25 +46,15 @@ router.post('/', (req, res) => {
 router.get('/login/:id', (req, res) => {
   let email = req.params.id;
   console.log(email);
-  return pool.query(`SELECT * FROM users
-      WHERE email = $1`, [`${email}`])
-      .then((result) => {
-        if (result) {
-          if(result['rows'].length !== 0) {
-            console.log(result);
-            console.log(result.rows[0]);
-            return res.json(result.rows[0]);
-          } else {
-            console.log('Invalid email');
-            return res.json('Invalid email');
-          }
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  db.getUserWithEmail(email).then((bool) => {
+    if (bool) {
+      console.log(`Valid email ${email}`);
+      return res.json(`Valid email ${email}`);
+    } else {
+      console.log('Invalid email');
+      return res.json('Invalid email');
+    }
+  })
 });
 
 // router.get('/bob', (req, res) => {
