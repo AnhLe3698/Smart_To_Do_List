@@ -5,28 +5,9 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
-// Commented out since we are no longer using router
-// const express = require('express');
-// Commented out since we are no longer using router
-// const router  = express.Router();
+
 
 const pool = require('../../database/connection');
-
-//'/api/widgets'
-// router.get('/', (req, res) => {
-//   const query = `SELECT * FROM widgets`;
-//   console.log(query);
-//   pool.query(query)
-//     .then(data => {
-//       const widgets = data.rows;
-//       res.json({ widgets });
-//     })
-//     .catch(err => {
-//       res
-//         .status(500)
-//         .json({ error: err.message });
-//     });
-// });
 
 module.exports = {
   // This should verify if user is registered by returning true
@@ -101,6 +82,27 @@ module.exports = {
   }
 
 }
+
+// Commented out since we are no longer using router
+// const express = require('express');
+// Commented out since we are no longer using router
+// const router  = express.Router();
+
+//'/api/widgets'
+// router.get('/', (req, res) => {
+//   const query = `SELECT * FROM widgets`;
+//   console.log(query);
+//   pool.query(query)
+//     .then(data => {
+//       const widgets = data.rows;
+//       res.json({ widgets });
+//     })
+//     .catch(err => {
+//       res
+//         .status(500)
+//         .json({ error: err.message });
+//     });
+// });
 
 // Commented out since we are no longer using router
 // module.exports = router;

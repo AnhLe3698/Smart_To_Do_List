@@ -11,21 +11,6 @@ const router  = express.Router();
 const searching = require('../helper_functions/searching');
 const db = require('./widgets-api');
 
-router.post('/', (req, res) => {
-  const user = req.body;
-  user.password = bcrypt.hashSync(user.password, 12);
-  database.addUser(user)
-  .then(user => {
-    if (!user) {
-      res.send({error: "error"});
-      return;
-    }
-    req.session.userId = user.id;
-    res.send("🤗");
-  })
-  .catch(e => res.send(e));
-});
-
 
 // '/users/login/bm@gmail.com'
 router.get('/login/:id', (req, res) => {
@@ -39,8 +24,23 @@ router.get('/login/:id', (req, res) => {
       console.log('Invalid email');
       return res.json('Invalid email');
     }
-  })
+  }).catch(e => res.send(e));
 });
+
+// router.post('/', (req, res) => {
+//   const user = req.body;
+//   user.password = bcrypt.hashSync(user.password, 12);
+//   database.addUser(user)
+//   .then(user => {
+//     if (!user) {
+//       res.send({error: "error"});
+//       return;
+//     }
+//     req.session.userId = user.id;
+//     res.send("🤗");
+//   })
+//   .catch(e => res.send(e));
+// });
 
 // router.get('/bob', (req, res) => {
 //   let s = req.body['name'];
