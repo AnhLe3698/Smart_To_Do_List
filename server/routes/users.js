@@ -25,20 +25,20 @@ const express = require('express');
 const router  = express.Router();
 const searching = require('../helper_functions/searching');
 
-// router.post('/', (req, res) => {
-//   const user = req.body;
-//   user.password = bcrypt.hashSync(user.password, 12);
-//   database.addUser(user)
-//   .then(user => {
-//     if (!user) {
-//       res.send({error: "error"});
-//       return;
-//     }
-//     req.session.userId = user.id;
-//     res.send("🤗");
-//   })
-//   .catch(e => res.send(e));
-// });
+router.post('/', (req, res) => {
+  const user = req.body;
+  user.password = bcrypt.hashSync(user.password, 12);
+  database.addUser(user)
+  .then(user => {
+    if (!user) {
+      res.send({error: "error"});
+      return;
+    }
+    req.session.userId = user.id;
+    res.send("🤗");
+  })
+  .catch(e => res.send(e));
+});
 
 
 // '/users/login/bm@gmail.com'
@@ -49,17 +49,21 @@ router.get('/login/:id', (req, res) => {
       WHERE email = $1`, [`${email}`])
       .then((result) => {
         if (result) {
-          console.log(result.rows[0]);
-          return result.rows[0];
+          if(result['rows'].length !== 0) {
+            console.log(result);
+            console.log(result.rows[0]);
+            return res.json(result.rows[0]);
+          } else {
+            console.log('Invalid email');
+            return res.json('Invalid email');
+          }
         } else {
           return null;
         }
-
       })
       .catch((err) => {
         console.log(err.message);
       });
-
 });
 
 // router.get('/bob', (req, res) => {

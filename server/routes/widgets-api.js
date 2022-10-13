@@ -25,23 +25,74 @@ router.get('/', (req, res) => {
     });
 });
 
-// module.exports = {
-//   getUserWithEmail: (email) => {
-//     return pool
-//       .query(`SELECT * FROM users
-//       WHERE email = $1`, [`${email}`])
-//       .then((result) => {
-//         if (result) {
-//           console.log(result.rows[0]);
-//           return result.rows[0];
-//         } else {
-//           return null;
-//         }
+module.exports = {
+  // This should verify if user is registered by returning true
+  getUserWithEmail: (email) => {
+    return pool.query(`SELECT * FROM users
+    WHERE email = $1`, [`${email}`])
+    .then((result) => {
+      if (result) {
+        // Add CODE
+      } else {
+        // ADD CODE
+      }
 
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//       })
-//   },
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  },
+
+  // This query should add an extra item to items table
+  addEntry: (toDoItem) => {
+    return pool.query(`ADD SQL QUERY`, [`${toDoItem}`])
+    .then((result) => {
+      if (result) {
+        // Add CODE
+      } else {
+        // ADD CODE
+      }
+
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  },
+
+  // This query should logically change the status of an active
+  // item to an inactive item
+  logicRemoveItem: (toDoItem) => {
+    return pool.query(`ADD SQL QUERY`, [`${toDoItem}`])
+    .then((result) => {
+      if (result) {
+        // Add CODE
+      } else {
+        // ADD CODE
+      }
+
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  },
+
+  //  This should join the users and items table and grab all
+  // items specific to user
+  grabInitialList: (email) => {
+    return pool.query(`ADD SQL QUERY`, [`${email}`])
+    .then((result) => {
+      if (result) {
+        // Add CODE
+      } else {
+        // ADD CODE
+      }
+
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  }
+
+}
 
 module.exports = router;
