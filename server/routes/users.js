@@ -8,8 +8,11 @@
 const express = require('express');
 const router  = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/bob', (req, res) => {
+  let s = req.body['name'];
+  let a = req.body['fridge'];
+  console.log(a+s);
   res.render('users');
-}); 
+});
 
 module.exports = router;
