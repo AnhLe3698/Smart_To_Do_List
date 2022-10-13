@@ -49,7 +49,7 @@ app.use('/api/widgets', widgetApiRoutes);
 // $('.cool').on('click', function() {
   // let s = somefuncForms.params
   // let params = {'name': s['name'], 'fridge': s['fridge]}
-  // $('.cool').submit(/path, params, (data) => {
+// $('.cool').submit(/path, params, (data) => {
 //})
 // })
 
