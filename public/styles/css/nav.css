@@ -14,5 +14,5 @@ nav {
 
 .navbar {
   position: fixed !important;
-  align-content: stretch;
+  display: flex;
 }
