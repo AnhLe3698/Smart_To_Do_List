@@ -6,21 +6,6 @@
  */
 
 
-
-const { Pool } = require('pg');
-
-const dbParams = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: "midterm"
-};
-
-const pool = new Pool(dbParams);
-
-pool.connect();
-
 const express = require('express');
 const router  = express.Router();
 const searching = require('../helper_functions/searching');
