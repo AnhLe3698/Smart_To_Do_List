@@ -1,10 +1,11 @@
 // load .env data into process.env
-require('dotenv').config();
+// require('dotenv').config();
 
 // Web server config
 const sassMiddleware = require('.././lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -38,7 +39,25 @@ const usersRoutes = require('./routes/users');
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
-app.use('/users', usersRoutes);
+
+// <form class="submit-coolest">
+// <text name = "cold"> Rob </textfield>
+// <text name = "fridge"> Rob </textfield>
+// <button type="submit" class="submit-button"></button>
+//</form>
+
+// $('.cool').on('click', function() {
+  // let s = somefuncForms.params
+  // let params = {'name': s['name'], 'fridge': s['fridge]}
+  // $('.cool').submit(/path, params, (data) => {
+//})
+// })
+
+app.use('/users', usersRoutes); // ===> /bob  in users.js router object
+
+app.get('/bob', (req, res) => {
+
+});
 // Note: mount other resources here, using the same pattern above
 
 // Home page
