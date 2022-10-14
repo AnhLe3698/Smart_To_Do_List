@@ -27,11 +27,12 @@ router.get('/login/:id', (req, res) => {
   }).catch(e => res.send(e));
 });
 
+
 router.post('/delete/:itemid', (req, res)=>{
   let itemId = req.params.itemid;
   console.log(itemId);
-
   db.removeItem(itemId)
+  .then(()=>res.send('deleted succusseflyy'))
   .catch(e => res.send(e))
 });
 
@@ -40,8 +41,11 @@ router.post('/insert', (req, res)=>{
   let item = req.body;
   console.log(req.body);
   db.addItem(item)
+  .then(()=>res.send('added succusseflyy'))
   .catch(e => res.send(e))
-})
+});
+
+
 // router.post('/', (req, res) => {
 //   const user = req.body;
 //   user.password = bcrypt.hashSync(user.password, 12);

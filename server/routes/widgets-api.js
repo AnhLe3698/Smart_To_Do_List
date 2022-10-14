@@ -53,11 +53,11 @@ module.exports = {
   // This query should add an extra item to items table
   addItem: (item) => { //maybe return item as object ??? and maybe check if the user entered an empty object
 
-    const values = [item.userid, item.name];
+    const values = [item.userid, item.name, item.category];
 
     let queryString = `INSERT INTO items
     (userid, name, category, is_active)
-    VALUES ($1, $2, TRUE)
+    VALUES ($1, $2, $3, TRUE)
     RETURNING* ;
     `;
 
@@ -94,13 +94,13 @@ module.exports = {
 
   //  This should join the users and items table and grab all
   // items specific to user
-  grabInitialList: (userid) => {
-    const values = [userid];
+  grabInitialList: (useremail) => {
+    const values = [useremail];
 
     let queryString = `SELECT items.id*
     FROM items
     JOIN users ON users.id = items.userid
-    WHERE user.id = $1;
+    WHERE users.email = $1;
     `;
 
     return pool.query(queryString, values)
