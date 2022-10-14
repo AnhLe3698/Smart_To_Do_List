@@ -9,12 +9,12 @@
 const express = require('express');
 const router  = express.Router();
 const searching = require('../helper_functions/searching');
+const { addUser } = require('./widgets-api');
 const db = require('./widgets-api');
 
 
-// '/users/login/bm@gmail.com'
-router.get('/login/:id', (req, res) => {
-  let email = req.params.id;
+router.post('/login', (req, res) => {
+  let email = req.body.email;
   console.log(email);
   db.getUserWithEmail(email).then((bool) => {
     if (bool) {
@@ -26,6 +26,25 @@ router.get('/login/:id', (req, res) => {
     }
   }).catch(e => res.send(e));
 });
+
+router.post('/register', (req, res) => {
+  let user = {};
+  user['email'] = req.body.email;
+  user['lastName'] = req.body.lastName;
+  user['firstName']= req.body.firstName;
+  db.getUserWithEmail(user['email']).then((bool) => {
+    if (bool) {
+      console.log('Duplicate email');
+      return res.json('Duplicate email');
+    } else {
+      console.log(user);
+      addUser(user).then((result) => {
+        console.log(`The following user was added ${result}`);
+      });
+      return res.json(`The following user was added ${result}`);
+    }
+  }).catch(e => res.send(e));
+})
 
 
 router.post('/delete/:itemid', (req, res)=>{
