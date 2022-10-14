@@ -14,71 +14,102 @@ module.exports = {
   getUserWithEmail: (email) => {
     return pool.query(`SELECT * FROM users
     WHERE email = $1`, [`${email}`])
-    .then((result) => {
-      if (result) {
-        if(result['rows'].length !== 0) {
-          return true;
+      .then((result) => {
+        if (result) {
+          if (result['rows'].length !== 0) {
+            return true;
+          } else {
+            return false;
+          }
         } else {
-          return false;
+          // ADD CODE
         }
-      } else {
-        // ADD CODE
-      }
 
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
+
+  addUser: (user) => {
+
+    const values = [user.firstName, user.lastName, user.email];
+
+    let queryString = `INSERT INTO users
+    (first_name, last_name, email)
+    VALUES ($1, $2, $3)
+    RETURNING* ;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        return result.rows[0];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   },
 
   // This query should add an extra item to items table
-  addEntry: (toDoItem) => {
-    return pool.query(`ADD SQL QUERY`, [`${toDoItem}`])
-    .then((result) => {
-      if (result) {
-        // Add CODE
-      } else {
-        // ADD CODE
-      }
+  addItem: (item) => { //maybe return item as object ??? and maybe check if the user entered an empty object
 
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    const values = [item.userid, item.name];
+
+    let queryString = `INSERT INTO items
+    (userid, name, category, is_active)
+    VALUES ($1, $2, TRUE)
+    RETURNING* ;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        return result.rows[0];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   },
 
   // This query should logically change the status of an active
   // item to an inactive item
-  logicRemoveItem: (toDoItem) => {
-    return pool.query(`ADD SQL QUERY`, [`${toDoItem}`])
-    .then((result) => {
-      if (result) {
-        // Add CODE
-      } else {
-        // ADD CODE
-      }
+  removeItem: (item) => {
 
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    const values = [item.id];
+
+    let queryString = `UPDATE items
+    SET is_active = FALSE
+    WHERE id = $1
+    RETURNING* ;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        return result.rows[0];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
   },
 
   //  This should join the users and items table and grab all
   // items specific to user
-  grabInitialList: (email) => {
-    return pool.query(`ADD SQL QUERY`, [`${email}`])
-    .then((result) => {
-      if (result) {
-        // Add CODE
-      } else {
-        // ADD CODE
-      }
+  grabInitialList: (userid) => {
+    const values = [userid];
 
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+    let queryString = `SELECT items.id*
+    FROM items
+    JOIN users ON users.id = items.userid
+    WHERE user.id = $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        return result.rows;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
 }
