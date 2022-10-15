@@ -1,5 +1,7 @@
 main {
-  padding-top: 100px;
+  padding-top: 130px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .toDoBox{
@@ -52,6 +54,13 @@ input.form-control {
 }
 
 select#search-filter.form-control {
-  width: 150px;
-  
+  width: 150px; 
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-content: center;
+  align-items: center;
 }

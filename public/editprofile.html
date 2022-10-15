@@ -1,3 +1,5 @@
+<!-- ***** NOTES: Take in nav container tags only ***** -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +16,7 @@
   <link rel="stylesheet" href="./styles/css/nav.css" type="text/css">
   <link rel="stylesheet" href="./styles/css/main.css" type="text/css">
   <link rel="stylesheet" href="./styles/css/footer.css" type="text/css">
+  
 
   <!-- resources -->
   <script src="./resources/dependencies/jquery_3.6.1.min.js"></script>
@@ -26,31 +29,25 @@
 
 <body>
 
-  <nav class="navbar navbar-dark bg-primary">
-    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1">Smart TO DO List</span></div>
-    <span><a href="/register.html">Register</a></span>
-    <span><a href="/login.html">Login</a></span>
-    <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
-  </nav>
-
-  <main>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1">Smart TO DO List</span></div>
+        <span><a href="/register.html">Register</a></span>
+        <span><a href="/login.html">Login</a></span>
+        <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
+      </nav>
     
-    <h3>Register</h3>
-    <form action="/register" method="POST">
-      <div class="form-group">
-        <label for="email">Email address</label>
-        <input class="form-control" type="email" name="email" placeholder="Enter email">
-        <label for="email">Name</label>
-        <input class="form-control" type="name" name="name" placeholder="Enter name">
-      </div>
-      <!-- <div class="form-group">
-        <label for="email">Password</label>
-        <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
-      </div> -->
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
 
-  </main>
+    <main>
+        <section class="profile-container">
+            <form class="form-inline" action="" method="POST" display="block-center">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" name="email" placeholder="Enter email" style="width: 300px; margin: 2em">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" name="name" placeholder="Enter name" style="width: 300px; margin: 2em">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </section>
+    </main>
   <footer>
     Kevin Le, Mohamed Khalaf, Carolyn Wang
   </footer>
