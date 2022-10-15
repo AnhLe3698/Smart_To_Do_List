@@ -33,6 +33,7 @@
 
   <main>
     <h3>Login</h3>
+
     <form id="logging-in" action="/login" method="POST">
       <div class="form-group">
         <label for="email">Email address</label>
@@ -44,7 +45,25 @@
         </div> -->
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
+
+    <section id="item-container">
+      <section class="toBuy toDoBox box">
+        <header class="toDoHeader">To Buy Section</header>
+        <section>
+          <ul id = "items-to-buy" class="list-group">
+          </ul>
+        </section>
+      </section>`
+    </section>
+
     <script>
+      const listItems = function (items) {
+        let markup = `
+          <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
+           `;
+        return markup;
+      }
+
       $('#logging-in').submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#logging-in'))
@@ -54,18 +73,20 @@
           if ($data === errorString) {
             $('main').append($data);
           } else {
-            $('main').append('Login Successful');
+            data.map(item=>{
+                const $item = listItems(item);
+                $('#items-to-buy').append($item)
+              });
           }
         });
       });
     </script>
 
-<<<<<<< HEAD
       <button id="logout-button" class="btn btn-primary">Logout</button>
       <script>
         $('#logout-button').on('click', (event) => {
           event.preventDefault();
-          $.post('/users/logout').done(function(data) {
+          $.get('/users/logout').done(function(data) {
             const $data = data;
           });
         });
@@ -82,7 +103,6 @@
           <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
         </div>
         <!-- <div class="form-group">
-=======
     <h3>Register</h3>
     <form id="register-user" action="/register" method="POST">
       <div class="form-group">
@@ -93,8 +113,7 @@
         <label for="first-name">Last Name</label>
         <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
       </div>
-      <!-- <div class="form-group">
->>>>>>> 668110046da646a67d5485369ecb7940acce1103
+      <div class="form-group">
           <label for="email">Password</label>
           <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
         </div> -->
@@ -147,7 +166,7 @@
         let category = formData.get('category');
 
         if (name.length !== 0 && category.length !== 0) {
-          $.post('/users/insert', { 'userid': 8, 'name': name, 'category': category }).done(function (data) {
+          $.post('/users/insert', { 'name': name, 'category': category }).done(function (data) {
             const $data = data;
             if ($data === errorString) {
               $('main').append($data);
@@ -164,8 +183,8 @@
     <h3>Remove item</h3>
     <form id="remove-item">
       <div class="form-group">
-        <label for="id">Enter item id</label>
-        <input class="form-control" type="text" name="id" placeholder="Add id" style="width: 300px">
+        <label for="itemName">Enter item name</label>
+        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
       </div>
       <button type="submit" class="btn btn-primary">remove</button>
     </form>
@@ -176,11 +195,12 @@
         event.preventDefault();
         const formData = new FormData(document.querySelector('#remove-item'))
         const errorString = 'Invalid item';
-        let id = formData.get('id');
-
-        if (id.length !== 0) {
-          $.post(`/users/delete/${id}`).done(function (data) {
+        let itemName = formData.get('itemName');
+        console.log('clicked and detected');
+        if (itemName.length !== 0) {
+          $.post(`/users/delete/${itemName}`).done(function (data) {
             const $data = data;
+            console.log('callback detected');
             if ($data === errorString) {
               $('main').append($data);
             } else {
@@ -192,49 +212,47 @@
       });
     </script>
 
-    <h3>Enter user email to display items</h3>
+    <!-- <h3>Enter user email to display items</h3>
     <form id="display-items">
       <div class="form-group">
         <label for="email">Enter user email </label>
         <input class="form-control" type="text" name="email" placeholder="Add email" style="width: 300px">
       </div>
       <button type="submit" class="btn btn-primary">remove</button>
-    </form>
+    </form> -->
 
 
     <script>
-      const listItems = function (items) {
-        let markup = `
-          <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
-           `;
-        return markup;
-      }
 
 
-      $('#display-items').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#display-items'));
-        let email = formData.get('email');
-        const errorString = 'Invalid item';
+      // $('#display-items').submit((event) => {
+      //   event.preventDefault();
+      //   const formData = new FormData(document.querySelector('#display-items'));
+      //   let email = formData.get('email');
+      //   const errorString = 'Invalid item';
 
-        if (email.length !== 0) {
-          $.post(`/users`, { 'email': email }).done(function (data) {
-            const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              data.map(item=>{
-                const $item = listItems(item);
-                $('#items-to-buy').append($item)
-              })
-            }
-          });
-        }
+      //   if (email.length !== 0) {
+      //     $.post(`/users`, { 'email': email }).done(function (data) {
+      //       const $data = data;
+      //       if ($data === errorString) {
+      //         $('main').append($data);
+      //       } else {
+      //         data.map(item=>{
+      //           const $item = listItems(item);
+      //           $('#items-to-buy').append($item)
+      //         })
+      //       }
+      //     });
+      //   }
 
-      })
+      // })
     </script>
 
-    <section id="item-container">
+    <div>sdsadassa</div>
+    <div>sdsadassa</div>
+    <div>sdsadassa</div>
+    <div>sdsadassa</div>
+    <!-- <section id="item-container">
       <section class="toBuy toDoBox box">
         <header class="toDoHeader">To Buy Section</header>
         <section>
@@ -242,7 +260,7 @@
           </ul>
         </section>
       </section>`
-    </section>
+    </section> -->
 
   </main>
 

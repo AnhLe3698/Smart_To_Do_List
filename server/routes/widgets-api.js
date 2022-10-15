@@ -33,12 +33,14 @@ module.exports = {
   },
 
   getUserID: (email) => {
+
     return pool.query(`SELECT * FROM users
     WHERE email = $1`, [`${email}`])
       .then((result) => {
         if (result) {
           if (result['rows'].length !== 0) {
             // Returns true if user email is in database
+            console.log(result['rows'][0].id);
             return result['rows'][0].id;
           } else {
             return null;
@@ -91,15 +93,35 @@ module.exports = {
       });
   },
 
+  // Checks if item is in database and returns a boolean/true/false
+  ifItemExists: (name) => {
+    const values = [name];
+
+    let queryString = `SELECT name
+    FROM items where name =  $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        if(result.rows.length !== 0){
+          return true;
+        }
+        return false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
   // This query should logically change the status of an active
   // item to an inactive item
-  removeItem: (itemid) => {
+  removeItem: (itemName) => {
 
-    const values = [itemid];
+    const values = [itemName];
 
     let queryString = `UPDATE items
     SET is_active = FALSE
-    WHERE id = $1
+    WHERE name = $1
     RETURNING* ;
     `;
 
@@ -126,6 +148,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
+        console.log(result);
         return result.rows;
       })
       .catch((err) => {

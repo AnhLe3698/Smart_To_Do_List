@@ -18,11 +18,15 @@ router.post('/login', (req, res) => {
   let email = req.body.email;
   console.log(email);
   db.getUserWithEmail(email).then((bool) => {
+    console.log(bool);
     if (bool) {
       // Successful Login
       console.log(`Valid email ${email}`);
       res.cookie('email', email);
-      return res.json(`Valid email ${email}`);
+      db.grabInitialList(email).then((data) => {
+        console.log(data);
+        return res.json(data);
+      }).catch(e => res.send(e));
     } else {
       // Failed Login
       console.log('Invalid email');
@@ -31,8 +35,9 @@ router.post('/login', (req, res) => {
   }).catch(e => res.send(e));
 });
 
-router.post('logout', (req, res) => {
+router.get('/logout', (req, res) => {
   res.clearCookie('email');
+  return res.json('nice');
 });
 
 router.post('/register', (req, res) => {
@@ -54,13 +59,13 @@ router.post('/register', (req, res) => {
       return res.json(`The following user was added ${result}`);
     }
   }).catch(e => res.send(e));
-})
+});
 
 
-router.post('/delete/:itemid', (req, res) => {
-  let itemId = req.params.itemid;
-  console.log(itemId);
-  db.removeItem(itemId)
+router.post('/delete/:itemName', (req, res) => {
+  let itemName = req.params.itemName;
+  console.log(itemName);
+  db.removeItem(itemName)
     .then(() => res.send('deleted succusseflyy'))
     .catch(e => res.send(e))
 });
@@ -68,10 +73,24 @@ router.post('/delete/:itemid', (req, res) => {
 
 router.post('/insert', (req, res) => {
   let item = req.body;
-  console.log(req.body);
-  db.addItem(item)
-    .then(() => res.send('added succusseflyy'))
-    .catch(e => res.send(e))
+  console.log(item);
+  db.ifItemExists(item.name).then((bool) => {
+    console.log(bool);
+    if(bool) {
+      // If it exists do not add the item
+      res.json('Sorry item already exists');
+    } else {
+      // If it does not exist, add the item
+      db.getUserID(req.cookies['email']).then((result) => {
+        item['userid'] = result;
+        db.addItem(item)
+        .then(() => res.send('added succusseflyy'))
+        .catch(e => res.send(e))
+      }).catch(e => res.send(e));
+    }
+  })
+
+
 });
 
 router.post('/', (req, res) => {
