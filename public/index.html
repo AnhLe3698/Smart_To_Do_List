@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!--title-->
@@ -26,86 +27,205 @@
 
 <body>
 
-    <nav class=" navbar navbar-dark bg-primary">
-        <span class="navbar-brand">Smart TO DO List</span>
-    </nav>
+  <nav class=" navbar navbar-dark bg-primary">
+    <span class="navbar-brand">Smart TO DO List</span>
+  </nav>
 
   <main>
-     <h3>Login</h3>
-      <form id="logging-in" action="/login" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-        </div>
-        <!-- <div class="form-group">
+    <h3>Login</h3>
+    <form id="logging-in" action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+      </div>
+      <!-- <div class="form-group">
           <label for="password">Password</label>
           <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
         </div> -->
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-      <script>
-        $('#logging-in').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#logging-in'))
-          const errorString = 'Invalid email';
-          $.post('/users/login', {email: formData.get('email')}).done(function(data) {
-            const $data = data;
-            if($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append('Login Successful');
-            }
-          });
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <script>
+      $('#logging-in').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#logging-in'))
+        const errorString = 'Invalid email';
+        $.post('/users/login', { email: formData.get('email') }).done(function (data) {
+          const $data = data;
+          if ($data === errorString) {
+            $('main').append($data);
+          } else {
+            $('main').append('Login Successful');
+          }
         });
-      </script>
+      });
+    </script>
 
-      <h3>Register</h3>
-      <form id="register-user" action="/register" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-          <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
-          <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
-        </div>
-        <!-- <div class="form-group">
+    <h3>Register</h3>
+    <form id="register-user" action="/register" method="POST">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+        <label for="first-name">First Name</label>
+        <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
+        <label for="first-name">Last Name</label>
+        <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
+      </div>
+      <!-- <div class="form-group">
           <label for="email">Password</label>
           <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
         </div> -->
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
-      <script>
-        $('#register-user').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#register-user'))
-          const errorString = 'Invalid email';
-          let email = formData.get('email');
-          let firstName = formData.get('first-name');
-          let lastName = formData.get('last-name');
-          console.log(email, firstName, lastName);
-          if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0 ) {
-            $.post('/users/register', {'email': email, 'firstName': firstName, 'lastName': lastName}).done(function(data) {
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+    <script>
+      $('#register-user').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#register-user'))
+        const errorString = 'Invalid email';
+        let email = formData.get('email');
+        let firstName = formData.get('first-name');
+        let lastName = formData.get('last-name');
+        console.log(email, firstName, lastName);
+        if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
+          $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
             const $data = data;
-            if($data === errorString) {
+            if ($data === errorString) {
               $('main').append($data);
             } else {
               $('main').append($data);
               // $('main').append('Login Successful');
             }
           });
-          }
+        }
 
-        });
-      </script>
+      });
+    </script>
+
+
+    <h3>Add item</h3>
+    <form id="add-item">
+      <div class="form-group">
+        <label for="name">Enter item name</label>
+        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+        <label for="category">Enter item category</label>
+        <input class="form-control" type="text" name="category" placeholder="Add category" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+
+    <script>
+      $('#add-item').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#add-item'))
+        const errorString = 'Invalid item';
+        let name = formData.get('name');
+        let category = formData.get('category');
+
+        if (name.length !== 0 && category.length !== 0) {
+          $.post('/users/insert', { 'userid': 8, 'name': name, 'category': category }).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              $('main').append($data);
+            }
+          });
+        }
+
+      });
+    </script>
+
+
+    <h3>Remove item</h3>
+    <form id="remove-item">
+      <div class="form-group">
+        <label for="id">Enter item id</label>
+        <input class="form-control" type="text" name="id" placeholder="Add id" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">remove</button>
+    </form>
+
+
+    <script>
+      $('#remove-item').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#remove-item'))
+        const errorString = 'Invalid item';
+        let id = formData.get('id');
+
+        if (id.length !== 0) {
+          $.post(`/users/delete/${id}`).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              $('main').append($data);
+            }
+          });
+        }
+
+      });
+    </script>
+
+    <h3>Enter user email to display items</h3>
+    <form id="display-items">
+      <div class="form-group">
+        <label for="email">Enter user email </label>
+        <input class="form-control" type="text" name="email" placeholder="Add email" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">remove</button>
+    </form>
+
+
+    <script>
+      const listItems = function (items) {
+        let markup = `
+          <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
+           `;
+        return markup;
+      }
+
+
+      $('#display-items').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#display-items'));
+        let email = formData.get('email');
+        const errorString = 'Invalid item';
+
+        if (email.length !== 0) {
+          $.post(`/users`, { 'email': email }).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              data.map(item=>{
+                const $item = listItems(item);
+                $('#items-to-buy').append($item)
+              })
+            }
+          });
+        }
+
+      })
+    </script>
+
+    <section id="item-container">
+      <section class="toBuy toDoBox box">
+        <header class="toDoHeader">To Buy Section</header>
+        <section>
+          <ul id = "items-to-buy" class="list-group">
+          </ul>
+        </section>
+      </section>`
+    </section>
 
   </main>
-
-
 
   <footer>
     Kevin Le, Mohamed Khalaf, Carolyn Wang
   </footer>
 </body>
-  <script type="text/javascript" src="./scripts/client.js"></script>
+<script type="text/javascript" src="./scripts/client.js"></script>
+
 </html>

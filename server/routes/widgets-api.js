@@ -72,9 +72,9 @@ module.exports = {
 
   // This query should logically change the status of an active
   // item to an inactive item
-  removeItem: (item) => {
+  removeItem: (itemid) => {
 
-    const values = [item.id];
+    const values = [itemid];
 
     let queryString = `UPDATE items
     SET is_active = FALSE
@@ -97,10 +97,10 @@ module.exports = {
   grabInitialList: (useremail) => {
     const values = [useremail];
 
-    let queryString = `SELECT items.id*
+    let queryString = `SELECT items. *
     FROM items
     JOIN users ON users.id = items.userid
-    WHERE users.email = $1;
+    WHERE users.email = $1 AND is_active = TRUE;
     `;
 
     return pool.query(queryString, values)
