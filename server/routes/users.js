@@ -7,7 +7,7 @@
 
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const searching = require('../helper_functions/searching');
 const { addUser } = require('./widgets-api');
 const db = require('./widgets-api');
@@ -39,7 +39,7 @@ router.post('/register', (req, res) => {
   let user = {};
   user['email'] = req.body.email;
   user['lastName'] = req.body.lastName;
-  user['firstName']= req.body.firstName;
+  user['firstName'] = req.body.firstName;
   db.getUserWithEmail(user['email']).then((bool) => {
     if (bool) {
       // Failed register attempt
@@ -57,23 +57,32 @@ router.post('/register', (req, res) => {
 })
 
 
-router.post('/delete/:itemid', (req, res)=>{
+router.post('/delete/:itemid', (req, res) => {
   let itemId = req.params.itemid;
   console.log(itemId);
   db.removeItem(itemId)
-  .then(()=>res.send('deleted succusseflyy'))
-  .catch(e => res.send(e))
+    .then(() => res.send('deleted succusseflyy'))
+    .catch(e => res.send(e))
 });
 
 
-router.post('/insert', (req, res)=>{
+router.post('/insert', (req, res) => {
   let item = req.body;
   console.log(req.body);
   db.addItem(item)
-  .then(()=>res.send('added succusseflyy'))
-  .catch(e => res.send(e))
+    .then(() => res.send('added succusseflyy'))
+    .catch(e => res.send(e))
 });
 
+router.post('/', (req, res) => {
+  let email = req.body.email;
+  console.log(email);
+  db.grabInitialList(email).then((data) => {
+    console.log(data);
+    res.json(data)
+  }).catch(e => res.send(e))
+
+})
 
 // router.post('/', (req, res) => {
 //   const user = req.body;
