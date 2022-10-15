@@ -17,14 +17,35 @@ module.exports = {
       .then((result) => {
         if (result) {
           if (result['rows'].length !== 0) {
+            // Returns true if user email is in database
             return true;
           } else {
             return false;
           }
         } else {
-          // ADD CODE
+          return false;
         }
 
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
+
+  getUserID: (email) => {
+    return pool.query(`SELECT * FROM users
+    WHERE email = $1`, [`${email}`])
+      .then((result) => {
+        if (result) {
+          if (result['rows'].length !== 0) {
+            // Returns true if user email is in database
+            return result['rows'][0].id;
+          } else {
+            return null;
+          }
+        } else {
+          return null;
+        }
       })
       .catch((err) => {
         console.log(err.message);

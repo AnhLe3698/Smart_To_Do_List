@@ -13,18 +13,26 @@ const { addUser } = require('./widgets-api');
 const db = require('./widgets-api');
 
 
+
 router.post('/login', (req, res) => {
   let email = req.body.email;
   console.log(email);
   db.getUserWithEmail(email).then((bool) => {
     if (bool) {
+      // Successful Login
       console.log(`Valid email ${email}`);
+      res.cookie('email', email);
       return res.json(`Valid email ${email}`);
     } else {
+      // Failed Login
       console.log('Invalid email');
       return res.json('Invalid email');
     }
   }).catch(e => res.send(e));
+});
+
+router.post('logout', (req, res) => {
+  res.clearCookie('email');
 });
 
 router.post('/register', (req, res) => {
@@ -34,12 +42,14 @@ router.post('/register', (req, res) => {
   user['firstName']= req.body.firstName;
   db.getUserWithEmail(user['email']).then((bool) => {
     if (bool) {
+      // Failed register attempt
       console.log('Duplicate email');
       return res.json('Duplicate email');
     } else {
+      // Successful Register
       console.log(user);
       addUser(user).then((result) => {
-        console.log(`The following user was added ${result}`);
+        console.log(result);
       });
       return res.json(`The following user was added ${result}`);
     }

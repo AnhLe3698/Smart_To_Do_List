@@ -59,6 +59,16 @@
         });
       </script>
 
+      <button id="logout-button" class="btn btn-primary">Logout</button>
+      <script>
+        $('#logout-button').on('click', (event) => {
+          event.preventDefault();
+          $.post('/users/logout').done(function(data) {
+            const $data = data;
+          });
+        });
+      </script>
+
       <h3>Register</h3>
       <form id="register-user" action="/register" method="POST">
         <div class="form-group">
