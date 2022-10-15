@@ -1,10 +1,11 @@
 // load .env data into process.env
-// require('dotenv').config();
+require('dotenv').config();
 
 // Web server config
 const sassMiddleware = require('.././lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookiesState = require('cookie-parser');
 
 
 const PORT = process.env.PORT || 8080;
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
+app.use(cookiesState());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   '/styles',
@@ -38,7 +40,8 @@ const usersRoutes = require('./routes/users');
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
+// app.use('/api/widgets', widgetApiRoutes);
+
 
 // <form class="submit-coolest">
 // <text name = "cold"> Rob </textfield>

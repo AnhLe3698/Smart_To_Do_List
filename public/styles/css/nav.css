@@ -1,11 +1,24 @@
 nav {
-  padding: 20px;
+  padding: 5px;
   width: 100%;
-  position: fixed;
   top: 0px;
-  align-content: stretch;
+  /* align-content: stretch; */
   /* when to add more items in nav */
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: rgb(125, 177, 255);
+}
+
+.navbar {
+  position: fixed !important;
+  display: flex;
+}
+
+a {
+  color: #abd4f7;
+}
+
+.logged-as {
+  float: left;
 }

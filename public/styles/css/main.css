@@ -1,11 +1,7 @@
-.searchForm {
-  display: flex;
-  justify-content: center;
-  padding-top: 80px;
-}
-
-input {
-  width: 30%;
+main {
+  padding-top: 130px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .toDoBox{
@@ -28,11 +24,43 @@ ul {
   display: flex;
   flex-flow: wrap column;
   /* remove indentation and bullet */
-  padding: 0;
   list-style-type: none; 
+  padding: 0;
 } 
 
 li {
-  border: solid 1px;
-  padding: 5%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5% !important;
+}
+
+/* Search section */
+
+section.search-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+input.form-control {
+  width: 500px;
+}
+
+.searchForm {
+  display: flex;
+  justify-content: center;
+}
+
+select#search-filter.form-control {
+  width: 150px; 
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-content: center;
+  align-items: center;
 }
