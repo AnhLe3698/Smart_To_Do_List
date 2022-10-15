@@ -35,7 +35,7 @@
 
   <main>
      <h3>Login</h3>
-      <form id="logging-in" action="/login" method="POST">
+      <form action="/login" method="POST">
         <div class="form-group">
           <label for="email">Email address</label>
           <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
@@ -46,66 +46,8 @@
         </div> -->
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
-      <script>
-        $('#logging-in').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#logging-in'))
-          const errorString = 'Invalid email';
-          $.post('/login', {email: formData.get('email')}).done(function(data) {
-            const $data = data;
-            if($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append('Login Successful');
-            }
-          });
-        });
-      </script>
-
-      <h3>Register</h3>
-      <form id="register-user" action="/register" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-          <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
-          <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
-        </div>
-        <!-- <div class="form-group">
-          <label for="email">Password</label>
-          <input class="form-control" type="password" name="password" placeholder="Password" style="width: 300px">
-        </div> -->
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
-      <script>
-        $('#register-user').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#register-user'))
-          const errorString = 'Invalid email';
-          let email = formData.get('email');
-          let firstName = formData.get('first-name');
-          let lastName = formData.get('last-name');
-          console.log(email, firstName, lastName);
-          if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0 ) {
-            $.post('/login', {'email': email, 'firstName': firstName, 'lastName': lastName}).done(function(data) {
-            const $data = data;
-            if($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append($data);
-              // $('main').append('Login Successful');
-            }
-          });
-          }
-
-        });
-      </script>
 
   </main>
-
-
-
   <footer>
     Kevin Le, Mohamed Khalaf, Carolyn Wang
   </footer>
