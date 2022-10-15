@@ -6,24 +6,112 @@
  */
 
 
-
-const { Pool } = require('pg');
-
-const dbParams = {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: "midterm"
-};
-
-const pool = new Pool(dbParams);
-
-pool.connect();
-
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const searching = require('../helper_functions/searching');
+const { addUser } = require('./widgets-api');
+const db = require('./widgets-api');
+
+
+
+router.post('/login', (req, res) => {
+  let email = req.body.email;
+  console.log(email);
+  db.getUserWithEmail(email).then((bool) => {
+    console.log(bool);
+    if (bool) {
+      // Successful Login
+      console.log(`Valid email ${email}`);
+      res.cookie('email', email);
+      db.grabInitialList(email).then((data) => {
+        console.log(data);
+        return res.json(data);
+      }).catch(e => res.send(e));
+    } else {
+      // Failed Login
+      console.log('Invalid email');
+      return res.json('Invalid email');
+    }
+  }).catch(e => res.send(e));
+});
+
+router.get('/logout', (req, res) => {
+  res.clearCookie('email');
+  return res.json('nice');
+});
+
+router.post('/register', (req, res) => {
+  let user = {};
+  user['email'] = req.body.email;
+  user['lastName'] = req.body.lastName;
+  user['firstName'] = req.body.firstName;
+  db.getUserWithEmail(user['email']).then((bool) => {
+    if (bool) {
+      // Failed register attempt
+      console.log('Duplicate email');
+      return res.json('Duplicate email');
+    } else {
+      // Successful Register
+      console.log(user);
+      addUser(user).then((result) => {
+        console.log(result);
+      });
+      return res.json(`The following user was added ${result}`);
+    }
+  }).catch(e => res.send(e));
+});
+
+
+router.post('/delete/:itemName', (req, res) => {
+  let itemName = req.params.itemName;
+  console.log(itemName);
+  db.removeItem(itemName)
+    .then(() => res.send('deleted succusseflyy'))
+    .catch(e => res.send(e))
+});
+
+// Searching function needs to be invoked in this path
+// { 'name': name, 'category': category } remove category in listener and object
+// Searching funciton will add category
+router.post('/insert', (req, res) => {
+  let item = req.body;
+  console.log(item);
+  db.ifItemExists(item.name).then((bool) => {
+    console.log(bool);
+    if(bool) {
+      // If it exists do not add the item
+      res.json('Sorry item already exists');
+    } else {
+      // If it does not exist, add the item
+      db.getUserID(req.cookies['email']).then((result) => {
+        item['userid'] = result;
+        db.addItem(item)
+        .then(() => res.send('added succusseflyy'))
+        .catch(e => res.send(e))
+      }).catch(e => res.send(e));
+    }
+  })
+
+
+});
+
+router.get('/', (req, res) => {
+  let email = req.cookies['email'];
+  if (email && email.length !== 0) {
+    db.grabInitialList(email).then((data) => {
+      if(data.length !== 0) {
+        console.log(data);
+        res.json(data);
+      } else {
+        res.json('Not logged in');
+      }
+    }).catch(e => res.send(e))
+  } else {
+    res.json('Not logged in');
+  }
+
+
+})
 
 // router.post('/', (req, res) => {
 //   const user = req.body;
@@ -39,28 +127,6 @@ const searching = require('../helper_functions/searching');
 //   })
 //   .catch(e => res.send(e));
 // });
-
-
-// '/users/login/bm@gmail.com'
-router.get('/login/:id', (req, res) => {
-  let email = req.params.id;
-  console.log(email);
-  return pool.query(`SELECT * FROM users
-      WHERE email = $1`, [`${email}`])
-      .then((result) => {
-        if (result) {
-          console.log(result.rows[0]);
-          return result.rows[0];
-        } else {
-          return null;
-        }
-
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-
-});
 
 // router.get('/bob', (req, res) => {
 //   let s = req.body['name'];
