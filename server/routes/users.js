@@ -70,7 +70,9 @@ router.post('/delete/:itemName', (req, res) => {
     .catch(e => res.send(e))
 });
 
-
+// Searching function needs to be invoked in this path
+// { 'name': name, 'category': category } remove category in listener and object
+// Searching funciton will add category
 router.post('/insert', (req, res) => {
   let item = req.body;
   console.log(item);
@@ -93,13 +95,21 @@ router.post('/insert', (req, res) => {
 
 });
 
-router.post('/', (req, res) => {
-  let email = req.body.email;
-  console.log(email);
-  db.grabInitialList(email).then((data) => {
-    console.log(data);
-    res.json(data)
-  }).catch(e => res.send(e))
+router.get('/', (req, res) => {
+  let email = req.cookies['email'];
+  if (email && email.length !== 0) {
+    db.grabInitialList(email).then((data) => {
+      if(data.length !== 0) {
+        console.log(data);
+        res.json(data);
+      } else {
+        res.json('Not logged in');
+      }
+    }).catch(e => res.send(e))
+  } else {
+    res.json('Not logged in');
+  }
+
 
 })
 

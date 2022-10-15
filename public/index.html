@@ -57,6 +57,21 @@
     </section>
 
     <script>
+      $(() => {
+
+        $.get('/users', (data) => {
+          const errorString = 'Not logged in';
+          const $data = data;
+          if ($data === errorString) {
+            $('main').append($data);
+          } else {
+            data.map(item=>{
+                const $item = listItems(item);
+                $('#items-to-buy').append($item)
+              });
+          }
+        });
+      })
       const listItems = function (items) {
         let markup = `
           <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
