@@ -28,12 +28,14 @@
 <body>
 
   <nav class="navbar navbar-dark bg-primary">
-    <span class="navbar-brand">Smart TO DO List</span>
-    <span>Logged in as:</span>
+    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1">Smart TO DO List</span></div>
+    <span><a href="/register.html">Register</a></span>
+    <span><a href="/login.html">Login</a></span>
+    <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
   </nav>
 
   <main>
-    <section class="search-section">
+    <div class="search-section container-fluid">
       <form action="" name="searchForm" class="searchForm">
         <input class="form-control me-2" type="search" placeholder="Add item..." aria-label="Search">
         <select name="searchFilter" id="search-filter" class="form-control">
@@ -45,7 +47,7 @@
         </select>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-    </section>
+    </div>
     
   <!-- Container for the to-do lists -->
    <section class="toDoListBox box">

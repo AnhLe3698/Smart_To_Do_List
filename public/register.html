@@ -26,9 +26,12 @@
 
 <body>
 
-    <nav class=" navbar navbar-dark bg-primary">
-        <span class="navbar-brand">Smart TO DO List</span>
-    </nav>
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1">Smart TO DO List</span></div>
+    <span><a href="/register.html">Register</a></span>
+    <span><a href="/login.html">Login</a></span>
+    <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
+  </nav>
 
   <main>
     
@@ -36,7 +39,9 @@
     <form action="/register" method="POST">
       <div class="form-group">
         <label for="email">Email address</label>
-        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+        <input class="form-control" type="email" name="email" placeholder="Enter email">
+        <label for="email">Name</label>
+        <input class="form-control" type="name" name="name" placeholder="Enter name">
       </div>
       <!-- <div class="form-group">
         <label for="email">Password</label>
