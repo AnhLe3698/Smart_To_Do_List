@@ -151,13 +151,34 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log(result);
+        //console.log(result);
         return result.rows;
       })
       .catch((err) => {
         console.log(err.message);
       });
+  },
+
+
+  categorizeItem: (item) => {
+    const values = [item.name];
+
+    let queryString = `SELECT category
+    FROM data
+    WHERE name = $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category is:',result.rows[0].category);
+        return result.rows[0].category;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
+
+
 
 }
 
