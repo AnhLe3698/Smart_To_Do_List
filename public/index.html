@@ -90,16 +90,16 @@
           if ($data === errorString) {
             $('main').append($data);
           } else {
-            data.map(item=>{
+            data.map(item => {
               const $item = listItems(item);
               const category = item.category;
-              if(category === 'movie') {
+              if (category === 'movie') {
                 $('.media').append($item);
-              } else if(category === 'book') {
+              } else if (category === 'book') {
                 $('.books').append($item);
-              } else if(category === 'product') {
+              } else if (category === 'product') {
                 $('.products').append($item);
-              } else if( category === 'restaurant') {
+              } else if (category === 'restaurant') {
                 $('.resteraunts').append($item);
               }
             });
@@ -128,16 +128,16 @@
             $('main').append($data);
           } else {
             $('main').prepend(listForms);
-            data.map(item=>{
+            data.map(item => {
               const $item = listItems(item);
               const category = item.category;
-              if(category === 'movie') {
+              if (category === 'movie') {
                 $('.media').append($item);
-              } else if(category === 'book') {
+              } else if (category === 'book') {
                 $('.books').append($item);
-              } else if(category === 'product') {
+              } else if (category === 'product') {
                 $('.products').append($item);
-              } else if( category === 'restaurant') {
+              } else if (category === 'restaurant') {
                 $('.resteraunts').append($item);
               }
             });
@@ -146,27 +146,27 @@
       });
     </script>
 
-      <button id="logout-button" class="btn btn-primary">Logout</button>
-      <script>
-        $('#logout-button').on('click', (event) => {
-          event.preventDefault();
-          $('ul').empty();
-          $.get('/users/logout').done(function(data) {
-            const $data = data;
-          });
+    <button id="logout-button" class="btn btn-primary">Logout</button>
+    <script>
+      $('#logout-button').on('click', (event) => {
+        event.preventDefault();
+        $('ul').empty();
+        $.get('/users/logout').done(function (data) {
+          const $data = data;
         });
-      </script>
+      });
+    </script>
 
-      <h3>Register</h3>
-      <form id="register-user" action="/register" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-          <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
-          <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
-        </div>
+    <h3>Register</h3>
+    <form id="register-user" action="/register" method="POST">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+        <label for="first-name">First Name</label>
+        <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
+        <label for="first-name">Last Name</label>
+        <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
+      </div>
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
 
@@ -221,13 +221,13 @@
             if ($data === errorString) {
               $('main').append($data);
             } else {
-              if(data.category === 'movie') {
+              if (data.category === 'movie') {
                 $('.media').append(listItems($data));
-              } else if(data.category === 'book') {
+              } else if (data.category === 'book') {
                 $('.books').append(listItems($data));
-              } else if(data.category === 'product') {
+              } else if (data.category === 'product') {
                 $('.products').append(listItems($data));
-              } else if(data.category === 'restaurant') {
+              } else if (data.category === 'restaurant') {
                 $('.resteraunts').append(listItems($data));
               };
             }
@@ -237,6 +237,44 @@
       });
     </script>
 
+    <h3>Add item Part 2</h3>
+    <form id="add-item2">
+      <div class="form-group">
+        <label for="name">Enter item name</label>
+        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+    <script>
+      $('#add-item2').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#add-item2'))
+        const errorString = 'Sorry item already exists';
+        let name = formData.get('name');
+        let category = formData.get('category');
+        console.log('name clicked')
+        if (name.length !== 0) {
+          $.post('/users/add', { 'name': name }).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              if (data.category === 'movie') {
+                $('.media').append(listItems($data));
+              } else if (data.category === 'book') {
+                $('.books').append(listItems($data));
+              } else if (data.category === 'product') {
+                $('.products').append(listItems($data));
+              } else if (data.category === 'restaurant') {
+                $('.resteraunts').append(listItems($data));
+              };
+            }
+          });
+        }
+
+      });
+    </script>
 
     <h3>Remove item</h3>
     <form id="remove-item">
