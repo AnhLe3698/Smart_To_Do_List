@@ -4,3 +4,4 @@
 *.log
 *.sqlite3
 public/scripts/data.tsv
+public/scripts/rawData.sql

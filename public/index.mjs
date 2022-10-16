@@ -16,18 +16,76 @@
 // const readline = require('readline');
 // const d3 = require('d3-dsv');
 // import * as d3 from "d3-dsv";
+import * as fs from "fs";
 import * as d3 from "d3";
+import * as inspect from "util";
+import { index } from "d3";
 // tconst	titleType	primaryTitle	originalTitle	isAdult	startYear	endYear	runtimeMinutes	genres
-d3.tsvParse("./scripts/data.tsv", function(d) {
-  return {
-    // tconst: new Date(+d.Year, 0, 1), // convert "Year" column to Date
-    primaryTitle: d.primaryTitle,
-    // primaryTitle: d.Model,
-    // originalTitle: +d.Length // convert "Length" column to number
-  };
-}, function(error, rows) {
-  console.log(rows);
+// fs.readFile('./scripts/data.tsv', 'utf8', (err, data) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//   d3.tsvParseRows(data, function(d) {
+//     return {
+//       // tconst: new Date(+d.Year, 0, 1), // convert "Year" column to Date
+//       primaryTitle: d.primaryTitle,
+//       // primaryTitle: d.Model,
+//       // originalTitle: +d.Length // convert "Length" column to number
+//     };
+//   }, function(error, rows) {
+//     console.log(rows);
+//   });
+// });
+
+// var fs = require('fs');
+// var inspect = require('util').inspect;
+// console.log("l'usine Lumière à Lyon'".replaceAll("'", "''"));
+
+var buffer = '';
+var rs = fs.createReadStream('./scripts/data.tsv');
+rs.on('data', function(chunk) {
+  var lines = (buffer + chunk).split(/\r?\n/g);
+  buffer = lines.pop();
+  for (var i = 0; i < lines.length; ++i) {
+    // do something with `lines[i]`
+    // var tab = RegExp([^\t]*, "g");
+    let line = inspect.inspect(lines[i]);
+    // strs = "foo\tbar\t\tspam"
+    // re.split(r'\t+', strs)
+    // let arrLine = line.split(r'\t+', strs);
+    let arrLine = line.split(/\\t/g)[3];
+    if(arrLine.indexOf("'") == -1 && arrLine.length < 20 && arrLine.indexOf('Episode') === - 1 && arrLine.indexOf('episode') === - 1 && arrLine.indexOf('No.') === - 1){
+      // console.log(arrLine.replaceAll("'", "''"));
+      fs.appendFileSync('./scripts/rawData.sql', `INSERT INTO data (name, category) VALUES ('${arrLine}', 'movie');\n`);
+    }
+    // arrLine.replaceAll("'", "''")
+    // console.log(arrLine);
+
+    // console.log('found line: ' + typeof line);
+  }
 });
+
+rs.on('end', function() {
+  // optionally process `buffer` here if you want to treat leftover data without
+  // a newline as a "line"
+  console.log('ended on non-empty buffer: ' + inspect.inspect(buffer));
+});
+;
+
+
+
+// d3.tsvParseRows("./scripts/data.tsv", function(d) {
+//   console.log(d);
+//   return {
+//     // tconst: new Date(+d.Year, 0, 1), // convert "Year" column to Date
+//     primaryTitle: d.primaryTitle,
+//     // primaryTitle: d.Model,
+//     // originalTitle: +d.Length // convert "Length" column to number
+//   };
+// }, function(error, rows) {
+//   console.log(rows);
+// });
 
 // const rl = readline.createInterface({
 //     input: fs.createReadStream('./scripts/data.tsv'),
