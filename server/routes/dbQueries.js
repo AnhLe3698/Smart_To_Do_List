@@ -94,11 +94,13 @@ module.exports = {
   },
 
   // Checks if item is in database and returns a boolean/true/false
-  ifItemExists: (name) => {
-    const values = [name];
+  ifItemExists: (name, email) => {
+    const values = [name, email];
 
     let queryString = `SELECT name
-    FROM items where name =  $1;
+    FROM items
+    JOIN users ON items.userid = users.id
+    WHERE items.name =  $1 AND users.email = $2;
     `;
 
     return pool.query(queryString, values)
@@ -115,13 +117,14 @@ module.exports = {
 
   // This query should logically change the status of an active
   // item to an inactive item
-  removeItem: (itemName) => {
+  removeItem: (itemName, email) => {
 
-    const values = [itemName];
+    const values = [itemName, email];
 
     let queryString = `UPDATE items
     SET is_active = FALSE
-    WHERE name = $1
+    FROM users WHERE items.userid = users.id
+    WHERE name = $1 AND AND users.email = $2
     RETURNING* ;
     `;
 
@@ -140,7 +143,7 @@ module.exports = {
   grabInitialList: (useremail) => {
     const values = [useremail];
 
-    let queryString = `SELECT items. *
+    let queryString = `SELECT items.*
     FROM items
     JOIN users ON users.id = items.userid
     WHERE users.email = $1 AND is_active = TRUE;

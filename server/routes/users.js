@@ -9,8 +9,8 @@
 const express = require('express');
 const router = express.Router();
 const searching = require('../helper_functions/searching');
-const { addUser } = require('./widgets-api');
-const db = require('./widgets-api');
+const { addUser } = require('./dbQueries');
+const db = require('./dbQueries');
 
 
 
@@ -52,6 +52,7 @@ router.post('/register', (req, res) => {
       return res.json('Duplicate email');
     } else {
       // Successful Register
+      res.cookie('email', user.email);
       console.log(user);
       addUser(user).then((result) => {
         console.log(result);
@@ -65,10 +66,11 @@ router.post('/register', (req, res) => {
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
   console.log(itemName);
-  db.removeItem(itemName)
+  db.removeItem(itemName, req.cookies['email'])
     .then(() => res.send('deleted succusseflyy'))
     .catch(e => res.send(e))
 });
+
 
 // Searching function needs to be invoked in this path
 // { 'name': name, 'category': category } remove category in listener and object
@@ -76,7 +78,7 @@ router.post('/delete/:itemName', (req, res) => {
 router.post('/insert', (req, res) => {
   let item = req.body;
   console.log(item);
-  db.ifItemExists(item.name).then((bool) => {
+  db.ifItemExists(item.name, req.cookies['email']).then((bool) => {
     console.log(bool);
     if(bool) {
       // If it exists do not add the item
@@ -86,7 +88,7 @@ router.post('/insert', (req, res) => {
       db.getUserID(req.cookies['email']).then((result) => {
         item['userid'] = result;
         db.addItem(item)
-        .then(() => res.send('added succusseflyy'))
+        .then(() => res.json(item))
         .catch(e => res.send(e))
       }).catch(e => res.send(e));
     }
@@ -109,7 +111,6 @@ router.get('/', (req, res) => {
   } else {
     res.json('Not logged in');
   }
-
 
 })
 
