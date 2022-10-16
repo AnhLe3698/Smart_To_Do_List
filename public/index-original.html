@@ -28,12 +28,14 @@
 <body>
 
   <nav class="navbar navbar-dark bg-primary">
-    <span class="navbar-brand">Smart TO DO List</span>
-    <span>Logged in as:</span>
+    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1">Smart TO DO List</span></div>
+    <span><a href="/register.html">Register</a></span>
+    <span><a href="/login.html">Login</a></span>
+    <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
   </nav>
 
   <main>
-    <section class="search-section">
+    <div class="search-section container-fluid">
       <form action="" name="searchForm" class="searchForm">
         <input class="form-control me-2" type="search" placeholder="Add item..." aria-label="Search">
         <select name="searchFilter" id="search-filter" class="form-control">
@@ -45,21 +47,15 @@
         </select>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-    </section>
+    </div>
 
   <!-- Container for the to-do lists -->
    <section class="toDoListBox box">
     <section class="toWatch toDoBox box">
       <header class="toDoHeader">To Watch Section</header>
       <section>
-        <ul>
+        <ul class="list-group media">
           <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
-          <li class="dropzone list-group" id='1' draggable="true">Item 2</li>
-          <li class="dropzone list-group" id='2' draggable="true">Item 3</li>
-          <li class="dropzone list-group" id='3' draggable="true">Item 4</li>
-          <li class="dropzone list-group" id='4' draggable="true">Item 5</li>
-          <li class="dropzone list-group" id='5' draggable="true">Item 6</li>
-          <li class="dropzone list-group" id='6' draggable="true">Item 7</li>
 
       </section>
     </section>
@@ -68,14 +64,8 @@
     <section class="toEat toDoBox box">
       <header class="toDoHeader">To Eat Section</header>
       <section class="list-container">
-        <ul class="list-group">
+        <ul class="list-group resteraunts">
           <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
-          <li class="dropzone list-group" id='1' draggable="true">Item 2</li>
-          <li class="dropzone list-group" id='2' draggable="true">Item 3</li>
-          <li class="dropzone list-group" id='3' draggable="true">Item 4</li>
-          <li class="dropzone list-group" id='4' draggable="true">Item 5</li>
-          <li class="dropzone list-group" id='5' draggable="true">Item 6</li>
-          <li class="dropzone list-group" id='6' draggable="true">Item 7</li>
 
       </section>
     </section>
@@ -83,14 +73,9 @@
     <section class="toRead toDoBox box">
       <header class="toDoHeader">To Read Section</header>
       <section>
-        <ul class="list-group">
+        <ul class="list-group books">
           <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
-          <li class="dropzone list-group" id='1' draggable="true">Item 2</li>
-          <li class="dropzone list-group" id='2' draggable="true">Item 3</li>
-          <li class="dropzone list-group" id='3' draggable="true">Item 4</li>
-          <li class="dropzone list-group" id='4' draggable="true">Item 5</li>
-          <li class="dropzone list-group" id='5' draggable="true">Item 6</li>
-          <li class="dropzone list-group" id='6' draggable="true">Item 7</li>
+
 
       </section>
     </section>
@@ -98,14 +83,9 @@
     <section class="toBuy toDoBox box">
       <header class="toDoHeader">To Buy Section</header>
       <section>
-        <ul class="list-group">
+        <ul class="list-group products">
           <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
-          <li class="dropzone list-group" id='1' draggable="true">Item 2</li>
-          <li class="dropzone list-group" id='2' draggable="true">Item 3</li>
-          <li class="dropzone list-group" id='3' draggable="true">Item 4</li>
-          <li class="dropzone list-group" id='4' draggable="true">Item 5</li>
-          <li class="dropzone list-group" id='5' draggable="true">Item 6</li>
-          <li class="dropzone list-group" id='6' draggable="true">Item 7</li>
+
         </ul>
       </section>
     </section>

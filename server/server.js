@@ -32,54 +32,22 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
+// const userApiRoutes = require('./routes/users-api');
+// const widgetApiRoutes = require('./routes/dbQueries');
 const usersRoutes = require('./routes/users');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-app.use('/api/users', userApiRoutes);
+// app.use('/api/users', userApiRoutes);
 // app.use('/api/widgets', widgetApiRoutes);
-
-
-// <form class="submit-coolest">
-// <text name = "cold"> Rob </textfield>
-// <text name = "fridge"> Rob </textfield>
-// <button type="submit" class="submit-button"></button>
-//</form>
-
-// $('.cool').on('click', function() {
-  // let s = somefuncForms.params
-  // let params = {'name': s['name'], 'fridge': s['fridge]}
-// $('.cool').submit(/path, params, (data) => {
-//})
-// })
 
 app.use('/users', usersRoutes); // ===> /bob  in users.js router object
 
-app.get('/bob', (req, res) => {
-
-});
 // Note: mount other resources here, using the same pattern above
 
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-
-// We do not need this command since we are making single page app
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-// it checkout main
-// git pull orgin main
-// git checkout -b name-of-branch
-
-// feat/api-connection
-// refactor/name0of-refactor
-// fix/name-of-fix
