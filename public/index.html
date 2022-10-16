@@ -42,12 +42,14 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
-    <section class="toDoListBox box">
+
+
+    <script>
+      let listForms = `<section class="toDoListBox box">
       <section class="toWatch toDoBox box">
         <header class="toDoHeader">To Watch Section</header>
         <section>
           <ul class="list-group media">
-            <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
 
         </section>
       </section>
@@ -57,7 +59,6 @@
         <header class="toDoHeader">To Eat Section</header>
         <section class="list-container">
           <ul class="list-group resteraunts">
-            <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
 
         </section>
       </section>
@@ -66,7 +67,6 @@
         <header class="toDoHeader">To Read Section</header>
         <section>
           <ul class="list-group books">
-            <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
 
 
         </section>
@@ -76,16 +76,14 @@
         <header class="toDoHeader">To Buy Section</header>
         <section>
           <ul class="list-group products">
-            <li class="dropzone list-group" id='0' draggable="true">Item 1</li>
+
 
           </ul>
         </section>
       </section>
-     </section>
-
-    <script>
+      </section>`;
+      // recreates the list everytime you refresh
       $(() => {
-
         $.get('/users', (data) => {
           const errorString = 'Not logged in';
           const $data = data;
@@ -108,6 +106,8 @@
           }
         });
       })
+
+      // Creates the list items
       const listItems = function (items) {
         let markup = `
           <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
@@ -115,16 +115,19 @@
         return markup;
       }
 
+      // Login
       $('#logging-in').submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#logging-in'))
         const errorString = 'Invalid email';
         $('ul').empty();
         $.post('/users/login', { email: formData.get('email') }).done(function (data) {
+          // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
             $('main').append($data);
           } else {
+            $('main').prepend(listForms);
             data.map(item=>{
               const $item = listItems(item);
               const category = item.category;
