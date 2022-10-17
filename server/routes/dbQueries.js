@@ -124,7 +124,7 @@ module.exports = {
     let queryString = `UPDATE items
     SET is_active = FALSE
     FROM users WHERE items.userid = users.id
-    WHERE name = $1 AND AND users.email = $2
+    AND items.name = $1  AND users.email = $2
     RETURNING* ;
     `;
 

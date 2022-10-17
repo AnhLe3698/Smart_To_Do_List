@@ -3,5 +3,6 @@
 .env
 *.log
 *.sqlite3
-public/scripts/data.tsv
-public/scripts/rawData.sql
+database/seeds/FastFoodRestaurants.csv
+database/seeds/data.tsv
+database/seeds/03_seeds.sql
