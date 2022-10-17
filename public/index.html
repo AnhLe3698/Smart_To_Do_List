@@ -22,11 +22,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="./scripts/client.js"></script>
   <script type="text/javascript" src="./scripts/register.js"></script>
+  <!-- <script type="text/javascript" src="./scripts/client.js"></script>
   <script type="text/javascript" src="./scripts/removeItem.js"></script>
   <script type="text/javascript" src="./scripts/addItem.js"></script>
-  <script type="text/javascript" src="./scripts/logIn.js"></script>
+  <script type="text/javascript" src="./scripts/logIn.js"></script> -->
 
 
 </head>
@@ -50,23 +50,8 @@
 
   <main>
 
-    <script>
-      const registerForm = `
-      <h3>Register</h3>
-      <form id="register-user" action="/register" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-          <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
-          <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
+    <!-- <script>
 
-
-      `;
 
       const loginForm = `
       <h3>Login</h3>
@@ -82,23 +67,22 @@
 
 
       $("#login-button-nav").on("click", function () {
-        $("main").empty();
-        $("main").append(loginForm);
+        $("#container").empty();
+        $("#container").append(loginForm);
       });
 
 
-      $("#register-button-nav").click(function () {
-        $("main").empty();
-        $("main").append(registerForm);
-      });
-
-    </script>
 
 
+    </script> -->
+
+    <Section id='container'>
+
+    </Section>
 
 
 
-    <script>
+    <!-- <script>
 
       let listForms = `<section class="toDoListBox box">
       <section class="toWatch toDoBox box">
@@ -165,9 +149,9 @@
           const errorString = 'Not logged in';
           const $data = data;
           if ($data === errorString) {
-            $('main').append($data);
+            $('#container').append($data);
           } else {
-            $('main').append(listForms);
+            $('#container').append(listForms);
             data.map(item => {
               const $item = listItems(item);
               const category = item.category;
@@ -204,7 +188,7 @@
           const $data = data;
         });
       });
-    </script>
+    </script> -->
 
 
 
