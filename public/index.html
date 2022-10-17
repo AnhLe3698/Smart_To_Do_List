@@ -23,6 +23,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="./scripts/register.js"></script>
+  <!-- <script type="text/javascript" src="./scripts/client.js"></script>
+  <script type="text/javascript" src="./scripts/removeItem.js"></script>
+  <script type="text/javascript" src="./scripts/addItem.js"></script>
+  <script type="text/javascript" src="./scripts/logIn.js"></script> -->
 
   <!--Scripts-->
   <script type="text/javascript" src="./scripts/htmlForms.js"></script>
@@ -59,6 +64,193 @@
   -->
 
   <main>
+
+    <!-- <script>
+
+
+      const loginForm = `
+      <h3>Login</h3>
+      <form id="logging-in" action="/login" method="POST">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+      `
+
+
+
+      $("#login-button-nav").on("click", function () {
+        $("#container").empty();
+        $("#container").append(loginForm);
+      });
+
+
+
+
+    </script> -->
+
+    <Section id='container'>
+
+    </Section>
+
+
+
+    <!-- <script>
+
+      let listForms = `<section class="toDoListBox box">
+      <section class="toWatch toDoBox box">
+        <header class="toDoHeader">To Watch Section</header>
+        <section>
+          <ul class="list-group media">
+
+        </section>
+      </section>
+
+
+      <section class="toEat toDoBox box">
+        <header class="toDoHeader">To Eat Section</header>
+        <section class="list-container">
+          <ul class="list-group resteraunts">
+
+        </section>
+      </section>
+
+      <section class="toRead toDoBox box">
+        <header class="toDoHeader">To Read Section</header>
+        <section>
+          <ul class="list-group books">
+
+
+        </section>
+      </section>
+
+      <section class="toBuy toDoBox box">
+        <header class="toDoHeader">To Buy Section</header>
+        <section>
+          <ul class="list-group products">
+
+
+          </ul>
+        </section>
+      </section>
+      </section>
+
+      <h3>Add item Part 2</h3>
+    <form id="add-item2">
+      <div class="form-group">
+        <label for="name">Enter item name</label>
+        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+
+    <h3>Remove item</h3>
+    <form id="remove-item">
+      <div class="form-group">
+        <label for="itemName">Enter item name</label>
+        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">remove</button>
+    </form>
+
+
+    `;
+      // recreates the list everytime you refresh
+      $(() => {
+        $.get('/users', (data) => {
+          const errorString = 'Not logged in';
+          const $data = data;
+          if ($data === errorString) {
+            $('#container').append($data);
+          } else {
+            $('#container').append(listForms);
+            data.map(item => {
+              const $item = listItems(item);
+              const category = item.category;
+              if (category === 'movie') {
+                $('.media').append($item);
+              } else if (category === 'book') {
+                $('.books').append($item);
+              } else if (category === 'product') {
+                $('.products').append($item);
+              } else if (category === 'restaurant') {
+                $('.resteraunts').append($item);
+              }
+            });
+          }
+        });
+      })
+
+      // Creates the list items
+      const listItems = function (items) {
+        let markup = `
+          <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
+           `;
+        return markup;
+      }
+
+    </script>
+
+    <button id="logout-button" class="btn btn-primary">Logout</button>
+    <script>
+      $('#logout-button').on('click', (event) => {
+        event.preventDefault();
+        $('ul').empty();
+        $.get('/users/logout').done(function (data) {
+          const $data = data;
+        });
+      });
+    </script> -->
+
+
+
+
+
+    <!-- <h3>Add item</h3>
+    <form id="add-item">
+      <div class="form-group">
+        <label for="name">Enter item name</label>
+        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+        <label for="category">Enter item category</label>
+        <input class="form-control" type="text" name="category" placeholder="Add category" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+
+    <script>
+      $('#add-item').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#add-item'))
+        const errorString = 'Sorry item already exists';
+        let name = formData.get('name');
+        let category = formData.get('category');
+
+        if (name.length !== 0 && category.length !== 0) {
+          $.post('/users/insert', { 'name': name, 'category': category }).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              if (data.category === 'movie') {
+                $('.media').append(listItems($data));
+              } else if (data.category === 'book') {
+                $('.books').append(listItems($data));
+              } else if (data.category === 'product') {
+                $('.products').append(listItems($data));
+              } else if (data.category === 'restaurant') {
+                $('.resteraunts').append(listItems($data));
+              };
+            }
+          });
+        }
+
+      });
+    </script> -->
+
 
   </main>
   <footer>
