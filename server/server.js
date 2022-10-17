@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   '/styles',
   sassMiddleware({
-    source: __dirname + '.././styles',
-    destination: __dirname + '.././public/styles',
+    source: __dirname + '.././public/styles/sass',
+    destination: __dirname + '.././public/styles/css',
     isSass: false, // false => scss, true => sass
   })
 );
