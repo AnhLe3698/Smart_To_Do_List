@@ -16,17 +16,16 @@
   <link rel="stylesheet" href="./styles/css/main.css" type="text/css">
   <link rel="stylesheet" href="./styles/css/footer.css" type="text/css">
 
+
   <!-- resources -->
   <script src="./resources/dependencies/jquery_3.6.1.min.js"></script>
   <script src="./scripts/listDrag.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+
   <script type="text/javascript" src="./scripts/client.js"></script>
-  <script type="text/javascript" src="./scripts/register.js"></script>
-  <script type="text/javascript" src="./scripts/removeItem.js"></script>
-  <script type="text/javascript" src="./scripts/addItem.js"></script>
-  <script type="text/javascript" src="./scripts/logIn.js"></script>
+  <script type="text/javascript" src="./scripts/htmlForms.js"></script>
 
 
 </head>
@@ -55,176 +54,21 @@
   -Extra features -->
 
   <main>
-
+    <button id="logout-button" class="btn btn-primary">Logout</button>
+    <h3>Add item</h3>
     <script>
-      const registerForm = `
-      <h3>Register</h3>
-      <form id="register-user" action="/register" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-          <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
-          <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
-
-
-      `;
-<<<<<<< HEAD
-
-
-      $("#register-button-nav").click(function() {
+      $("#register-button-nav").click(function(event) {
+          event.preventDefault();
           let $registerForm = registerForm;
           $("main").empty();
           $("main").append($registerForm);
       });
-    </script>
-
-
-
-    <script>
-=======
-
->>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
-      const loginForm = `
-      <h3>Login</h3>
-      <form id="logging-in" action="/login" method="POST">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-      `
-
-
-
       $("#login-button-nav").on("click", function () {
+        event.preventDefault();
+        let $loginForm = loginForm
         $("main").empty();
         $("main").append(loginForm);
       });
-
-
-      $("#register-button-nav").click(function () {
-        $("main").empty();
-        $("main").append(registerForm);
-      });
-
-    </script>
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
-
-
-
-    <script>
-
-      let listForms = `<section class="toDoListBox box">
-      <section class="toWatch toDoBox box">
-        <header class="toDoHeader">To Watch Section</header>
-        <section>
-          <ul class="list-group media">
-
-        </section>
-      </section>
-
-
-      <section class="toEat toDoBox box">
-        <header class="toDoHeader">To Eat Section</header>
-        <section class="list-container">
-          <ul class="list-group resteraunts">
-
-        </section>
-      </section>
-
-      <section class="toRead toDoBox box">
-        <header class="toDoHeader">To Read Section</header>
-        <section>
-          <ul class="list-group books">
-
-
-        </section>
-      </section>
-
-      <section class="toBuy toDoBox box">
-        <header class="toDoHeader">To Buy Section</header>
-        <section>
-          <ul class="list-group products">
-
-
-          </ul>
-        </section>
-      </section>
-      </section>
-
-      <h3>Add item Part 2</h3>
-    <form id="add-item2">
-      <div class="form-group">
-        <label for="name">Enter item name</label>
-        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-
-
-    <h3>Remove item</h3>
-    <form id="remove-item">
-      <div class="form-group">
-        <label for="itemName">Enter item name</label>
-        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">remove</button>
-    </form>
-
-
-    `;
-      // recreates the list everytime you refresh
-      $(() => {
-        $.get('/users', (data) => {
-          const errorString = 'Not logged in';
-          const $data = data;
-          if ($data === errorString) {
-            $('main').append($data);
-          } else {
-            $('main').append(listForms);
-            data.map(item => {
-              const $item = listItems(item);
-              const category = item.category;
-              if (category === 'movie') {
-                $('.media').append($item);
-              } else if (category === 'book') {
-                $('.books').append($item);
-              } else if (category === 'product') {
-                $('.products').append($item);
-              } else if (category === 'restaurant') {
-                $('.resteraunts').append($item);
-              }
-            });
-          }
-        });
-      })
-
-      // Creates the list items
-      const listItems = function (items) {
-        let markup = `
-          <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}</li>
-           `;
-        return markup;
-      }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
-    </script>
-
-    <button id="logout-button" class="btn btn-primary">Logout</button>
-    <script>
       $('#logout-button').on('click', (event) => {
         event.preventDefault();
         $('ul').empty();
@@ -235,135 +79,10 @@
     </script>
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
-
-
-
-    <!-- <h3>Add item</h3>
-    <form id="add-item">
-      <div class="form-group">
-        <label for="name">Enter item name</label>
-        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-        <label for="category">Enter item category</label>
-        <input class="form-control" type="text" name="category" placeholder="Add category" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-
-
-    <script>
-      $('#add-item').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#add-item'))
-        const errorString = 'Sorry item already exists';
-        let name = formData.get('name');
-        let category = formData.get('category');
-
-        if (name.length !== 0 && category.length !== 0) {
-          $.post('/users/insert', { 'name': name, 'category': category }).done(function (data) {
-            const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              if (data.category === 'movie') {
-                $('.media').append(listItems($data));
-              } else if (data.category === 'book') {
-                $('.books').append(listItems($data));
-              } else if (data.category === 'product') {
-                $('.products').append(listItems($data));
-              } else if (data.category === 'restaurant') {
-                $('.resteraunts').append(listItems($data));
-              };
-            }
-          });
-        }
-
-      });
-    </script> -->
-
-<<<<<<< HEAD
-    <h3>Add item Part 2</h3>
-    <form id="add-item2">
-      <div class="form-group">
-        <label for="name">Enter item name</label>
-        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-
-    <script>
-      $('#add-item2').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#add-item2'))
-        const errorString = 'Sorry item already exists';
-        let name = formData.get('name');
-        let category = formData.get('category');
-        console.log('name clicked')
-        if (name.length !== 0) {
-          $.post('/users/add', { 'name': name }).done(function (data) {
-            const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              if (data.category === 'movie') {
-                $('.media').append(listItems($data));
-              } else if (data.category === 'book') {
-                $('.books').append(listItems($data));
-              } else if (data.category === 'product') {
-                $('.products').append(listItems($data));
-              } else if (data.category === 'restaurant') {
-                $('.resteraunts').append(listItems($data));
-              };
-            }
-          });
-        }
-
-      });
-    </script>
-
-    <h3>Remove item</h3>
-    <form id="remove-item">
-      <div class="form-group">
-        <label for="itemName">Enter item name</label>
-        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">remove</button>
-    </form>
-
-    <!-- Bugs abound -->
-    <script>
-      $('#remove-item').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#remove-item'))
-        const errorString = 'Invalid item';
-        let itemName = formData.get('itemName');
-        console.log('clicked and detected');
-        if (itemName.length !== 0) {
-          $.post(`/users/delete/${itemName}`).done(function (data) {
-            const $data = data;
-            console.log('callback detected');
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append($data);
-            }
-          });
-        }
-
-      });
-    </script>
-
-
-
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
-=======
->>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
+    <!-- <script type="text/javascript" src="./scripts/register.js"></script>
+    <script type="text/javascript" src="./scripts/removeItem.js"></script>
+    <script type="text/javascript" src="./scripts/addItem.js"></script>
+    <script type="text/javascript" src="./scripts/logIn.js"></script> -->
 
   </main>
 
