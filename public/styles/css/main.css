@@ -4,6 +4,10 @@ main {
   padding-right: 10px;
 }
 
+.logo img {
+
+}
+
 .toDoBox{
   padding: 50px;
   width: 325px;
@@ -24,9 +28,9 @@ ul {
   display: flex;
   flex-flow: wrap column;
   /* remove indentation and bullet */
-  list-style-type: none; 
+  list-style-type: none;
   padding: 0;
-} 
+}
 
 li {
   border: 1px solid #ccc;
@@ -54,7 +58,7 @@ input.form-control {
 }
 
 select#search-filter.form-control {
-  width: 150px; 
+  width: 150px;
 }
 
 .profile-container {
