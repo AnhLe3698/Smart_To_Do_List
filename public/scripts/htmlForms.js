@@ -85,7 +85,7 @@ let listForms = `<section class="toDoListBox box">
       </section>
       </section>
 
-      <h3>Add item Part 2</h3>
+    <h3>Add item Part 2</h3>
     <form id="add-item2">
       <div class="form-group">
         <label for="name">Enter item name</label>
@@ -93,7 +93,34 @@ let listForms = `<section class="toDoListBox box">
       </div>
       <button type="submit" class="btn btn-primary">Add</button>
     </form>
-
+    <script>
+      $('#add-item2').submit((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#add-item2'))
+        const errorString = 'Sorry item already exists';
+        let name = formData.get('name');
+        let category = formData.get('category');
+        console.log('name clicked')
+        if (name.length !== 0) {
+          $.post('/users/add', { 'name': name }).done(function (data) {
+            const $data = data;
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              if (data.category === 'movie') {
+                $('.media').append(listItems($data));
+              } else if (data.category === 'book') {
+                $('.books').append(listItems($data));
+              } else if (data.category === 'product') {
+                $('.products').append(listItems($data));
+              } else if (data.category === 'restaurant') {
+                $('.resteraunts').append(listItems($data));
+              };
+            }
+          });
+        }
+      });
+    </script>
 
     <h3>Remove item</h3>
     <form id="remove-item">
@@ -103,6 +130,7 @@ let listForms = `<section class="toDoListBox box">
       </div>
       <button type="submit" class="btn btn-primary">remove</button>
     </form>
+
     `;
 
 
@@ -144,7 +172,6 @@ const registerForm = `
       `;
 
 $(document).ready(function() {
-
       $(function() {
         $.get('/users', (data) => {
           const errorString = 'Not logged in';

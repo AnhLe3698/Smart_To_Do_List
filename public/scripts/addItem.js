@@ -25,7 +25,9 @@ $('#add-item2').submit((event) => {
   }
 });
 
-{/* <form id="add-item">
+{/*
+<h3>Add item</h3>
+<form id="add-item">
   <div class="form-group">
     <label for="name">Enter item name</label>
     <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
