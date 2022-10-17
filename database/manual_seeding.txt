@@ -1,0 +1,5 @@
+\i ./database/seeds/02_seeds.sql;
+\i ./database/seeds/03_seeds.sql;
+\i ./database/seeds/04_seeds.sql;
+\i ./database/seeds/05_seeds.sql;
+\i ./database/seeds/06_seeds.sql;
