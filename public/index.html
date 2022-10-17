@@ -55,36 +55,7 @@
   -Commenting
   -clean html and css2?
   -Extra features -->
-
   <main>
-
-    <script>
-      $("#register-button-nav").click(function(event) {
-          event.preventDefault();
-          let $registerForm = registerForm;
-          $("main").empty();
-          $("main").append($registerForm);
-      });
-      $("#login-button-nav").on("click", function () {
-        event.preventDefault();
-        let $loginForm = loginForm
-        $("main").empty();
-        $("main").append(loginForm);
-      });
-      $('#logout-button').on('click', (event) => {
-        event.preventDefault();
-        $('ul').empty();
-        $.get('/users/logout').done(function (data) {
-          const $data = data;
-        });
-      });
-    </script>
-
-
-    <!-- <script type="text/javascript" src="./scripts/register.js"></script>
-    <script type="text/javascript" src="./scripts/removeItem.js"></script>
-    <script type="text/javascript" src="./scripts/addItem.js"></script>
-    <script type="text/javascript" src="./scripts/logIn.js"></script> -->
 
   </main>
 
