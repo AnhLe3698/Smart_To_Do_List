@@ -4,5 +4,5 @@
 *.log
 *.sqlite3
 database/seeds/FastFoodRestaurants.csv
-database/seeds/data.tsv
-database/seeds/03_seeds.sql
+database/seeds/archive
+database/seeds/ani_crossing_archive
