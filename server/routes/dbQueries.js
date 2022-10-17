@@ -118,13 +118,20 @@ module.exports = {
   // This query should logically change the status of an active
   // item to an inactive item
   removeItem: (itemName, email) => {
-
+    console.log('temove item working')
     const values = [itemName, email];
     let queryString = `UPDATE items
+<<<<<<< HEAD
         SET is_active = FALSE
         FROM users WHERE items.userid = users.id
         AND name = $1 AND users.email = $2
         RETURNING* ;
+=======
+    SET is_active = false
+    FROM users WHERE items.userid = users.id
+    AND items.name = $1 AND users.email = $2
+    RETURNING* ;
+>>>>>>> 0f6b49fd37d7836f02b9336377c5de3a381a710c
     `;
 
     return pool.query(queryString, values)
