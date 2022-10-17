@@ -4,8 +4,9 @@ $('#remove-item').submit((event) => {
   const errorString = 'Invalid item';
   let itemName = formData.get('itemName');
   console.log('clicked and detected');
+  let urlStr = '/users/delete/' + itemName;
   if (itemName.length !== 0) {
-    $.post(`/users/delete/${itemName}`).done(function (data) {
+    $.post(urlStr).done(function (data) {
       const $data = data;
       console.log('callback detected');
       if ($data === errorString) {

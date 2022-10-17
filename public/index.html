@@ -24,9 +24,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
 
-  <script type="text/javascript" src="./scripts/client.js"></script>
+  <!--Scripts-->
   <script type="text/javascript" src="./scripts/htmlForms.js"></script>
-
+  <script type="text/javascript" src="./scripts/client.js"></script>
 
 </head>
 
@@ -38,6 +38,7 @@
 
     <span><button id="register-button-nav">Register</button></span>
     <span><button id="login-button-nav">Login</button></span>
+    <button id="logout-button" class="btn btn-primary">Logout</button>
 
     <div class="d-flex" role="search">
       <div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div>
@@ -56,7 +57,7 @@
   -Extra features -->
 
   <main>
-    <button id="logout-button" class="btn btn-primary">Logout</button>
+
     <script>
       $("#register-button-nav").click(function(event) {
           event.preventDefault();

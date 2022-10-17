@@ -47,7 +47,77 @@ const loginForm = `
       </script>
     `;
 // Creates the list items
-let listForms = `<section class="toDoListBox box">
+let listForms = `
+      <h3>Add item Part 2</h3>
+      <form id="add-item2">
+        <div class="form-group">
+          <label for="name">Enter item name</label>
+          <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+        </div>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+      <script>
+        $('#add-item2').submit((event) => {
+          event.preventDefault();
+          const formData = new FormData(document.querySelector('#add-item2'))
+          const errorString = 'Sorry item already exists';
+          let name = formData.get('name');
+          let category = formData.get('category');
+          console.log('name clicked')
+          if (name.length !== 0) {
+            $.post('/users/add', { 'name': name }).done(function (data) {
+              const $data = data;
+              if ($data === errorString) {
+                $('main').append($data);
+              } else {
+                if (data.category === 'movie') {
+                  $('.media').append(listItems($data));
+                } else if (data.category === 'book') {
+                  $('.books').append(listItems($data));
+                } else if (data.category === 'product') {
+                  $('.products').append(listItems($data));
+                } else if (data.category === 'restaurant') {
+                  $('.resteraunts').append(listItems($data));
+                };
+              }
+            });
+          }
+        });
+      </script>
+
+      <h3>Remove item</h3>
+      <form id="remove-item">
+        <div class="form-group">
+          <label for="itemName">Enter item name</label>
+          <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
+        </div>
+        <button type="submit" class="btn btn-primary">remove</button>
+      </form>
+      <script>
+        $('#remove-item').submit((event) => {
+          event.preventDefault();
+          const formData = new FormData(document.querySelector('#remove-item'))
+          const errorString = 'Invalid item';
+          let itemName = formData.get('itemName');
+          console.log('clicked and detected');
+          let urlStr = '/users/delete/' + itemName;
+          if (itemName.length !== 0) {
+            $.post(urlStr).done(function (data) {
+              const $data = data;
+              console.log('callback detected');
+              if ($data === errorString) {
+                $('main').append($data);
+              } else {
+                $('main').append($data);
+              }
+            });
+          }
+
+        });
+      </script>
+
+
+    <section class="toDoListBox box">
       <section class="toWatch toDoBox box">
         <header class="toDoHeader">To Watch Section</header>
         <section>
@@ -85,53 +155,7 @@ let listForms = `<section class="toDoListBox box">
       </section>
       </section>
 
-    <h3>Add item Part 2</h3>
-    <form id="add-item2">
-      <div class="form-group">
-        <label for="name">Enter item name</label>
-        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-    <script>
-      $('#add-item2').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#add-item2'))
-        const errorString = 'Sorry item already exists';
-        let name = formData.get('name');
-        let category = formData.get('category');
-        console.log('name clicked')
-        if (name.length !== 0) {
-          $.post('/users/add', { 'name': name }).done(function (data) {
-            const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              if (data.category === 'movie') {
-                $('.media').append(listItems($data));
-              } else if (data.category === 'book') {
-                $('.books').append(listItems($data));
-              } else if (data.category === 'product') {
-                $('.products').append(listItems($data));
-              } else if (data.category === 'restaurant') {
-                $('.resteraunts').append(listItems($data));
-              };
-            }
-          });
-        }
-      });
-    </script>
-
-    <h3>Remove item</h3>
-    <form id="remove-item">
-      <div class="form-group">
-        <label for="itemName">Enter item name</label>
-        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">remove</button>
-    </form>
-
-    `;
+  `;
 
 
 const registerForm = `
@@ -169,7 +193,7 @@ const registerForm = `
         }
       });
       </script>
-      `;
+    `;
 
 $(document).ready(function() {
       $(function() {
