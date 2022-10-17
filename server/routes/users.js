@@ -65,7 +65,6 @@ router.post('/register', (req, res) => {
 
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
-  //console.log(itemName);
   db.removeItem(itemName, req.cookies['email'])
     .then(() => res.send('deleted succusseflyy'))
     .catch(e => res.send(e))
