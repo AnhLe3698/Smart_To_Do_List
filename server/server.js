@@ -7,18 +7,15 @@ const express = require('express');
 const morgan = require('morgan');
 const cookiesState = require('cookie-parser');
 
-
+// Setting port and creating an instant of a server
 const PORT = process.env.PORT || 8080;
 const app = express();
 
-app.set('view engine', 'ejs');
-
-// Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
-//         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+// Get and Post request statistics
 app.use(morgan('dev'));
 app.use(cookiesState());
 app.use(express.urlencoded({ extended: true }));
+// Sass to css constructor
 app.use(
   '/styles',
   sassMiddleware({
@@ -28,25 +25,14 @@ app.use(
   })
 );
 
+// Express will serve Frontend Files from /public folder
 app.use(express.static('public'));
 
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-// const userApiRoutes = require('./routes/users-api');
-// const widgetApiRoutes = require('./routes/dbQueries');
+// Our routes are extensions from /users path
 const usersRoutes = require('./routes/users');
+app.use('/users', usersRoutes);
 
-// Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-// Note: Endpoints that return data (eg. JSON) usually start with `/api`
-// app.use('/api/users', userApiRoutes);
-// app.use('/api/widgets', widgetApiRoutes);
-
-app.use('/users', usersRoutes); // ===> /bob  in users.js router object
-
-// Note: mount other resources here, using the same pattern above
-
-
+// Listener
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
