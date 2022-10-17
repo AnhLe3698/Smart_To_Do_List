@@ -105,7 +105,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        if(result.rows.length !== 0){
+        if (result.rows.length !== 0) {
           return true;
         }
         return false;
@@ -118,13 +118,13 @@ module.exports = {
   // This query should logically change the status of an active
   // item to an inactive item
   removeItem: (itemName, email) => {
-
+    console.log('temove item working')
     const values = [itemName, email];
 
     let queryString = `UPDATE items
-    SET is_active = FALSE
+    SET is_active = false
     FROM users WHERE items.userid = users.id
-    WHERE name = $1 AND AND users.email = $2
+    AND items.name = $1 AND users.email = $2
     RETURNING* ;
     `;
 
@@ -170,7 +170,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category is:',result.rows[0].category);
+        console.log('this category is:', result.rows[0].category);
         return result.rows[0].category;
       })
       .catch((err) => {

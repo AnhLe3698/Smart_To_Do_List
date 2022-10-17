@@ -22,16 +22,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="./scripts/client.js"></script>
+  <script type="text/javascript" src="./scripts/register.js"></script>
+  <script type="text/javascript" src="./scripts/removeItem.js"></script>
+  <script type="text/javascript" src="./scripts/addItem.js"></script>
+  <script type="text/javascript" src="./scripts/logIn.js"></script>
+
 
 </head>
 
 <body>
 
   <nav class="navbar navbar-dark bg-primary">
-    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1"><a href="/">Smart TO DO List</a></span></div>
+    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1"><a href="/">Smart TO DO List</a></span>
+    </div>
     <span><button id="register-button-nav">Register</button></span>
     <span><button id="login-button-nav">Login</button></span>
-    <div class="d-flex" role="search"><div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div></div>
+    <div class="d-flex" role="search">
+      <div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div>
+    </div>
   </nav>
 
   <!-- Add eventlistener on click -->
@@ -56,20 +65,9 @@
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
 
-      <script src="./scripts/register.js" defer>
+
       `;
-      
 
-      $("#register-button-nav").click(function() {
-          let $registerForm = registerForm;
-          $("main").empty();
-          $("main").append($registerForm);
-      });
-    </script>
-
-    
-
-    <script>
       const loginForm = `
       <h3>Login</h3>
       <form id="logging-in" action="/login" method="POST">
@@ -79,49 +77,29 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
-      // Login
-      <script>
-      $('#logging-in').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#logging-in'))
-        const errorString = 'Invalid email';
-        $('ul').empty();
-        $.post('/users/login', { email: formData.get('email') }).done(function (data) {
-          // Data we get back from the server
-          const $data = data;
-          if ($data === errorString) {
-            $('main').append($data);
-          } else {
-            $('main').prepend(listForms);
-            data.map(item => {
-              const $item = listItems(item);
-              const category = item.category;
-              if (category === 'movie') {
-                $('.media').append($item);
-              } else if (category === 'book') {
-                $('.books').append($item);
-              } else if (category === 'product') {
-                $('.products').append($item);
-              } else if (category === 'restaurant') {
-                $('.resteraunts').append($item);
-              }
-            });
-          }
-        });
-      });
       `
 
-      $("#login-button-nav").on("click", function() {
-          $("main").empty();
-          $("main").append(loginForm);
+
+
+      $("#login-button-nav").on("click", function () {
+        $("main").empty();
+        $("main").append(loginForm);
       });
+
+
+      $("#register-button-nav").click(function () {
+        $("main").empty();
+        $("main").append(registerForm);
+      });
+
     </script>
-    
+
+
 
 
 
     <script>
-      
+
       let listForms = `<section class="toDoListBox box">
       <section class="toWatch toDoBox box">
         <header class="toDoHeader">To Watch Section</header>
@@ -158,7 +136,29 @@
           </ul>
         </section>
       </section>
-      </section>`;
+      </section>
+
+      <h3>Add item Part 2</h3>
+    <form id="add-item2">
+      <div class="form-group">
+        <label for="name">Enter item name</label>
+        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+
+
+    <h3>Remove item</h3>
+    <form id="remove-item">
+      <div class="form-group">
+        <label for="itemName">Enter item name</label>
+        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
+      </div>
+      <button type="submit" class="btn btn-primary">remove</button>
+    </form>
+
+
+    `;
       // recreates the list everytime you refresh
       $(() => {
         $.get('/users', (data) => {
@@ -167,6 +167,7 @@
           if ($data === errorString) {
             $('main').append($data);
           } else {
+            $('main').append(listForms);
             data.map(item => {
               const $item = listItems(item);
               const category = item.category;
@@ -206,10 +207,10 @@
     </script>
 
 
-    
 
 
-    <h3>Add item</h3>
+
+    <!-- <h3>Add item</h3>
     <form id="add-item">
       <div class="form-group">
         <label for="name">Enter item name</label>
@@ -249,85 +250,8 @@
         }
 
       });
-    </script>
+    </script> -->
 
-    <h3>Add item Part 2</h3>
-    <form id="add-item2">
-      <div class="form-group">
-        <label for="name">Enter item name</label>
-        <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">Add</button>
-    </form>
-
-    <script>
-      $('#add-item2').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#add-item2'))
-        const errorString = 'Sorry item already exists';
-        let name = formData.get('name');
-        let category = formData.get('category');
-        console.log('name clicked')
-        if (name.length !== 0) {
-          $.post('/users/add', { 'name': name }).done(function (data) {
-            const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              if (data.category === 'movie') {
-                $('.media').append(listItems($data));
-              } else if (data.category === 'book') {
-                $('.books').append(listItems($data));
-              } else if (data.category === 'product') {
-                $('.products').append(listItems($data));
-              } else if (data.category === 'restaurant') {
-                $('.resteraunts').append(listItems($data));
-              };
-            }
-          });
-        }
-
-      });
-    </script>
-
-    <h3>Remove item</h3>
-    <form id="remove-item">
-      <div class="form-group">
-        <label for="itemName">Enter item name</label>
-        <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-      </div>
-      <button type="submit" class="btn btn-primary">remove</button>
-    </form>
-
-
-    <script>
-      $('#remove-item').submit((event) => {
-        event.preventDefault();
-        const formData = new FormData(document.querySelector('#remove-item'))
-        const errorString = 'Invalid item';
-        let itemName = formData.get('itemName');
-        console.log('clicked and detected');
-        if (itemName.length !== 0) {
-          $.post(`/users/delete/${itemName}`).done(function (data) {
-            const $data = data;
-            console.log('callback detected');
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append($data);
-            }
-          });
-        }
-
-      });
-    </script>
-
-
-
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
-    <div>sdsadassa</div>
 
   </main>
 
@@ -335,6 +259,7 @@
     Kevin Le, Mohamed Khalaf, Carolyn Wang
   </footer>
 </body>
-<script type="text/javascript" src="./scripts/client.js"></script>
+
+
 
 </html>
