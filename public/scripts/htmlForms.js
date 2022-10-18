@@ -60,6 +60,14 @@ const loginForm = `
           if ($data === errorString) {
             $('main').append($data);
           } else {
+            let cookie = getCookie('email');
+            cookie = cookie.replace('%40', '@');
+            // Displays user email when logged in
+            if(cookie) {
+              $('.logged-as').text('Logged in as: '+ cookie);
+            } else {
+              $('.logged-as').text('Logged in as:');
+            }
             $('main').empty();
             $('main').append(listForms);
             data.map(item => {
@@ -228,8 +236,33 @@ const registerForm = `
       </script>
     `;
 
+    const getCookie = function(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    };
+
 $(document).ready(function () {
   $(function () {
+
+    let cookie = getCookie('email');
+    cookie = cookie.replace('%40', '@');
+    // Displays user email when logged in
+    if(cookie) {
+      $('.logged-as').text(`Logged in as: ${cookie}`);
+    } else {
+      $('.logged-as').text(`Logged in as:`);
+    }
+
     $.get('/users', (data) => {
       const errorString = 'Not logged in';
       const $data = data;

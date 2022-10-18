@@ -16,6 +16,7 @@ $('#logout-button').on('click', (event) => {
   $('ul').empty();
   $.get('/users/logout').done(function (data) {
     const $data = data;
+    $('.logged-as').text(`Logged in as:`);
   });
 });
 })

@@ -92,8 +92,6 @@ router.post('/insert', (req, res) => {
       }).catch(e => res.send(e));
     }
   })
-
-
 });
 
 
