@@ -1,21 +1,22 @@
 const listItems = function (items) {
+  let joinString = items.name.split(' ').join('');
   let markup = `
   <form>
-    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
+    <li class="dropzone list-group" id="${joinString}" draggable="true"><div>${items.name}</div>
     <!--<select class="form-select" aria-label="Default select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
       </select>-->
-
+      <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
     </li>
-    <button id="delete-item" type="button" class="btn btn-danger">X</button>
+
   </form>
     <script>
-      $('#delete-item').click( function(event){
+      $('#delete-item${joinString}').click(function(event){
         event.preventDefault();
-        let varName = $(this).parent().find('li').text().trim()
+        let varName = $(this).parent().parent().children('#${joinString}').children('div').text().trim() + '';
         let urlStr = '/users/delete/' + varName;
         console.log('this is the text: ',varName)
         console.log('this is the string url: ', urlStr)
@@ -28,6 +29,7 @@ const listItems = function (items) {
               $('main').append($data);
             } else {
               $('main').append($data);
+              $( "#${joinString}").remove();
             }
           });
         }
