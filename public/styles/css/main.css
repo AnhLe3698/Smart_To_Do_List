@@ -127,3 +127,14 @@ select#search-filter.form-control {
   padding: 10px;
   align-items: center;
 }
+
+
+/* Register Section */
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-content: center;
+  align-items: center;
+}

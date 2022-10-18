@@ -192,18 +192,20 @@ let listForms = `
 
 
 const registerForm = `
+      <div class="register-container">
       <h3>Register</h3>
       <form id="register-user" action="/register" method="POST">
         <div class="form-group">
           <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+              <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px" required>
           <label for="first-name">First Name</label>
-          <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px">
+              <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px" required>
           <label for="first-name">Last Name</label>
-          <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
+              <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px" required>
         </div>
-        <button type="submit" class="btn btn-primary">Register</button>
+          <button type="submit" class="btn default-button">Register</button>
       </form>
+      </div>
       <script>
       $('#register-user').unbind().submit((event) => {
         event.preventDefault();
