@@ -245,6 +245,10 @@ const registerForm = `
       return "";
     };
 
+    let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
+    Please login
+    </div>`;
+
 $(document).ready(function () {
   $(function () {
 
@@ -268,7 +272,8 @@ $(document).ready(function () {
       const errorString = 'Not logged in';
       const $data = data;
       if ($data === errorString) {
-        $('main').append($data);
+        //$('main').append($data);
+        $('main').prepend(notLoggedIn);
       } else {
         $('main').append(listForms);
         data.map(item => {
