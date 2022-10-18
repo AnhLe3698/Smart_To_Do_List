@@ -367,6 +367,7 @@ const mcMenu = function() {
     aniCross('tops', 0);
     aniCross('umbrellas', 0);
     aniCross('wall-mounted', 0);
+    householdProducts()
   });
 };
 
@@ -401,9 +402,35 @@ const aniCross = function(filePath, index) {
   });
 };
 
+const householdProducts = function() {
+  let ts = fs.createReadStream('./seeds/archive/products.txt');
+  ts.on('data', function(chunk) {
+    let lines = (buffer + chunk).split(/\r?\n/g);
+    buffer = lines.pop();
+    // let firstWordHolder = '';
+    for (let i = 0; i < lines.length; ++i) {
+      let line = inspect.inspect(lines[i]);
+      let arrLine = line.split(',')[0];
+      let newStr = arrLine.replaceAll("'", "").replaceAll(/\\t/g, "").replaceAll('`', "");
+      if(newStr.indexOf('(') !== -1) {
+        newStr = newStr.slice(0, newStr.indexOf('(')).trim();
+      }
+      // let newStr1 = arrLine.replaceAll("'", "''");
+      if(!obj[newStr] && !Number(newStr)) {
+        obj[newStr] = newStr;
+        fs.appendFileSync('./seeds/07_seeds.sql', `INSERT INTO data (name, category) VALUES ('${newStr}', 'product');\n`);
+        // if(newStr !== newStr1) {
+        //   fs.appendFileSync('./seeds/03_seeds.sql', `INSERT INTO data (name, category) VALUES ('${newStr1}', 'movie');\n`);
+        // }
+      }
+    }
 
+  });
 
-
+  ts.on('end', function() {
+    console.log('ended on non-empty buffer: ' + inspect.inspect(buffer));
+  });
+};
 
 
 
