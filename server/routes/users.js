@@ -79,7 +79,7 @@ router.post('/delete/:itemName', (req, res) => {
       let deleteMessage =\`<div class="alert alert-success center-content" role="alert">
         Deleted!
       </div>\`;
-      
+
       let alert = $(deleteMessage);
       $('main').prepend(alert);
       setTimeout(function () {
@@ -118,16 +118,31 @@ router.post('/insert', (req, res) => {
 router.post('/add', (req, res) => {
   let item = req.body;
   console.log('item before',item);
-  db.ifItemExists(item.name, req.cookies['email']).then((bool) => {
+  let email = req.cookies['email'];
+  db.ifItemExists(item.name, email).then((bool) => {
     //console.log(bool);
     if(bool) {
       // If it exists do not add the item
-      res.json('Sorry item already exists');
+      db.ifItemExistsButFalse(item.name, email).then((bool) => {
+        if(bool) {
+          db.updataItemToTrue(item.name, email).then((result) => {
+            if (result) {
+              item['category'] = result.category;
+              res.json(item);
+            } else {
+              res.json('Sorry item already exists');
+            }
+          }).catch(e => res.send(e));
+        } else {
+          res.json('Sorry item already exists');
+        }
+      })
+
     } else {
       // If it does not exist, add the item
-      db.getUserID(req.cookies['email']).then((result) => {
+      db.getUserID(email).then((result) => {
         item['userid'] = result;
-        db.categorizeItem(item).then((category)=>{
+        db.grabItemCategory(item).then((category)=>{
           item['category'] = category;
           db.addItem(item)
         .then(() => res.json(item))
