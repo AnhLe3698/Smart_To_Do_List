@@ -278,7 +278,7 @@ $(document).ready(function () {
       $("#register-button-nav").css("visibility", "visible");
       $("#login-button-nav").css("visibility", "visible");
       $("#logout-button").css("visibility", "hidden");
-      $('.logged-as').text(`Logged in as:`).css("visibility", "hidden");
+      $('.logged-as').text(``);
     }
 
     $.get('/users', (data) => {
@@ -287,6 +287,9 @@ $(document).ready(function () {
       if ($data === errorString) {
         //$('main').append($data);
         $('main').prepend(notLoggedIn);
+        const $data = data;
+        let $landingPage = '<img class="landing-page" src="./resources/images/landingLogo.png" alt="">';
+        $("main").append($landingPage);
       } else {
         $('main').append(listForms);
         data.map(item => {

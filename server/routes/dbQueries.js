@@ -193,12 +193,14 @@ module.exports = {
       });
   },
 
+  // Item exists and needs to be recatoregorized
   recategorizeItem: (item) => {
     const values = [item.name, item.category];
 
-    let queryString = `SELECT category
-    FROM data
-    WHERE name = $1;
+    let queryString = `UPDATE data
+    SET category = $2
+    WHERE data.name = $1
+    RETURNING* ;
     `;
 
     return pool.query(queryString, values)
