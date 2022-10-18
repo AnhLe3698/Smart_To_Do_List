@@ -14,6 +14,7 @@ $("#login-button-nav").unbind().on("click", function(event) {
 $('#logout-button').unbind().on('click', (event) => {
   event.preventDefault();
   $('ul').empty();
+  window.location.reload(true); //Reloads page after logout
   $('.logged-as').text(`Logged in as:`);
   $("#register-button-nav").css("visibility", "visible");
   $("#login-button-nav").css("visibility", "visible");
