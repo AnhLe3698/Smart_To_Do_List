@@ -131,7 +131,7 @@ select#search-filter.form-control {
 
 /* Register Section */
 
-.register-container {
+.custom-centered-container {
   display: flex;
   flex-direction: column;
   padding: 10px;
