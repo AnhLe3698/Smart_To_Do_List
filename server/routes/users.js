@@ -51,6 +51,11 @@ router.post('/register', (req, res) => {
     if (bool) {
       // Failed register attempt
       console.log('Duplicate email');
+      res.set('Content-Type', 'text/html');
+      res.send(Buffer.from(`
+      <div class="alert alert-warning center-content" role="alert">
+        Email already exists!
+      </div>`));
       return res.json('Duplicate email');
     } else {
       // Successful Register
@@ -69,7 +74,19 @@ router.post('/register', (req, res) => {
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
   db.removeItem(itemName, req.cookies['email'])
-    .then(() => res.send('deleted succusseflyy'))
+    .then(() => res.send(Buffer.from(`
+      <script>
+      let deleteMessage =\`<div class="alert alert-success center-content" role="alert">
+        Deleted!
+      </div>\`;
+      
+      let alert = $(deleteMessage);
+      $('main').prepend(alert);
+      setTimeout(function () {
+        alert.fadeOut(3000);
+      }, 2000);
+      </script>
+    `)))
     .catch(e => res.send(e))
 });
 

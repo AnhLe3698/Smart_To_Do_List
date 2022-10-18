@@ -30,11 +30,11 @@ main {
 
 ul {
   display: flex;
-    flex-flow: wrap column;
-    list-style-type: none;
-    padding: 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
+  flex-flow: wrap column;
+  list-style-type: none;
+  padding: 5px;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 li {
@@ -45,12 +45,18 @@ li {
   height: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
-
+  background-color: #ffffff;
+  box-shadow: 5px 5px 5px rgba(103, 103, 103, 0.221);
 }
 
 li:hover {
-  background-color: #f5f5f5;
+  background-color: #ffedc4;
   overflow: visible;
+  color: rgb(38, 38, 38);
+}
+
+.list-container {
+  cursor: move;
 }
 
 /* Search section */
@@ -119,5 +125,32 @@ select#search-filter.form-control {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  align-items: center;
+}
+
+/* landing page */
+.landing-page {
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  justify-content: center;
+  width: 90%;
+  object-fit: contain;
+  margin-left: 5%;
+}
+
+/* Register Section */
+
+.custom-centered-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-content: center;
+  align-items: center;
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }

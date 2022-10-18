@@ -14,11 +14,13 @@ $("#login-button-nav").unbind().on("click", function(event) {
 $('#logout-button').unbind().on('click', (event) => {
   event.preventDefault();
   $('ul').empty();
-  $('.logged-as').text(`Logged in as:`);
   $("#register-button-nav").css("visibility", "visible");
   $("#login-button-nav").css("visibility", "visible");
   $("#logout-button").css("visibility", "hidden");
-  $('.logged-as').text(`Logged in as:`);
+  $('.logged-as').text(``);
+  const $landingPage = '<img class="landing-page" src="./resources/images/landingLogo.png" alt="">'
+  $("main").empty();
+  $("main").append($landingPage);
   $.get('/users/logout').unbind().done(function (data) {
     const $data = data;
   });
