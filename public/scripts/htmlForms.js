@@ -1,32 +1,35 @@
 const listItems = function (items) {
   let markup = `
-    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name} 
-      <select class="form-select" aria-label="Default select example">
+    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
+    <button id="delete-item" type="button" class="btn btn-danger">X</button>
+     <!-- <select class="form-select" aria-label="Default select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
-      </select>
-      <button id="delete-item" type="button" class="btn btn-danger">X</button>
+      </select> -->
+      
     </li>
 
     <script>
-      $('#delete-item').click( function(event){
-        event.preventDefault();
-        let urlStr = '/users/delete/' + $(this).parent().text();
-        const errorString = 'Invalid item';
-        if ($(this).parent().text().length !== 0) {
-          $.post(urlStr).done(function (data) {
-            const $data = data;
-            console.log('callback detected');
-            if ($data === errorString) {
-              $('main').append($data);
-            } else {
-              $('main').append($data);
-            }
-          });
-        }
-      });
+    $('#delete-item').click( function(event){
+      event.preventDefault();
+      let urlStr = '/users/delete/' + $(this).parent().text();
+      console.log("Here:" + $(this).parent().text());
+      const errorString = 'Invalid item';
+      if ($(this).parent().text().length !== 0) {
+        $.post(urlStr).done(function (data) {
+          const $data = data;
+          console.log('callback detected');
+          if ($data === errorString) {
+            $('main').append($data);
+          } else {
+            $('main').append($data);
+          }
+        });
+      }
+    });
+
     </script>
      `;
   return markup;
