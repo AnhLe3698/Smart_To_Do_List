@@ -10,8 +10,8 @@ ul {
   flex-flow: wrap column;
   /* remove indentation and bullet */
   padding: 0;
-  list-style-type: none; 
-} 
+  list-style-type: none;
+}
 
 li {
   border: solid 1px;
@@ -20,3 +20,4 @@ li {
 li:hover {
     border: 2px solid orange;
 }
+
