@@ -1,18 +1,31 @@
 const listItems = function (items) {
   let markup = `
+<<<<<<< HEAD
   <form>
     <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
     <!--<select class="form-select" aria-label="Default select example">
+=======
+    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
+    <button id="delete-item" type="button" class="btn btn-danger">X</button>
+     <!-- <select class="form-select" aria-label="Default select example">
+>>>>>>> 7d778d7c9ce3024d37cadb5a0ae7bfd19f1cb264
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
+<<<<<<< HEAD
       </select>-->
+=======
+      </select> -->
+      
+    </li>
+>>>>>>> 7d778d7c9ce3024d37cadb5a0ae7bfd19f1cb264
 
     </li>
     <button id="delete-item" type="button" class="btn btn-danger">X</button>
   </form>
     <script>
+<<<<<<< HEAD
       $('#delete-item').click( function(event){
         event.preventDefault();
         let varName = $(this).parent().find('li').text().trim()
@@ -32,6 +45,26 @@ const listItems = function (items) {
           });
         }
       });
+=======
+    $('#delete-item').click( function(event){
+      event.preventDefault();
+      let urlStr = '/users/delete/' + $(this).parent().text();
+      console.log("Here:" + $(this).parent().text());
+      const errorString = 'Invalid item';
+      if ($(this).parent().text().length !== 0) {
+        $.post(urlStr).done(function (data) {
+          const $data = data;
+          console.log('callback detected');
+          if ($data === errorString) {
+            $('main').append($data);
+          } else {
+            $('main').append($data);
+          }
+        });
+      }
+    });
+
+>>>>>>> 7d778d7c9ce3024d37cadb5a0ae7bfd19f1cb264
     </script>
      `;
   return markup;
