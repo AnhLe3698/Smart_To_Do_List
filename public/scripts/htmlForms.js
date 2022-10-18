@@ -1,24 +1,29 @@
 const listItems = function (items) {
   let markup = `
-    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name} 
-      <select class="form-select" aria-label="Default select example">
+  <form>
+    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
+    <!--<select class="form-select" aria-label="Default select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
-      </select>
-      <button id="delete-item" type="button" class="btn btn-danger">X</button>
-    </li>
+      </select>-->
 
+    </li>
+    <button id="delete-item" type="button" class="btn btn-danger">X</button>
+  </form>
     <script>
       $('#delete-item').click( function(event){
         event.preventDefault();
-        let urlStr = '/users/delete/' + $(this).parent().text();
+        let varName = $(this).parent().find('li').text().trim()
+        let urlStr = '/users/delete/' + varName;
+        console.log('this is the text: ',varName)
+        console.log('this is the string url: ', urlStr)
         const errorString = 'Invalid item';
-        if ($(this).parent().text().length !== 0) {
+        if (varName !== 0) {
           $.post(urlStr).done(function (data) {
             const $data = data;
-            console.log('callback detected');
+            //console.log('callback detected');
             if ($data === errorString) {
               $('main').append($data);
             } else {
@@ -221,29 +226,29 @@ const registerForm = `
       </script>
     `;
 
-$(document).ready(function() {
-      $(function() {
-        $.get('/users', (data) => {
-          const errorString = 'Not logged in';
-          const $data = data;
-          if ($data === errorString) {
-            $('main').append($data);
-          } else {
-            $('main').append(listForms);
-            data.map(item => {
-              const $item = listItems(item);
-              const category = item.category;
-              if (category === 'movie') {
-                $('.media').append($item);
-              } else if (category === 'book') {
-                $('.books').append($item);
-              } else if (category === 'product') {
-                $('.products').append($item);
-              } else if (category === 'restaurant') {
-                $('.resteraunts').append($item);
-              }
-            });
+$(document).ready(function () {
+  $(function () {
+    $.get('/users', (data) => {
+      const errorString = 'Not logged in';
+      const $data = data;
+      if ($data === errorString) {
+        $('main').append($data);
+      } else {
+        $('main').append(listForms);
+        data.map(item => {
+          const $item = listItems(item);
+          const category = item.category;
+          if (category === 'movie') {
+            $('.media').append($item);
+          } else if (category === 'book') {
+            $('.books').append($item);
+          } else if (category === 'product') {
+            $('.products').append($item);
+          } else if (category === 'restaurant') {
+            $('.resteraunts').append($item);
           }
         });
-      })
+      }
+    });
+  })
 });
