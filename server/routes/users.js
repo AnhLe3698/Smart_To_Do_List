@@ -143,12 +143,16 @@ router.post('/add', (req, res) => {
       db.getUserID(email).then((result) => {
         item['userid'] = result;
         db.grabItemCategory(item).then((category)=>{
-          item['category'] = category;
-          db.addItem(item)
-        .then(() => res.json(item))
-        .catch(e => res.send(e))
+          if (category) {
+            item['category'] = category;
+            db.addItem(item).then(() => res.json(item)).catch(e => res.send(e));
+          } else {
+            item['category'] = 'sort';
+            db.addItemToDatabase(item).then(() => res.json(item)).catch(e => res.send(e));
+          }
+
       }).catch(e => res.send(e))
-        })
+    }).catch(e => res.send(e))
     }
   })
 
