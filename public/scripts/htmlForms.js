@@ -40,14 +40,16 @@ const listItems = function (items) {
 }
 
 const loginForm = `
+    <div class="custom-centered-container">
       <h3>Login</h3>
       <form id="logging-in" action="/login" method="POST">
         <div class="form-group">
           <label for="email">Email address</label>
-          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
+          <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px" required>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn default-button">Login</button>
       </form>
+      </div>
       <script>
       $('#logging-in').unbind().submit((event) => {
         event.preventDefault();
@@ -196,7 +198,7 @@ let listForms = `
 
 
 const registerForm = `
-      <div class="register-container">
+      <div class="custom-centered-container">
       <h3>Register</h3>
       <form id="register-user" action="/register" method="POST">
         <div class="form-group">
