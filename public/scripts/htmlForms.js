@@ -131,7 +131,6 @@ let listForms = `
         <header class="toDoHeader">To Watch Section</header>
         <section>
           <ul class="list-group media">
-
         </section>
       </section>
 
