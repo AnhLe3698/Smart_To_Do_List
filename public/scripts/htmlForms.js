@@ -90,7 +90,6 @@ const loginForm = `
     `;
 // Creates the list items
 let listForms = `
-      <h3>Add item Part 2</h3>
       <form id="add-item2">
         <div class="add-item form-group">
           <label for="name">Enter item name</label>
@@ -126,37 +125,6 @@ let listForms = `
           }
         });
       </script>
-
-      <h3>Remove item</h3>
-      <form id="remove-item">
-        <div class="form-group">
-          <label for="itemName">Enter item name</label>
-          <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-        </div>
-        <button type="submit" class="btn btn-primary">remove</button>
-      </form>
-      <script>
-        $('#remove-item').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#remove-item'))
-          const errorString = 'Invalid item';
-          let itemName = formData.get('itemName');
-          let urlStr = '/users/delete/' + itemName;
-          if (itemName.length !== 0) {
-            $.post(urlStr).done(function (data) {
-              const $data = data;
-              console.log('callback detected');
-              if ($data === errorString) {
-                $('main').append($data);
-              } else {
-                $('main').append($data);
-              }
-            });
-          }
-
-        });
-      </script>
-
 
     <section class="toDoListBox box">
       <section class="toWatch toDoBox box">
