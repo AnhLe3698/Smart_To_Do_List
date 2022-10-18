@@ -39,6 +39,8 @@ const listItems = function (items) {
   return markup;
 }
 
+let invalidEmailAlert = `<div class="alert alert-warning center-content" role="alert">Invalid Email</div>`;
+
 const loginForm = `
     <div class="custom-centered-container">
       <h3>Login</h3>
@@ -60,10 +62,15 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
+            console.log('error detected');
             $("#register-button-nav").css("visibility", "visible");
             $("#login-button-nav").css("visibility", "visible");
             $("#logout-button").css("visibility", "hidden");
-            $('main').append($data);
+            let alert = $(invalidEmailAlert);
+                $('main').prepend(alert);
+                setTimeout(function () {
+                  alert.fadeOut(3000);
+                }, 2000);
           } else {
             let cookie = getCookie('name');
             cookie = cookie.replace('%40', '@');
