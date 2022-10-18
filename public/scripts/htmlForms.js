@@ -96,6 +96,11 @@ const loginForm = `
       });
       </script>
     `;
+// Prepend the alert when an item already exists on the list
+let existsAlert = `<div class="alert alert-warning" role="alert">
+Sorry, that item already exists!
+</div>`;
+
 // Creates the list items
 let listForms = `
       <form id="add-item2" class="form-inline item-search">
@@ -117,7 +122,8 @@ let listForms = `
             $.post('/users/add', { 'name': name }).done(function (data) {
               const $data = data;
               if ($data === errorString) {
-                $('main').append($data);
+                // $('main').append($data);
+                $('main').prepend(existsAlert).click(function() {$('.alert').remove()});
               } else {
                 if (data.category === 'movie') {
                   $('.media').append(listItems($data));

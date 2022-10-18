@@ -16,7 +16,9 @@ ul {
 li {
   border: solid 1px;
   padding: 5%;
+  background-color: rgb(218, 218, 218)!important;
 }
+
 li:hover {
     border: 2px solid orange;
 }
