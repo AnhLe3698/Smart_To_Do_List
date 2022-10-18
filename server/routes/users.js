@@ -74,7 +74,19 @@ router.post('/register', (req, res) => {
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
   db.removeItem(itemName, req.cookies['email'])
-    .then(() => res.send('deleted succusseflyy'))
+    .then(() => res.send(Buffer.from(`
+      <script>
+      let deleteMessage =\`<div class="alert alert-success center-content" role="alert">
+        Deleted!
+      </div>\`;
+      
+      let alert = $(deleteMessage);
+      $('main').prepend(alert);
+      setTimeout(function () {
+        alert.fadeOut(3000);
+      }, 2000);
+      </script>
+    `)))
     .catch(e => res.send(e))
 });
 
