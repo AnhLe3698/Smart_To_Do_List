@@ -30,11 +30,11 @@ main {
 
 ul {
   display: flex;
-    flex-flow: wrap column;
-    list-style-type: none;
-    padding: 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
+  flex-flow: wrap column;
+  list-style-type: none;
+  padding: 5px;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 li {
