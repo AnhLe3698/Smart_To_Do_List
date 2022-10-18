@@ -265,7 +265,7 @@ $(document).ready(function () {
       $("#register-button-nav").css("visibility", "visible");
       $("#login-button-nav").css("visibility", "visible");
       $("#logout-button").css("visibility", "hidden");
-      $('.logged-as').text(`Logged in as:`);
+      $('.logged-as').text(`Logged in as:`).css("visibility", "hidden");
     }
 
     $.get('/users', (data) => {
