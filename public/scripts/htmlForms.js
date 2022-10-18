@@ -1,6 +1,6 @@
 const listItems = function (items) {
   let markup = `
-    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name} 
+    <li class="dropzone list-group" id=${items.name} draggable="true">${items.name}
       <select class="form-select" aria-label="Default select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
@@ -13,9 +13,10 @@ const listItems = function (items) {
     <script>
       $('#delete-item').click( function(event){
         event.preventDefault();
-        let urlStr = '/users/delete/' + $(this).parent().text();
+        let urlStr = '/users/delete/' + $(this).parent().attr('id');
         const errorString = 'Invalid item';
-        if ($(this).parent().text().length !== 0) {
+        console.log($(this).parent().attr('id'));
+        if ($(this).parent().attr('id').length !== 0) {
           $.post(urlStr).done(function (data) {
             const $data = data;
             console.log('callback detected');
