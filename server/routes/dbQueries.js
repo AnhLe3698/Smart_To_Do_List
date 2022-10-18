@@ -110,6 +110,49 @@ module.exports = {
       });
   },
 
+  ifItemExistsButFalse: (name, email) => {
+    const values = [name, email];
+
+    let queryString = `SELECT is_active
+    FROM items
+    JOIN users ON items.userid = users.id
+    WHERE items.name =  $1 AND users.email = $2;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        if (result.rows[0].is_active === false) {
+          return true;
+        }
+        return false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
+  updataItemToTrue: (itemName, email) => {
+    const values = [itemName, email];
+
+    let queryString = `UPDATE items
+    SET is_active = True
+    FROM users WHERE items.userid = users.id
+    AND items.name = $1 AND users.email = $2
+    RETURNING*
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        if (result.rows[0].length !== 0) {
+          return result.rows[0];
+        }
+        return false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+
   // This query should logically change the status of an active
   // item to an inactive item
   removeItem: (itemName, email) => {
@@ -154,7 +197,7 @@ module.exports = {
   },
 
   // Checks the database for item category
-  categorizeItem: (item) => {
+  grabItemCategory: (item) => {
     const values = [item.name];
 
     let queryString = `SELECT category
@@ -169,6 +212,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err.message);
+        return false;
       });
   },
 
@@ -197,21 +241,47 @@ module.exports = {
   recategorizeItem: (item) => {
     const values = [item.name, item.category];
 
-    let queryString = `UPDATE data
+    let queryString = `
+
+    UPDATE items
     SET category = $2
-    WHERE data.name = $1
+    WHERE name = $1;
+    UPDATE data
+    SET category = $2
+    WHERE name = $1
     RETURNING* ;
+
     `;
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category is:', result.rows[0].category);
-        return result.rows[0].category;
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  },
+
+  // Use this query to add items to be sorted
+  addItemToDatabase: (item) => {
+    const values = [item.name, item.category];
+
+    let queryString = `INSERT INTO data (name, category) VALUES ($1, $2);
+    SELECT * FROM data WHERE data.name = $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
+
 
 
 }
+
