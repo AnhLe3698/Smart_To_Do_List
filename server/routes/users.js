@@ -51,6 +51,11 @@ router.post('/register', (req, res) => {
     if (bool) {
       // Failed register attempt
       console.log('Duplicate email');
+      res.set('Content-Type', 'text/html');
+      res.send(Buffer.from(`
+      <div class="alert alert-warning center-content" role="alert">
+        Email already exists!
+      </div>`));
       return res.json('Duplicate email');
     } else {
       // Successful Register
