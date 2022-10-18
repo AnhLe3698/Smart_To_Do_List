@@ -138,3 +138,9 @@ select#search-filter.form-control {
   align-content: center;
   align-items: center;
 }
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

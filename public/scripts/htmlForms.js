@@ -97,7 +97,7 @@ const loginForm = `
       </script>
     `;
 // Prepend the alert when an item already exists on the list
-let existsAlert = `<div class="alert alert-warning" role="alert">
+let existsAlert = `<div class="alert alert-warning center-content" role="alert">
 Sorry, that item already exists!
 </div>`;
 
