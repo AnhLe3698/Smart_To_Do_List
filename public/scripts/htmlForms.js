@@ -49,7 +49,7 @@ const loginForm = `
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
       <script>
-      $('#logging-in').submit((event) => {
+      $('#logging-in').unbind().submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#logging-in'))
         const errorString = 'Invalid email';
@@ -58,12 +58,18 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
+            $("#register-button-nav").css("visibility", "visible");
+            $("#login-button-nav").css("visibility", "visible");
+            $("#logout-button").css("visibility", "hidden");
             $('main').append($data);
           } else {
-            let cookie = getCookie('email');
+            let cookie = getCookie('name');
             cookie = cookie.replace('%40', '@');
             // Displays user email when logged in
             if(cookie) {
+              $("#register-button-nav").css("visibility", "hidden");
+              $("#login-button-nav").css("visibility", "hidden");
+              $("#logout-button").css("visibility", "visible");
               $('.logged-as').text('Logged in as: '+ cookie);
             } else {
               $('.logged-as').text('Logged in as:');
@@ -81,7 +87,9 @@ const loginForm = `
                 $('.products').append($item);
               } else if (category === 'restaurant') {
                 $('.resteraunts').append($item);
-              }
+              } else {
+                $('.sort').append(listItems($data));
+              };
             });
           }
         });
@@ -98,7 +106,7 @@ let listForms = `
         </div>
       </form>
       <script>
-        $('#add-item2').submit((event) => {
+        $('#add-item2').unbind().submit((event) => {
           event.preventDefault();
           const formData = new FormData(document.querySelector('#add-item2'))
           const errorString = 'Sorry item already exists';
@@ -119,6 +127,8 @@ let listForms = `
                   $('.products').append(listItems($data));
                 } else if (data.category === 'restaurant') {
                   $('.resteraunts').append(listItems($data));
+                } else {
+                  $('.sort').append(listItems($data));
                 };
               }
             });
@@ -126,42 +136,50 @@ let listForms = `
         });
       </script>
 
-    <section class="toDoListBox box">
-      <section class="toWatch toDoBox box">
-        <header class="toDoHeader">To Watch Section</header>
-        <section>
-          <ul class="list-group media">
+      <section class="toDoListBox box">
+        <section class="toWatch toDoBox box">
+          <header class="toDoHeader">To Watch Section</header>
+          <section>
+            <ul class="list-group media">
+          </section>
         </section>
-      </section>
 
 
-      <section class="toEat toDoBox box">
-        <header class="toDoHeader">To Eat Section</header>
-        <section class="list-container">
-          <ul class="list-group resteraunts">
-
+        <section class="toEat toDoBox box">
+          <header class="toDoHeader">To Eat Section</header>
+          <section class="list-container">
+            <ul class="list-group resteraunts">
+            </ul>
+          </section>
         </section>
-      </section>
 
-      <section class="toRead toDoBox box">
-        <header class="toDoHeader">To Read Section</header>
-        <section>
-          <ul class="list-group books">
-
-
+        <section class="toRead toDoBox box">
+          <header class="toDoHeader">To Read Section</header>
+          <section>
+            <ul class="list-group books">
+            </ul>
+          </section>
         </section>
-      </section>
 
-      <section class="toBuy toDoBox box">
-        <header class="toDoHeader">To Buy Section</header>
-        <section>
-          <ul class="list-group products">
-
-
-          </ul>
+        <section class="toBuy toDoBox box">
+          <header class="toDoHeader">To Buy Section</header>
+          <section>
+            <ul class="list-group products">
+            </ul>
+          </section>
         </section>
+
+        <section class="toSort toDoBox box">
+          <header class="toDoHeader">Need Sorting</header>
+          <section>
+            <ul class="list-group sort">
+            </ul>
+          </section>
+        </section>
+
       </section>
-      </section>
+
+
 
   `;
 
@@ -180,7 +198,7 @@ const registerForm = `
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
       <script>
-      $('#register-user').submit((event) => {
+      $('#register-user').unbind().submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#register-user'))
         const errorString = 'Invalid email';
@@ -221,12 +239,19 @@ const registerForm = `
 $(document).ready(function () {
   $(function () {
 
-    let cookie = getCookie('email');
+    let cookie = getCookie('name');
     cookie = cookie.replace('%40', '@');
     // Displays user email when logged in
+
     if(cookie) {
+      $("#register-button-nav").css("visibility", "hidden");
+      $("#login-button-nav").css("visibility", "hidden");
+      $("#logout-button").css("visibility", "visible");
       $('.logged-as').text(`Logged in as: ${cookie}`);
     } else {
+      $("#register-button-nav").css("visibility", "visible");
+      $("#login-button-nav").css("visibility", "visible");
+      $("#logout-button").css("visibility", "hidden");
       $('.logged-as').text(`Logged in as:`);
     }
 
@@ -248,7 +273,9 @@ $(document).ready(function () {
             $('.products').append($item);
           } else if (category === 'restaurant') {
             $('.resteraunts').append($item);
-          }
+          } else {
+            $('.sort').append(listItems($data));
+          };
         });
       }
     });

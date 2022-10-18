@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="./scripts/register.js"></script>
 
   <script type="text/javascript" src="./scripts/htmlForms.js"></script>
   <script type="text/javascript" src="./scripts/client.js"></script>
@@ -37,13 +36,18 @@
     <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h3"><a href="/">Smart TO DO List</a></span>
     </div>
 
-    <span><button id="register-button-nav" class="btn default-button">Register</button></span>
-    <span><button id="login-button-nav" class="btn default-button">Login</button></span>
-    <button id="logout-button" class="btn default-button">Logout</button>
+    <div class="nav-wrapper">
 
-    <div class="d-flex" role="search">
-      <div class="logged-as light-brown">Logged in as:</div>
+      <span><button id="register-button-nav" class="btn default-button">Register</button></span>
+      <span><button id="login-button-nav" class="btn default-button">Login</button></span>
+      <div class="d-flex" role="search">
+        <div class="logged-as light-brown">Logged in as:</div>
+      </div>
+      <button id="logout-button" class="btn default-button">Logout</button>
     </div>
+
+
+
   </nav>
 
   <!--
