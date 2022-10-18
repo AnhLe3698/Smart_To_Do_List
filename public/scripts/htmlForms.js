@@ -105,9 +105,10 @@ Sorry, that item already exists!
 let listForms = `
       <form id="add-item2" class="form-inline item-search">
         <div class="add-item form-group">
-          <label for="name">Enter item name</label>
-          <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-        <button type="submit" class="btn default-button">Add</button>
+          <!-- <label for="name">Enter item name</label> --!>
+          <input class="form-control form-control-lg" type="text" name="name" placeholder="Enter item name" style="width: 300px; height: 50px; font-size: 20px">
+        <button type="submit" class="btn default-button" style="height: 50px; width: 50px; font-size: 25px;
+        ">+</button>
         </div>
       </form>
       <script>
