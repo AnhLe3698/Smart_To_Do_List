@@ -90,11 +90,11 @@ const loginForm = `
     `;
 // Creates the list items
 let listForms = `
-      <form id="add-item2">
+      <form id="add-item2" class="item-search">
         <div class="add-item form-group">
           <label for="name">Enter item name</label>
           <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn default-button">Add</button>
         </div>
       </form>
       <script>

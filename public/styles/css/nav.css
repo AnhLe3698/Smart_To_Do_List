@@ -4,10 +4,10 @@ nav {
   top: 0px;
   /* align-content: stretch; */
   /* when to add more items in nav */
+  position: fixed !important;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background-color: rgb(125, 177, 255);
+  align-items: center;
 }
 
 .navbar {
@@ -16,7 +16,12 @@ nav {
 }
 
 a {
-  color: #abd4f7;
+  color: #e8c382;
+}
+
+a:hover {
+  color: #a86b4c;
+  text-decoration: none;
 }
 
 .logged-as {
