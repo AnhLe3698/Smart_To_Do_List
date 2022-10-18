@@ -124,7 +124,11 @@ let listForms = `
               const $data = data;
               if ($data === errorString) {
                 // $('main').append($data);
-                $('main').prepend(existsAlert).click(function() {$('.alert').remove()});
+                let alert = $(existsAlert);
+                $('main').prepend(alert);
+                setTimeout(function () {
+                  alert.fadeOut(500);
+                }, 2000);
               } else {
                 if (data.category === 'movie') {
                   $('.media').append(listItems($data));
