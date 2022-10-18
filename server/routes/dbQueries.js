@@ -1,11 +1,6 @@
-/*
- * All routes for Widget Data are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /api/widgets
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
-
+///////////////////////////////////////////
+///////////Database Queries///////////////
+//////////////////////////////////////////
 
 const pool = require('../../database/connection');
 
@@ -158,7 +153,7 @@ module.exports = {
       });
   },
 
-  // User can help categorize items
+  // Checks the database for item category
   categorizeItem: (item) => {
     const values = [item.name];
 
@@ -175,8 +170,46 @@ module.exports = {
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  },
 
+  getUserName: (email) => {
+    return pool.query(`SELECT * FROM users
+    WHERE email = $1`, [`${email}`])
+      .then((result) => {
+        if (result) {
+          if (result['rows'].length !== 0) {
+            // Returns true if user email is in database
+            console.log(result['rows'][0].first_name);
+            return result['rows'][0].first_name;
+          } else {
+            return null;
+          }
+        } else {
+          return null;
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
+
+  recategorizeItem: (item) => {
+    const values = [item.name, item.category];
+
+    let queryString = `SELECT category
+    FROM data
+    WHERE name = $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category is:', result.rows[0].category);
+        return result.rows[0].category;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }
 
 
 }

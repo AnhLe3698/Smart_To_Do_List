@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="./scripts/register.js"></script>
 
   <script type="text/javascript" src="./scripts/htmlForms.js"></script>
   <script type="text/javascript" src="./scripts/client.js"></script>
@@ -34,16 +33,21 @@
 
   <nav class="navbar navbar-dark bg-primary">
     <div class="logo"><img src="./resources/images/group_logo.png" alt=""></div>
-    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h1"><a href="/">Smart TO DO List</a></span>
+    <div class="d-flex justify-content-start"><span class="navbar-brand mb-0 h3"><a href="/">Smart TO DO List</a></span>
     </div>
 
-    <span><button id="register-button-nav">Register</button></span>
-    <span><button id="login-button-nav">Login</button></span>
-    <button id="logout-button" class="btn btn-primary">Logout</button>
+    <div class="nav-wrapper">
 
-    <div class="d-flex" role="search">
-      <div class="logged-as">Logged in as: <a class="nav-link" href="/profile.html">USER</a></div>
+      <span><button id="register-button-nav" class="btn default-button">Register</button></span>
+      <span><button id="login-button-nav" class="btn default-button">Login</button></span>
+      <div class="d-flex" role="search">
+        <div class="logged-as light-brown">Logged in as:</div>
+      </div>
+      <button id="logout-button" class="btn default-button">Logout</button>
     </div>
+
+
+
   </nav>
 
   <!--
@@ -63,7 +67,7 @@
 
   </main>
   <footer>
-    Kevin Le, Mohamed Khalaf, Carolyn Wang
+    Anh Kevin Le, Mohamed Khalaf, Carolyn Wang
   </footer>
 </body>
 </html>

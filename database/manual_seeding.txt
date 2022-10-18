@@ -3,3 +3,4 @@
 \i ./database/seeds/04_seeds.sql;
 \i ./database/seeds/05_seeds.sql;
 \i ./database/seeds/06_seeds.sql;
+\i ./database/seeds/07_seeds.sql;

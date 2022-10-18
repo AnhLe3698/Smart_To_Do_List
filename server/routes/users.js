@@ -1,15 +1,11 @@
-/*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into /users,
- *   these routes are mounted onto /users
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
+//////////////////////////////////////
+///////////User Routes///////////////
+////////////////////////////////////
 
 const express = require('express');
 const router = express.Router();
 const searching = require('../helper_functions/searching');
-const { addUser } = require('./dbQueries');
+const { addUser, getUserName } = require('./dbQueries');
 const db = require('./dbQueries');
 
 
@@ -23,10 +19,15 @@ router.post('/login', (req, res) => {
       // Successful Login
       console.log(`Valid email ${email}`);
       res.cookie('email', email);
-      db.grabInitialList(email).then((data) => {
-        console.log(data);
-        return res.json(data);
-      }).catch(e => res.send(e));
+
+      db.getUserName(email).then((name) => {
+        res.cookie('name', name);
+        db.grabInitialList(email).then((data) => {
+
+          return res.json(data);
+        }).catch(e => res.send(e));
+      })
+
     } else {
       // Failed Login
       console.log('Invalid email');
@@ -37,6 +38,7 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
   res.clearCookie('email');
+  res.clearCookie('name');
   return res.json('nice');
 });
 
@@ -53,6 +55,7 @@ router.post('/register', (req, res) => {
     } else {
       // Successful Register
       res.cookie('email', user.email);
+      res.cookie('name', user.firstName);
       //console.log(user);
       addUser(user).then((result) => {
         //console.log(result);
@@ -92,8 +95,6 @@ router.post('/insert', (req, res) => {
       }).catch(e => res.send(e));
     }
   })
-
-
 });
 
 

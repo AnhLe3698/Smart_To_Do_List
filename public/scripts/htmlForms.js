@@ -1,37 +1,39 @@
 const listItems = function (items) {
+  let joinString = items.name.split(' ').join('');
   let markup = `
-
   <form>
-    <li class="dropzone list-group" id=${items.id} draggable="true">${items.name}
-    <button id="delete-item" type="button" class="btn btn-danger">X</button>
-     <!-- <select class="form-select" aria-label="Default select example">
+    <li class="dropzone list-group" id="${joinString}" draggable="true"><div>${items.name}</div>
+    <!--<select class="form-select" aria-label="Default select example">
         <option selected>Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
-      </select> -->
-
+      </select>-->
+      <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
     </li>
+
   </form>
     <script>
-    $('#delete-item').click( function(event){
-      event.preventDefault();
-      let urlStr = '/users/delete/' + $(this).parent().text();
-      console.log("Here:" + $(this).parent().text());
-      const errorString = 'Invalid item';
-      if ($(this).parent().text().length !== 0) {
-        $.post(urlStr).done(function (data) {
-          const $data = data;
-          console.log('callback detected');
-          if ($data === errorString) {
-            $('main').append($data);
-          } else {
-            $('main').append($data);
-          }
-        });
-      }
-    });
-
+      $('#delete-item${joinString}').click(function(event){
+        event.preventDefault();
+        let varName = $(this).parent().parent().children('#${joinString}').children('div').text().trim() + '';
+        let urlStr = '/users/delete/' + varName;
+        console.log('this is the text: ',varName)
+        console.log('this is the string url: ', urlStr)
+        const errorString = 'Invalid item';
+        if (varName !== 0) {
+          $.post(urlStr).done(function (data) {
+            const $data = data;
+            //console.log('callback detected');
+            if ($data === errorString) {
+              $('main').append($data);
+            } else {
+              $('main').append($data);
+              $( "#${joinString}").remove();
+            }
+          });
+        }
+      });
     </script>
      `;
   return markup;
@@ -47,7 +49,7 @@ const loginForm = `
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
       <script>
-      $('#logging-in').submit((event) => {
+      $('#logging-in').unbind().submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#logging-in'))
         const errorString = 'Invalid email';
@@ -56,8 +58,22 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
+            $("#register-button-nav").css("visibility", "visible");
+            $("#login-button-nav").css("visibility", "visible");
+            $("#logout-button").css("visibility", "hidden");
             $('main').append($data);
           } else {
+            let cookie = getCookie('name');
+            cookie = cookie.replace('%40', '@');
+            // Displays user email when logged in
+            if(cookie) {
+              $("#register-button-nav").css("visibility", "hidden");
+              $("#login-button-nav").css("visibility", "hidden");
+              $("#logout-button").css("visibility", "visible");
+              $('.logged-as').text('Logged in as: '+ cookie);
+            } else {
+              $('.logged-as').text('Logged in as:');
+            }
             $('main').empty();
             $('main').append(listForms);
             data.map(item => {
@@ -71,7 +87,9 @@ const loginForm = `
                 $('.products').append($item);
               } else if (category === 'restaurant') {
                 $('.resteraunts').append($item);
-              }
+              } else {
+                $('.sort').append(listItems($data));
+              };
             });
           }
         });
@@ -80,16 +98,15 @@ const loginForm = `
     `;
 // Creates the list items
 let listForms = `
-      <h3>Add item Part 2</h3>
-      <form id="add-item2">
+      <form id="add-item2" class="form-inline item-search">
         <div class="add-item form-group">
           <label for="name">Enter item name</label>
           <input class="form-control" type="text" name="name" placeholder="Add name" style="width: 300px">
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn default-button">Add</button>
         </div>
       </form>
       <script>
-        $('#add-item2').submit((event) => {
+        $('#add-item2').unbind().submit((event) => {
           event.preventDefault();
           const formData = new FormData(document.querySelector('#add-item2'))
           const errorString = 'Sorry item already exists';
@@ -110,6 +127,8 @@ let listForms = `
                   $('.products').append(listItems($data));
                 } else if (data.category === 'restaurant') {
                   $('.resteraunts').append(listItems($data));
+                } else {
+                  $('.sort').append(listItems($data));
                 };
               }
             });
@@ -117,74 +136,50 @@ let listForms = `
         });
       </script>
 
-      <h3>Remove item</h3>
-      <form id="remove-item">
-        <div class="form-group">
-          <label for="itemName">Enter item name</label>
-          <input class="form-control" type="text" name="itemName" placeholder="Add item Name" style="width: 300px">
-        </div>
-        <button type="submit" class="btn btn-primary">remove</button>
-      </form>
-      <script>
-        $('#remove-item').submit((event) => {
-          event.preventDefault();
-          const formData = new FormData(document.querySelector('#remove-item'))
-          const errorString = 'Invalid item';
-          let itemName = formData.get('itemName');
-          let urlStr = '/users/delete/' + itemName;
-          if (itemName.length !== 0) {
-            $.post(urlStr).done(function (data) {
-              const $data = data;
-              console.log('callback detected');
-              if ($data === errorString) {
-                $('main').append($data);
-              } else {
-                $('main').append($data);
-              }
-            });
-          }
-
-        });
-      </script>
-
-
-    <section class="toDoListBox box">
-      <section class="toWatch toDoBox box">
-        <header class="toDoHeader">To Watch Section</header>
-        <section>
-          <ul class="list-group media">
-
+      <section class="toDoListBox box">
+        <section class="toWatch toDoBox box">
+          <header class="toDoHeader">To Watch Section</header>
+          <section>
+            <ul class="list-group media">
+          </section>
         </section>
-      </section>
 
 
-      <section class="toEat toDoBox box">
-        <header class="toDoHeader">To Eat Section</header>
-        <section class="list-container">
-          <ul class="list-group resteraunts">
-
+        <section class="toEat toDoBox box">
+          <header class="toDoHeader">To Eat Section</header>
+          <section class="list-container">
+            <ul class="list-group resteraunts">
+            </ul>
+          </section>
         </section>
-      </section>
 
-      <section class="toRead toDoBox box">
-        <header class="toDoHeader">To Read Section</header>
-        <section>
-          <ul class="list-group books">
-
-
+        <section class="toRead toDoBox box">
+          <header class="toDoHeader">To Read Section</header>
+          <section>
+            <ul class="list-group books">
+            </ul>
+          </section>
         </section>
-      </section>
 
-      <section class="toBuy toDoBox box">
-        <header class="toDoHeader">To Buy Section</header>
-        <section>
-          <ul class="list-group products">
-
-
-          </ul>
+        <section class="toBuy toDoBox box">
+          <header class="toDoHeader">To Buy Section</header>
+          <section>
+            <ul class="list-group products">
+            </ul>
+          </section>
         </section>
+
+        <section class="toSort toDoBox box">
+          <header class="toDoHeader">Need Sorting</header>
+          <section>
+            <ul class="list-group sort">
+            </ul>
+          </section>
+        </section>
+
       </section>
-      </section>
+
+
 
   `;
 
@@ -203,7 +198,7 @@ const registerForm = `
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
       <script>
-      $('#register-user').submit((event) => {
+      $('#register-user').unbind().submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#register-user'))
         const errorString = 'Invalid email';
@@ -226,8 +221,40 @@ const registerForm = `
       </script>
     `;
 
+    const getCookie = function(cname) {
+      let name = cname + "=";
+      let ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    };
+
 $(document).ready(function () {
   $(function () {
+
+    let cookie = getCookie('name');
+    cookie = cookie.replace('%40', '@');
+    // Displays user email when logged in
+
+    if(cookie) {
+      $("#register-button-nav").css("visibility", "hidden");
+      $("#login-button-nav").css("visibility", "hidden");
+      $("#logout-button").css("visibility", "visible");
+      $('.logged-as').text(`Logged in as: ${cookie}`);
+    } else {
+      $("#register-button-nav").css("visibility", "visible");
+      $("#login-button-nav").css("visibility", "visible");
+      $("#logout-button").css("visibility", "hidden");
+      $('.logged-as').text(`Logged in as:`);
+    }
+
     $.get('/users', (data) => {
       const errorString = 'Not logged in';
       const $data = data;
@@ -246,7 +273,9 @@ $(document).ready(function () {
             $('.products').append($item);
           } else if (category === 'restaurant') {
             $('.resteraunts').append($item);
-          }
+          } else {
+            $('.sort').append(listItems($data));
+          };
         });
       }
     });
