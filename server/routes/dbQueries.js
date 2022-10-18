@@ -205,13 +205,31 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category is:', result.rows[0].category);
-        return result.rows[0].category;
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }
+  },
 
+  // Use this query to add items to be sorted
+  addItemToDatabase: (item) => {
+    const values = [item.name, item.category];
+
+    let queryString = `INSERT INTO data (name, category) VALUES ($1, $2);
+    SELECT * FROM data WHERE data.name = $1;
+    `;
+
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
 
 }
+
