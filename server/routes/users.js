@@ -164,8 +164,10 @@ router.post('/profile', (req, res) => {
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
   console.log(email, firstName, lastName);
+  console.log(req.cookies['email']);
   // edits the user based on information given
-  db.editUser(email, firstName, lastName, req.cookie['email']).then((result) => {
+  db.editUser(email, firstName, lastName, req.cookies['email']).then((result) => {
+    
     res.clearCookie('email');
     res.clearCookie('name');
     res.cookie('email', email);
