@@ -66,6 +66,7 @@ const loginForm = `
             $("#register-button-nav").css("visibility", "visible");
             $("#login-button-nav").css("visibility", "visible");
             $("#logout-button").css("visibility", "hidden");
+            $("#edit-profile-button").css("visibility", "hidden");
             let alert = $(invalidEmailAlert);
                 $('main').prepend(alert);
                 setTimeout(function () {
@@ -80,6 +81,7 @@ const loginForm = `
               $("#login-button-nav").css("visibility", "hidden");
               $("#logout-button").css("visibility", "visible");
               $('.logged-as').text('Logged in as: '+ cookie);
+              $("#edit-profile-button").css("visibility", "visible");
             } else {
               $('.logged-as').text('Logged in as:');
             }
@@ -243,20 +245,54 @@ const registerForm = `
       </script>
     `;
 
-    const getCookie = function(cname) {
-      let name = cname + "=";
-      let ca = document.cookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    };
+const profileForm = `
+    <div class="custom-centered-container">
+    <h3>Edit Profile</h3>
+    <form id="edit-profile" action="/profile" method="POST">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px"
+                >
+            <label for="first-name">First Name</label>
+            <input class="form-control" type="name" name="first-name" placeholder="Enter first Name"
+                style="width: 300px" >
+            <label for="first-name">Last Name</label>
+            <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px"
+                >
+        </div>
+        <button type="submit" class="btn default-button">Edit</button>
+    </form>
+</div>
+<script>
+    $('#edit-profile').unbind().click((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#edit-profile'));
+        const errorString = 'Invalid';
+        let email = formData.get('email');
+        let firstName = formData.get('first-name');
+        let lastName = formData.get('last-name');
+        console.log(email, firstName, lastName);
+        $.post('/users/register', function (data) {
+          $('main').append($data);
+        });
+    });
+</script>
+    `;
+
+const getCookie = function (cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+};
 
     let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
     Please login
@@ -274,11 +310,13 @@ $(document).ready(function () {
       $("#login-button-nav").css("visibility", "hidden");
       $("#logout-button").css("visibility", "visible");
       $('.logged-as').text(`Logged in as: ${cookie}`);
+      $('#edit-profile-button').css("visibility", "visible");
     } else {
       $("#register-button-nav").css("visibility", "visible");
       $("#login-button-nav").css("visibility", "visible");
       $("#logout-button").css("visibility", "hidden");
       $('.logged-as').text(``);
+      $('#edit-profile-button').css("visibility", "hidden");
     }
 
     $.get('/users', (data) => {
