@@ -251,20 +251,18 @@ const profileForm = `
     <form id="edit-profile" action="/profile" method="POST">
         <div class="form-group">
             <label for="email">Email address</label>
-            <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px"
-                >
+            <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
             <label for="first-name">First Name</label>
-            <input class="form-control" type="name" name="first-name" placeholder="Enter first Name"
-                style="width: 300px" >
+            <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px" >
             <label for="first-name">Last Name</label>
-            <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px"
-                >
+            <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px">
         </div>
         <button type="submit" class="btn default-button">Edit</button>
     </form>
 </div>
 <script>
-    $('#edit-profile').unbind().click((event) => {
+    $('#edit-profile').unbind().submit((event) => {
+        console.log('edit profile clicked');
         event.preventDefault();
         const formData = new FormData(document.querySelector('#edit-profile'));
         const errorString = 'Invalid';
@@ -272,7 +270,7 @@ const profileForm = `
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
         console.log(email, firstName, lastName);
-        $.post('/users/profile', function (data) {
+        $.post('/users/profile', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
           $('main').append($data);
         });
     });
@@ -294,7 +292,7 @@ const getCookie = function (cname) {
   return "";
 };
 
-    let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
+let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
     Please login
     </div>`;
 

@@ -71,11 +71,11 @@ module.exports = {
   // Edit user profile
   editUser: (user) => {
   
-    const values = [user.firstName, user.lastName, user.email, user.id];
+    const values = [user.firstName, user.lastName, user.email, user.oldEmail];
   
     let queryString = `UPDATE users
     SET first_name = $1, last_name = $2, email = $3
-    WHERE id = $4
+    WHERE email = $4
     RETURNING* ;`
 
     return pool.query(queryString, values)

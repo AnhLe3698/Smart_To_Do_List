@@ -159,9 +159,19 @@ router.post('/add', (req, res) => {
 
 });
 
-router.post('/users/profile', (req, res) => {
-  let email = req.cookies['email'];
-  console.log("SOMETHING HAPPENED");
+router.post('/profile', (req, res) => {
+  let email = req.body.email;
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  console.log(email, firstName, lastName);
+  // edits the user based on information given
+  db.editUser(email, firstName, lastName, req.cookie['email']).then((result) => {
+    res.clearCookie('email');
+    res.clearCookie('name');
+    res.cookie('email', email);
+    res.cookie('name', firstName);
+    res.json(result);
+  }).catch(e => res.send(e));
 });
 
 
