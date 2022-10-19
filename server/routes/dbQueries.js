@@ -90,12 +90,12 @@ module.exports = {
 
   // Checks if item is in database and returns a boolean/true/false
   ifItemExists: (name, email) => {
-    const values = [name, email];
+    const values = [name.toLowerCase(), email];
 
     let queryString = `SELECT name
     FROM items
     JOIN users ON items.userid = users.id
-    WHERE items.name =  $1 AND users.email = $2;
+    WHERE LOWER(items.name) =  $1 AND users.email = $2;
     `;
 
     return pool.query(queryString, values)
@@ -111,12 +111,12 @@ module.exports = {
   },
 
   ifItemExistsButFalse: (name, email) => {
-    const values = [name, email];
+    const values = [name.toLowerCase(), email];
 
     let queryString = `SELECT is_active
     FROM items
     JOIN users ON items.userid = users.id
-    WHERE items.name =  $1 AND users.email = $2;
+    WHERE LOWER(items.name) =  $1 AND users.email = $2;
     `;
 
     return pool.query(queryString, values)
@@ -132,12 +132,12 @@ module.exports = {
   },
 
   updataItemToTrue: (itemName, email) => {
-    const values = [itemName, email];
+    const values = [itemName.toLowerCase(), email];
 
     let queryString = `UPDATE items
     SET is_active = True
     FROM users WHERE items.userid = users.id
-    AND items.name = $1 AND users.email = $2
+    AND LOWER(items.name) = $1 AND users.email = $2
     RETURNING*
     `;
 
@@ -198,17 +198,15 @@ module.exports = {
 
   // Checks the database for item category
   grabItemCategory: (item) => {
-    const values = [item.name];
+    const values = [item.name.toLowerCase()];
 
-    let queryString = `SELECT category
-    FROM data
-    WHERE name = $1;
+    let queryString = `SELECT lower(name), name, category FROM data WHERE lower(name) = $1;
     `;
 
     return pool.query(queryString, values)
       .then((result) => {
         console.log('this category is:', result.rows[0].category);
-        return result.rows[0].category;
+        return result.rows[0];
       })
       .catch((err) => {
         console.log(err.message);

@@ -1,5 +1,13 @@
+// const hmtlStr = `<div class="alert alert-success center-content" role="alert">Deleted!</div>
+// <script> let alert = $(deleteMessage);
+// $("main").prepend(alert);
+// setTimeout(function ()
+// {alert.fadeOut(3000);}, 2000);
+// </script>
+// `
+
 const listItems = function (items) {
-  let joinString = items.name.split(' ').join('');
+  let joinString = items.name.replaceAll(' ', '');
   let markup = `
   <form>
     <li class="dropzone list-group" id="${joinString}" draggable="true"><div>${items.name}</div>
@@ -18,17 +26,14 @@ const listItems = function (items) {
         event.preventDefault();
         let varName = $(this).parent().parent().children('#${joinString}').children('div').text().trim() + '';
         let urlStr = '/users/delete/' + varName;
-        console.log('this is the text: ',varName)
-        console.log('this is the string url: ', urlStr)
         const errorString = 'Invalid item';
         if (varName !== 0) {
           $.post(urlStr).done(function (data) {
             const $data = data;
-            //console.log('callback detected');
             if ($data === errorString) {
               $('main').append($data);
             } else {
-              $('main').append($data);
+              // $('main').prepend(htmlStr);
               $( "#${joinString}").remove();
             }
           });
@@ -62,7 +67,6 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
-            console.log('error detected');
             $("#register-button-nav").css("visibility", "visible");
             $("#login-button-nav").css("visibility", "visible");
             $("#logout-button").css("visibility", "hidden");
@@ -127,7 +131,6 @@ let listForms = `
           const errorString = 'Sorry item already exists';
           let name = formData.get('name');
           let category = formData.get('category');
-          console.log('name clicked')
           if (name.length !== 0) {
             $.post('/users/add', { 'name': name }).done(function (data) {
               const $data = data;
@@ -227,7 +230,6 @@ const registerForm = `
         let email = formData.get('email');
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
-        console.log(email, firstName, lastName);
         if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
           $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
             const $data = data;
@@ -304,7 +306,7 @@ $(document).ready(function () {
           } else if (category === 'restaurant') {
             $('.resteraunts').append($item);
           } else {
-            $('.sort').append(listItems($data));
+            $('.sort').append($item);
           };
         });
       }

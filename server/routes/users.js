@@ -74,44 +74,8 @@ router.post('/register', (req, res) => {
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
   db.removeItem(itemName, req.cookies['email'])
-    .then(() => res.send(Buffer.from(`
-      <script>
-      let deleteMessage =\`<div class="alert alert-success center-content" role="alert">
-        Deleted!
-      </div>\`;
-
-      let alert = $(deleteMessage);
-      $('main').prepend(alert);
-      setTimeout(function () {
-        alert.fadeOut(3000);
-      }, 2000);
-      </script>
-    `)))
+    .then(() => res.send(Buffer.from()))
     .catch(e => res.send(e))
-});
-
-
-// Searching function needs to be invoked in this path
-// { 'name': name, 'category': category } remove category in listener and object
-// Searching funciton will add category
-router.post('/insert', (req, res) => {
-  let item = req.body;
-  console.log(item);
-  db.ifItemExists(item.name, req.cookies['email']).then((bool) => {
-    //console.log(bool);
-    if(bool) {
-      // If it exists do not add the item
-      res.json('Sorry item already exists');
-    } else {
-      // If it does not exist, add the item
-      db.getUserID(req.cookies['email']).then((result) => {
-        item['userid'] = result;
-        db.addItem(item)
-        .then(() => res.json(item))
-        .catch(e => res.send(e))
-      }).catch(e => res.send(e));
-    }
-  })
 });
 
 
@@ -120,7 +84,6 @@ router.post('/add', (req, res) => {
   console.log('item before',item);
   let email = req.cookies['email'];
   db.ifItemExists(item.name, email).then((bool) => {
-    //console.log(bool);
     if(bool) {
       // If it exists do not add the item
       db.ifItemExistsButFalse(item.name, email).then((bool) => {
@@ -128,6 +91,7 @@ router.post('/add', (req, res) => {
           db.updataItemToTrue(item.name, email).then((result) => {
             if (result) {
               item['category'] = result.category;
+              item['name'] = result.name;
               res.json(item);
             } else {
               res.json('Sorry item already exists');
@@ -142,15 +106,17 @@ router.post('/add', (req, res) => {
       // If it does not exist, add the item
       db.getUserID(email).then((result) => {
         item['userid'] = result;
-        db.grabItemCategory(item).then((category)=>{
-          if (category) {
-            item['category'] = category;
+        db.grabItemCategory(item).then((row)=>{
+          if (row) {
+            item['category'] = row.category;
+            item['name'] = row.name;
             db.addItem(item).then(() => res.json(item)).catch(e => res.send(e));
           } else {
             item['category'] = 'sort';
-            db.addItemToDatabase(item).then(() => res.json(item)).catch(e => res.send(e));
+            db.addItemToDatabase(item).then(() => {
+              db.addItem(item).then(() => res.json(item)).catch(e => res.send(e));
+            }).catch(e => res.send(e));
           }
-
       }).catch(e => res.send(e))
     }).catch(e => res.send(e))
     }
@@ -174,7 +140,6 @@ router.get('/', (req, res) => {
   } else {
     res.json('Not logged in');
   }
-
 })
 
 module.exports = router;
