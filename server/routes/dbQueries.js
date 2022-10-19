@@ -68,6 +68,25 @@ module.exports = {
       });
   },
 
+  // Edit user profile
+  editUser: (user) => {
+  
+    const values = [user.firstName, user.lastName, user.email, user.id];
+  
+    let queryString = `UPDATE users
+    SET first_name = $1, last_name = $2, email = $3
+    WHERE id = $4
+    RETURNING* ;`
+
+    return pool.query(queryString, values)
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  },
+
   // This query should add an extra item to items table
   addItem: (item) => { //maybe return item as object ??? and maybe check if the user entered an empty object
 

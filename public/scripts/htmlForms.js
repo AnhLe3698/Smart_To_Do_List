@@ -272,7 +272,7 @@ const profileForm = `
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
         console.log(email, firstName, lastName);
-        $.post('/users/register', function (data) {
+        $.post('/users/profile', function (data) {
           $('main').append($data);
         });
     });
