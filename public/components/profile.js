@@ -5,20 +5,15 @@ $('#edit-profile').click((event) => {
     let email = formData.get('email');
     let firstName = formData.get('first-name');
     let lastName = formData.get('last-name');
-    console.log(email, firstName, lastName);
-    if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
-      $.post('/users/profile', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
-        const $data = data;
-        if ($data === errorString) {
-          $('main').append($data);
-        } else {
-          $('main').append($data);
-          // $('main').append('Login Successful');
-        }
-      });
+    if(email === ''){
+        console.log('email is empty');   
+    } else if (firstName === '') {
+        console.log('first name is empty');
+    } else if (lastName === '') {
+        console.log('last name is empty');
     }
-  });
-  
-  
-  
-  
+    console.log(email, firstName, lastName);
+});
+
+
+
