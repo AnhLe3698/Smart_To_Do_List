@@ -70,9 +70,9 @@ module.exports = {
 
   // Edit user profile
   editUser: (user) => {
-  
+
     const values = [user.firstName, user.lastName, user.email, user.id];
-  
+
     let queryString = `UPDATE users
     SET first_name = $1, last_name = $2, email = $3
     WHERE id = $4
@@ -219,7 +219,7 @@ module.exports = {
   grabItemCategory: (item) => {
     const values = [item.name.toLowerCase()];
 
-    let queryString = `SELECT lower(name), name, category FROM data WHERE lower(name) = $1;
+    let queryString = `SELECT LOWER(name), name, category FROM data WHERE LOWER(name) = $1;
     `;
 
     return pool.query(queryString, values)

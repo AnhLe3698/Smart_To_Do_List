@@ -1,4 +1,20 @@
 // allows the user to drag the items on the list - Will need to create something to save the state.
+
+
+// function allowDrop(ev) {
+//   ev.preventDefault();
+// }
+
+// function drag(ev) {
+//   ev.dataTransfer.setData("text", ev.target.id);
+// }
+
+// function drop(ev) {
+//   ev.preventDefault();
+//   var data = ev.dataTransfer.getData("text");
+//   ev.target.appendChild(document.getElementById(data));
+// }
+
 let dragged;
 let id;
 let index;

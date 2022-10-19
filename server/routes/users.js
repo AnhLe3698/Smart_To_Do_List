@@ -5,23 +5,23 @@
 const express = require('express');
 const router = express.Router();
 const searching = require('../helper_functions/searching');
-const { addUser, getUserName } = require('./dbQueries');
+const { addUser, getUserName, recategorizeItem } = require('./dbQueries');
 const db = require('./dbQueries');
 
-
-
+// The login form is handled on the front end
 router.post('/login', (req, res) => {
-  let email = req.body.email;
-  console.log(email);
+  let email = req.body.email; // Grab email from request header
   db.getUserWithEmail(email).then((bool) => {
-    //console.log(bool);
+
     if (bool) {
       // Successful Login
-      console.log(`Valid email ${email}`);
-      res.cookie('email', email);
 
+      // Set email cookie
+      res.cookie('email', email);
       db.getUserName(email).then((name) => {
+        // Sets new cookie for username based on their email
         res.cookie('name', name);
+        // Grabs the initial list
         db.grabInitialList(email).then((data) => {
 
           return res.json(data);
@@ -30,7 +30,6 @@ router.post('/login', (req, res) => {
 
     } else {
       // Failed Login
-      console.log('Invalid email');
       return res.json('Invalid email');
     }
   }).catch(e => res.send(e));
@@ -52,20 +51,19 @@ router.post('/register', (req, res) => {
       // Failed register attempt
       console.log('Duplicate email');
       res.set('Content-Type', 'text/html');
-      res.send(Buffer.from(`
+      return res.send(Buffer.from(`
       <div class="alert alert-warning center-content" role="alert">
         Email already exists!
       </div>`));
-      return res.json('Duplicate email');
+      // return res.json('Duplicate email'); Deprecated
     } else {
       // Successful Register
       res.cookie('email', user.email);
       res.cookie('name', user.firstName);
-      //console.log(user);
       addUser(user).then((result) => {
-        //console.log(result);
+        return res.json(`The following user was added ${result}`);
       });
-      return res.json(`The following user was added ${result}`);
+      ;
     }
   }).catch(e => res.send(e));
 });
@@ -74,11 +72,20 @@ router.post('/register', (req, res) => {
 router.post('/delete/:itemName', (req, res) => {
   let itemName = req.params.itemName;
   db.removeItem(itemName, req.cookies['email'])
-    .then(() => res.send(Buffer.from()))
+    .then(() => res.send(Buffer.from(
+      `<div class="alert alert-success center-content" role="alert">Deleted!</div>
+      <script>
+        setTimeout(function () {
+        $('.alert').fadeOut(2000)}, 1000);
+      </script>
+    `
+    )))
     .catch(e => res.send(e))
 });
 
-
+////////////////////////////////////////////////
+// MAIN PATH FEATURE PATH ADD ITEMS TO LIST ///
+///////////////////////////////////////////////
 router.post('/add', (req, res) => {
   let item = req.body;
   console.log('item before',item);
@@ -121,8 +128,6 @@ router.post('/add', (req, res) => {
     }).catch(e => res.send(e))
     }
   })
-
-
 });
 
 router.post('/users/profile', (req, res) => {
@@ -131,6 +136,7 @@ router.post('/users/profile', (req, res) => {
 });
 
 
+// This will load our initial load on every page refresh
 router.get('/', (req, res) => {
   let email = req.cookies['email'];
   if (email && email.length !== 0) {
@@ -146,5 +152,13 @@ router.get('/', (req, res) => {
     res.json('Not logged in');
   }
 })
+
+router.post('/recat', (req, res) => {
+  let item = req.body;
+  recategorizeItem(item).then((result) => {
+    // Returns array [itemName, category]
+    return res.json(result)
+  });
+});
 
 module.exports = router;

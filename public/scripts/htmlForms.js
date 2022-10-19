@@ -1,10 +1,3 @@
-// const hmtlStr = `<div class="alert alert-success center-content" role="alert">Deleted!</div>
-// <script> let alert = $(deleteMessage);
-// $("main").prepend(alert);
-// setTimeout(function ()
-// {alert.fadeOut(3000);}, 2000);
-// </script>
-// `
 
 const listItems = function (items) {
   let joinString = items.name.replaceAll(' ', '');
@@ -33,7 +26,7 @@ const listItems = function (items) {
             if ($data === errorString) {
               $('main').append($data);
             } else {
-              // $('main').prepend(htmlStr);
+              $('main').prepend($data);
               $( "#${joinString}").remove();
             }
           });
@@ -95,15 +88,15 @@ const loginForm = `
               const $item = listItems(item);
               const category = item.category;
               if (category === 'movie') {
-                $('.media').append($item);
+                $('.movie').append($item);
               } else if (category === 'book') {
                 $('.books').append($item);
               } else if (category === 'product') {
                 $('.products').append($item);
               } else if (category === 'restaurant') {
-                $('.resteraunts').append($item);
+                $('.restauraunt').append($item);
               } else {
-                $('.sort').append(listItems($data));
+                $('.sort').append($item);
               };
             });
           }
@@ -145,13 +138,13 @@ let listForms = `
                 }, 2000);
               } else {
                 if (data.category === 'movie') {
-                  $('.media').append(listItems($data));
+                  $('.movie').append(listItems($data));
                 } else if (data.category === 'book') {
                   $('.books').append(listItems($data));
                 } else if (data.category === 'product') {
                   $('.products').append(listItems($data));
                 } else if (data.category === 'restaurant') {
-                  $('.resteraunts').append(listItems($data));
+                  $('restaurant').append(listItems($data));
                 } else {
                   $('.sort').append(listItems($data));
                 };
@@ -165,46 +158,54 @@ let listForms = `
         <section class="toWatch toDoBox box">
           <header class="toDoHeader">To Watch Section</header>
           <section>
-            <ul class="list-group media">
+            <ul id="movie" class="list-group movie"
+
+            >
           </section>
         </section>
 
 
         <section class="toEat toDoBox box">
           <header class="toDoHeader">To Eat Section</header>
-          <section class="list-container">
-            <ul class="list-group resteraunts">
+          <section class="list-container" >
+            <ul id="restaurant" class="list-group restaurant"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toRead toDoBox box">
           <header class="toDoHeader">To Read Section</header>
-          <section>
-            <ul class="list-group books">
+          <section >
+            <ul class="list-group books"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toBuy toDoBox box">
           <header class="toDoHeader">To Buy Section</header>
-          <section>
-            <ul class="list-group products">
+          <section >
+            <ul class="list-group products"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toSort toDoBox box">
           <header class="toDoHeader">Need Sorting</header>
-          <section>
-            <ul class="list-group sort">
+          <section >
+            <ul class="list-group sort"
+
+            >
             </ul>
           </section>
         </section>
 
       </section>
-
-
 
   `;
 
@@ -336,18 +337,58 @@ $(document).ready(function () {
           const $item = listItems(item);
           const category = item.category;
           if (category === 'movie') {
-            $('.media').append($item);
+            $('.movie').append($item);
           } else if (category === 'book') {
             $('.books').append($item);
           } else if (category === 'product') {
             $('.products').append($item);
           } else if (category === 'restaurant') {
-            $('.resteraunts').append($item);
+            $('.restaurant').append($item);
           } else {
             $('.sort').append($item);
           };
         });
       }
     });
+
+    let dragged;
+    let id;
+    let index;
+    let indexDrop;
+    let list;
+
+    document.addEventListener("dragstart", ({target}) => {
+      dragged = target;
+      id = target.id;
+      list = target.parentNode.children;
+      for(let i = 0; i < list.length; i += 1) {
+          if(list[i] === dragged){
+          index = i;
+        }
+      }
+    });
+
+    document.addEventListener("dragover", (event) => {
+        event.preventDefault();
+    });
+
+    document.addEventListener("drop", ({target}) => {
+    if(target.className == "dropzone" && target.id !== id) {
+        dragged.remove( dragged );
+        for(let i = 0; i < list.length; i += 1) {
+            if(list[i] === target){
+            indexDrop = i;
+          }
+        }
+        console.log(index, indexDrop);
+        if(index > indexDrop) {
+            target.before( dragged );
+        } else {
+        target.after( dragged );
+        }
+      }
+    });
+
+
   })
 });
