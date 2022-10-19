@@ -125,6 +125,11 @@ router.post('/add', (req, res) => {
 
 });
 
+router.post('/users/profile', (req, res) => {
+  let email = req.cookies['email'];
+  console.log("SOMETHING HAPPENED");
+});
+
 
 router.get('/', (req, res) => {
   let email = req.cookies['email'];
