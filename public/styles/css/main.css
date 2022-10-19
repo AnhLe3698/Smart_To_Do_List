@@ -98,7 +98,7 @@ select#search-filter.form-control {
   align-content: center;
 }
 
-.dropzone {
+.zzone {
   display: flex;
   flex-direction: row;
   align-content: space-between;

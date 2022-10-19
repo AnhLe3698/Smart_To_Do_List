@@ -1,4 +1,5 @@
 $(() => {
+
   $("#register-button-nav").unbind().click(function (event) {
     event.preventDefault();
     let $registerForm = registerForm;

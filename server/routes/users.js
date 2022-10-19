@@ -88,7 +88,6 @@ router.post('/delete/:itemName', (req, res) => {
 ///////////////////////////////////////////////
 router.post('/add', (req, res) => {
   let item = req.body;
-  console.log('item before',item);
   let email = req.cookies['email'];
   db.ifItemExists(item.name, email).then((bool) => {
     if(bool) {
@@ -96,6 +95,7 @@ router.post('/add', (req, res) => {
       db.ifItemExistsButFalse(item.name, email).then((bool) => {
         if(bool) {
           db.updataItemToTrue(item.name, email).then((result) => {
+            console.log(result)
             if (result) {
               item['category'] = result.category;
               item['name'] = result.name;
@@ -156,9 +156,11 @@ router.get('/', (req, res) => {
 router.post('/recat', (req, res) => {
   let item = req.body;
   recategorizeItem(item).then((result) => {
-    // Returns array [itemName, category]
-    return res.json(result)
-  });
+    recategorizeDB (item).then((result1) => {
+      // Returns array [itemName, category]
+      return res.json(result1);
+    })
+  }).catch(e => res.send(e));
 });
 
 module.exports = router;

@@ -258,16 +258,7 @@ module.exports = {
   recategorizeItem: (item) => {
     const values = [item.name, item.category];
 
-    let queryString = `
-
-    UPDATE items
-    SET category = $2
-    WHERE name = $1;
-    UPDATE data
-    SET category = $2
-    WHERE name = $1
-    RETURNING* ;
-
+    let queryString = `UPDATE items SET category = $2 WHERE name = $1 RETURNING *
     `;
 
     return pool.query(queryString, values)
@@ -279,7 +270,20 @@ module.exports = {
         console.log(err.message);
       });
   },
+  recategorizeDB: (item) => {
+    const values = [item.name, item.category];
+    let queryString = `UPDATE items SET category = $2 WHERE name = $1 RETURNING *
+    `;
 
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
   // Use this query to add items to be sorted
   addItemToDatabase: (item) => {
     const values = [item.name, item.category];
@@ -301,4 +305,3 @@ module.exports = {
 
 
 }
-

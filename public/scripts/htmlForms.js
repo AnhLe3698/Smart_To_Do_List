@@ -1,20 +1,11 @@
-
 const listItems = function (items) {
   let joinString = items.name.replaceAll(' ', '');
   let markup = `
   <form>
-    <li class="dropzone list-group" id="${joinString}" draggable="true"><div>${items.name}</div>
-    <!--<select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>-->
-      <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
-    </li>
-
+    <li class="zzone list-group" id="${joinString}"><div>${items.name}</div>
   </form>
     <script>
+      $("#${joinString}").draggable();
       $('#delete-item${joinString}').click(function(event){
         event.preventDefault();
         let varName = $(this).parent().parent().children('#${joinString}').children('div').text().trim() + '';
@@ -94,11 +85,12 @@ const loginForm = `
               } else if (category === 'product') {
                 $('.products').append($item);
               } else if (category === 'restaurant') {
-                $('.restauraunt').append($item);
+                $('.restaurant').append($item);
               } else {
                 $('.sort').append($item);
               };
             });
+
           }
         });
       });
@@ -144,7 +136,7 @@ let listForms = `
                 } else if (data.category === 'product') {
                   $('.products').append(listItems($data));
                 } else if (data.category === 'restaurant') {
-                  $('restaurant').append(listItems($data));
+                  $('.restaurant').append(listItems($data));
                 } else {
                   $('.sort').append(listItems($data));
                 };
@@ -178,7 +170,7 @@ let listForms = `
         <section class="toRead toDoBox box">
           <header class="toDoHeader">To Read Section</header>
           <section >
-            <ul class="list-group books"
+            <ul id="books" class="list-group books"
 
             >
             </ul>
@@ -188,7 +180,7 @@ let listForms = `
         <section class="toBuy toDoBox box">
           <header class="toDoHeader">To Buy Section</header>
           <section >
-            <ul class="list-group products"
+            <ul id="products" class="list-group products"
 
             >
             </ul>
@@ -198,7 +190,7 @@ let listForms = `
         <section class="toSort toDoBox box">
           <header class="toDoHeader">Need Sorting</header>
           <section >
-            <ul class="list-group sort"
+            <ul id="sort" class="list-group sort"
 
             >
             </ul>
@@ -206,7 +198,178 @@ let listForms = `
         </section>
 
       </section>
-
+      <script>
+      $("#movie").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'movie'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#books").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'book'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#restaurant").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'restaurant'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#products").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'product'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#sort").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'sort'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+    </script>
   `;
 
 
