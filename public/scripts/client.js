@@ -1,4 +1,5 @@
 $(() => {
+
   $("#register-button-nav").unbind().click(function (event) {
     event.preventDefault();
     let $registerForm = registerForm;
@@ -22,7 +23,7 @@ $(() => {
     const $landingPage = '<img class="landing-page" src="./resources/images/landingLogo.png" alt="">'
     $("main").empty();
     $("main").append($landingPage);
-    $.get('/users/logout').unbind().done(function (data) {
+    $.get('/users/logout').done(function (data) {
       const $data = data;
     });
   });
