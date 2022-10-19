@@ -3,6 +3,9 @@ const listItems = function (items) {
   let markup = `
   <form>
     <li class="zzone list-group" id="${joinString}"><div>${items.name}</div>
+      <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
+    </li>
+
   </form>
     <script>
       $("#${joinString}").draggable();
