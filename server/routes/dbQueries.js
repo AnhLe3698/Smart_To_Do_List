@@ -68,6 +68,25 @@ module.exports = {
       });
   },
 
+  // Edit user profile
+  editUser: (user) => {
+
+    const values = [user.firstName, user.lastName, user.email, user.id];
+
+    let queryString = `UPDATE users
+    SET first_name = $1, last_name = $2, email = $3
+    WHERE id = $4
+    RETURNING* ;`
+
+    return pool.query(queryString, values)
+    .then((result) => {
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  },
+
   // This query should add an extra item to items table
   addItem: (item) => { //maybe return item as object ??? and maybe check if the user entered an empty object
 
@@ -90,12 +109,12 @@ module.exports = {
 
   // Checks if item is in database and returns a boolean/true/false
   ifItemExists: (name, email) => {
-    const values = [name, email];
+    const values = [name.toLowerCase(), email];
 
     let queryString = `SELECT name
     FROM items
     JOIN users ON items.userid = users.id
-    WHERE items.name =  $1 AND users.email = $2;
+    WHERE LOWER(items.name) =  $1 AND users.email = $2;
     `;
 
     return pool.query(queryString, values)
@@ -111,12 +130,12 @@ module.exports = {
   },
 
   ifItemExistsButFalse: (name, email) => {
-    const values = [name, email];
+    const values = [name.toLowerCase(), email];
 
     let queryString = `SELECT is_active
     FROM items
     JOIN users ON items.userid = users.id
-    WHERE items.name =  $1 AND users.email = $2;
+    WHERE LOWER(items.name) =  $1 AND users.email = $2;
     `;
 
     return pool.query(queryString, values)
@@ -132,12 +151,12 @@ module.exports = {
   },
 
   updataItemToTrue: (itemName, email) => {
-    const values = [itemName, email];
+    const values = [itemName.toLowerCase(), email];
 
     let queryString = `UPDATE items
     SET is_active = True
     FROM users WHERE items.userid = users.id
-    AND items.name = $1 AND users.email = $2
+    AND LOWER(items.name) = $1 AND users.email = $2
     RETURNING*
     `;
 
@@ -198,17 +217,15 @@ module.exports = {
 
   // Checks the database for item category
   grabItemCategory: (item) => {
-    const values = [item.name];
+    const values = [item.name.toLowerCase()];
 
-    let queryString = `SELECT category
-    FROM data
-    WHERE name = $1;
+    let queryString = `SELECT LOWER(name), name, category FROM data WHERE LOWER(name) = $1;
     `;
 
     return pool.query(queryString, values)
       .then((result) => {
         console.log('this category is:', result.rows[0].category);
-        return result.rows[0].category;
+        return result.rows[0];
       })
       .catch((err) => {
         console.log(err.message);
@@ -241,16 +258,7 @@ module.exports = {
   recategorizeItem: (item) => {
     const values = [item.name, item.category];
 
-    let queryString = `
-
-    UPDATE items
-    SET category = $2
-    WHERE name = $1;
-    UPDATE data
-    SET category = $2
-    WHERE name = $1
-    RETURNING* ;
-
+    let queryString = `UPDATE items SET category = $2 WHERE name = $1 RETURNING *
     `;
 
     return pool.query(queryString, values)
@@ -262,7 +270,20 @@ module.exports = {
         console.log(err.message);
       });
   },
+  recategorizeDB: (item) => {
+    const values = [item.name, item.category];
+    let queryString = `UPDATE items SET category = $2 WHERE name = $1 RETURNING *
+    `;
 
+    return pool.query(queryString, values)
+      .then((result) => {
+        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        return [result.rows[0].name, result.rows[0].category];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },
   // Use this query to add items to be sorted
   addItemToDatabase: (item) => {
     const values = [item.name, item.category];
@@ -284,4 +305,3 @@ module.exports = {
 
 
 }
-

@@ -1,34 +1,26 @@
 const listItems = function (items) {
-  let joinString = items.name.split(' ').join('');
+  let joinString = items.name.replaceAll(' ', '');
   let markup = `
   <form>
-    <li class="dropzone list-group" id="${joinString}" draggable="true"><div>${items.name}</div>
-    <!--<select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>-->
+    <li class="zzone list-group" id="${joinString}"><div>${items.name}</div>
       <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
     </li>
 
   </form>
     <script>
+      $("#${joinString}").draggable();
       $('#delete-item${joinString}').click(function(event){
         event.preventDefault();
         let varName = $(this).parent().parent().children('#${joinString}').children('div').text().trim() + '';
         let urlStr = '/users/delete/' + varName;
-        console.log('this is the text: ',varName)
-        console.log('this is the string url: ', urlStr)
         const errorString = 'Invalid item';
         if (varName !== 0) {
           $.post(urlStr).done(function (data) {
             const $data = data;
-            //console.log('callback detected');
             if ($data === errorString) {
               $('main').append($data);
             } else {
-              $('main').append($data);
+              $('main').prepend($data);
               $( "#${joinString}").remove();
             }
           });
@@ -62,10 +54,10 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
-            console.log('error detected');
             $("#register-button-nav").css("visibility", "visible");
             $("#login-button-nav").css("visibility", "visible");
             $("#logout-button").css("visibility", "hidden");
+            $("#edit-profile-button").css("visibility", "hidden");
             let alert = $(invalidEmailAlert);
                 $('main').prepend(alert);
                 setTimeout(function () {
@@ -80,6 +72,7 @@ const loginForm = `
               $("#login-button-nav").css("visibility", "hidden");
               $("#logout-button").css("visibility", "visible");
               $('.logged-as').text('Logged in as: '+ cookie);
+              $("#edit-profile-button").css("visibility", "visible");
             } else {
               $('.logged-as').text('Logged in as:');
             }
@@ -89,17 +82,18 @@ const loginForm = `
               const $item = listItems(item);
               const category = item.category;
               if (category === 'movie') {
-                $('.media').append($item);
+                $('.movie').append($item);
               } else if (category === 'book') {
                 $('.books').append($item);
               } else if (category === 'product') {
                 $('.products').append($item);
               } else if (category === 'restaurant') {
-                $('.resteraunts').append($item);
+                $('.restaurant').append($item);
               } else {
-                $('.sort').append(listItems($data));
+                $('.sort').append($item);
               };
             });
+
           }
         });
       });
@@ -127,7 +121,6 @@ let listForms = `
           const errorString = 'Sorry item already exists';
           let name = formData.get('name');
           let category = formData.get('category');
-          console.log('name clicked')
           if (name.length !== 0) {
             $.post('/users/add', { 'name': name }).done(function (data) {
               const $data = data;
@@ -140,13 +133,13 @@ let listForms = `
                 }, 2000);
               } else {
                 if (data.category === 'movie') {
-                  $('.media').append(listItems($data));
+                  $('.movie').append(listItems($data));
                 } else if (data.category === 'book') {
                   $('.books').append(listItems($data));
                 } else if (data.category === 'product') {
                   $('.products').append(listItems($data));
                 } else if (data.category === 'restaurant') {
-                  $('.resteraunts').append(listItems($data));
+                  $('.restaurant').append(listItems($data));
                 } else {
                   $('.sort').append(listItems($data));
                 };
@@ -160,47 +153,226 @@ let listForms = `
         <section class="toWatch toDoBox box">
           <header class="toDoHeader">To Watch Section</header>
           <section>
-            <ul class="list-group media">
+            <ul id="movie" class="list-group movie"
+
+            >
           </section>
         </section>
 
 
         <section class="toEat toDoBox box">
           <header class="toDoHeader">To Eat Section</header>
-          <section class="list-container">
-            <ul class="list-group resteraunts">
+          <section class="list-container" >
+            <ul id="restaurant" class="list-group restaurant"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toRead toDoBox box">
           <header class="toDoHeader">To Read Section</header>
-          <section>
-            <ul class="list-group books">
+          <section >
+            <ul id="books" class="list-group books"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toBuy toDoBox box">
           <header class="toDoHeader">To Buy Section</header>
-          <section>
-            <ul class="list-group products">
+          <section >
+            <ul id="products" class="list-group products"
+
+            >
             </ul>
           </section>
         </section>
 
         <section class="toSort toDoBox box">
           <header class="toDoHeader">Need Sorting</header>
-          <section>
-            <ul class="list-group sort">
+          <section >
+            <ul id="sort" class="list-group sort"
+
+            >
             </ul>
           </section>
         </section>
 
       </section>
-
-
-
+      <script>
+      $("#movie").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'movie'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#books").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'book'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#restaurant").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'restaurant'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#products").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'product'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+      $("#sort").droppable({
+        drop: function(event, ui) {
+          let itemName = $(ui.draggable).text().trim();
+          itemName = itemName.substring(0, itemName.length - 1).trim();
+          $.post('/users/recat', { 'name': itemName, 'category':  'sort'}).done(function (res) {
+            $.get('/users', (data) => {
+              const $data = data;
+              $('main').empty();
+              $('main').append(listForms);
+                data.map(item => {
+                  const $item = listItems(item);
+                  const category = item.category;
+                  if (category === 'movie') {
+                    $('.movie').append($item);
+                  } else if (category === 'book') {
+                    $('.books').append($item);
+                  } else if (category === 'product') {
+                    $('.products').append($item);
+                  } else if (category === 'restaurant') {
+                    $('.restaurant').append($item);
+                  } else {
+                    $('.sort').append($item);
+                  };
+                });
+            });
+          })
+        },
+        over: function(event, ui) {
+            $(this).css('background', 'orange');
+        },
+        out: function(event, ui) {
+            $(this).css('background', 'cyan');
+        }
+      });
+    </script>
   `;
 
 
@@ -227,7 +399,6 @@ const registerForm = `
         let email = formData.get('email');
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
-        console.log(email, firstName, lastName);
         if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
           $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
             const $data = data;
@@ -243,20 +414,54 @@ const registerForm = `
       </script>
     `;
 
-    const getCookie = function(cname) {
-      let name = cname + "=";
-      let ca = document.cookie.split(';');
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    };
+const profileForm = `
+    <div class="custom-centered-container">
+    <h3>Edit Profile</h3>
+    <form id="edit-profile" action="/profile" method="POST">
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px"
+                >
+            <label for="first-name">First Name</label>
+            <input class="form-control" type="name" name="first-name" placeholder="Enter first Name"
+                style="width: 300px" >
+            <label for="first-name">Last Name</label>
+            <input class="form-control" type="name" name="last-name" placeholder="Enter Last Name" style="width: 300px"
+                >
+        </div>
+        <button type="submit" class="btn default-button">Edit</button>
+    </form>
+</div>
+<script>
+    $('#edit-profile').unbind().click((event) => {
+        event.preventDefault();
+        const formData = new FormData(document.querySelector('#edit-profile'));
+        const errorString = 'Invalid';
+        let email = formData.get('email');
+        let firstName = formData.get('first-name');
+        let lastName = formData.get('last-name');
+        console.log(email, firstName, lastName);
+        $.post('/users/profile', function (data) {
+          $('main').append($data);
+        });
+    });
+</script>
+    `;
+
+const getCookie = function (cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+};
 
     let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
     Please login
@@ -274,11 +479,13 @@ $(document).ready(function () {
       $("#login-button-nav").css("visibility", "hidden");
       $("#logout-button").css("visibility", "visible");
       $('.logged-as').text(`Logged in as: ${cookie}`);
+      $('#edit-profile-button').css("visibility", "visible");
     } else {
       $("#register-button-nav").css("visibility", "visible");
       $("#login-button-nav").css("visibility", "visible");
       $("#logout-button").css("visibility", "hidden");
       $('.logged-as').text(``);
+      $('#edit-profile-button').css("visibility", "hidden");
     }
 
     $.get('/users', (data) => {
@@ -296,18 +503,58 @@ $(document).ready(function () {
           const $item = listItems(item);
           const category = item.category;
           if (category === 'movie') {
-            $('.media').append($item);
+            $('.movie').append($item);
           } else if (category === 'book') {
             $('.books').append($item);
           } else if (category === 'product') {
             $('.products').append($item);
           } else if (category === 'restaurant') {
-            $('.resteraunts').append($item);
+            $('.restaurant').append($item);
           } else {
-            $('.sort').append(listItems($data));
+            $('.sort').append($item);
           };
         });
       }
     });
+
+    let dragged;
+    let id;
+    let index;
+    let indexDrop;
+    let list;
+
+    document.addEventListener("dragstart", ({target}) => {
+      dragged = target;
+      id = target.id;
+      list = target.parentNode.children;
+      for(let i = 0; i < list.length; i += 1) {
+          if(list[i] === dragged){
+          index = i;
+        }
+      }
+    });
+
+    document.addEventListener("dragover", (event) => {
+        event.preventDefault();
+    });
+
+    document.addEventListener("drop", ({target}) => {
+    if(target.className == "dropzone" && target.id !== id) {
+        dragged.remove( dragged );
+        for(let i = 0; i < list.length; i += 1) {
+            if(list[i] === target){
+            indexDrop = i;
+          }
+        }
+        console.log(index, indexDrop);
+        if(index > indexDrop) {
+            target.before( dragged );
+        } else {
+        target.after( dragged );
+        }
+      }
+    });
+
+
   })
 });
