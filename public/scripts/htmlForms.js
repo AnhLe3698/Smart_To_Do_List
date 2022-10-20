@@ -406,8 +406,8 @@ const registerForm = `
               $('main').append($data);
             } else {
               $('main').append($data);
-              $('main').empty();
-              $('main').append(listForms);
+              cookie = getCookie('name');
+              window.location.reload();
               // $('main').append('Login Successful');
             }
           });
@@ -443,8 +443,8 @@ const profileForm = `
         console.log(email, firstName, lastName);
         $.post('/users/profile', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
           $('main').append($data);
-          $('main').empty();
-          $('main').append(listForms);
+          cookie = getCookie('name');
+          window.location.reload();
         });
     });
 </script>

@@ -58,6 +58,8 @@ router.post('/register', (req, res) => {
       // return res.json('Duplicate email'); Deprecated
     } else {
       // Successful Register
+      res.clearCookie('email');
+      res.clearCookie('name');
       res.cookie('email', user.email);
       res.cookie('name', user.firstName);
       addUser(user).then((result) => {
@@ -138,7 +140,7 @@ router.post('/profile', (req, res) => {
   console.log(req.cookies['email']);
   // edits the user based on information given
   db.editUser(email, firstName, lastName, req.cookies['email']).then((result) => {
-    
+
     res.clearCookie('email');
     res.clearCookie('name');
     res.cookie('email', email);
