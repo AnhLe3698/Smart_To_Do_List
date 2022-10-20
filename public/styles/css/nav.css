@@ -12,7 +12,7 @@ nav {
   /* when to add more items in nav */
   position: fixed !important;
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   z-index: 100;
 }
@@ -38,9 +38,10 @@ a:hover {
   text-decoration: none;
 }
 
-.nav-wrapper button{
-  margin: 5px ;
+.nav-wrapper button {
+  margin: 5px;
 }
+
 .logged-as {
   float: left;
 }

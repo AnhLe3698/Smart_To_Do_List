@@ -1,11 +1,23 @@
+$primary: #e8c382;
+$secondary: #b39d69;
+$tertiary: #a86b4c;
+$quaternary: #7d1a0c;
+$quinary: #340a0b;
+$white: #ffffff;
+$outline: #ccc;
+$background: #f5f5f5;
+$full-percent: 100%;
+
 body {
-  background-color: #f5f5f5;
+  background-color: $background;
 }
 
 main {
-  padding-top: 130px;
-  padding-left: 10px;
-  padding-right: 10px;
+  $top-size: 130px;
+  $left-right-size: 10px;
+  padding-top: $top-size;
+  padding-left: $left-right-size;
+  padding-right: $left-right-size;
 }
 
 .logo img {
@@ -39,23 +51,25 @@ ul {
 }
 
 li {
-  border: 1px solid #ccc;
+  border: 1px solid $outline;
   border-radius: 4px;
   padding: 5% !important;
-  width: 100%;
-  height: 100%;
+  width: $full-percent;
+  height: $full-percent;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background-color: #ffffff;
-  box-shadow: 5px 5px 5px #ccc;
-}
-li:hover {
-  background-color: #e8c382;
-  overflow: visible;
-  color: rgb(38, 38, 38);
+  background-color: $white;
+  box-shadow: 5px 5px 5px $outline;
+
+  &:hover {
+    background-color: $primary;
+    overflow: visible;
+    color: rgb(38, 38, 38);
+  }
 }
 
 /* Search section */
+
 section.search-section {
   display: flex;
   flex-direction: row;
@@ -85,6 +99,7 @@ select#search-filter.form-control {
   align-items: center;
 }
 
+
 .list-group-container {
   display: flex;
   flex-direction: row;
@@ -102,17 +117,17 @@ select#search-filter.form-control {
 }
 
 .bg-primary {
-  color: #ffffff;
-  background-color: #340a0b;
+  color: $white;
+  background-color: $quinary;
 }
 
 .default-button {
-  background-color: #b39d69;
-  color: #ffffff;
+  background-color: $secondary;
+  color: $white;
 }
 
 .light-brown {
-  color: #a86b4c;
+  color: $tertiary;
 }
 
 .item-search {
@@ -134,6 +149,7 @@ select#search-filter.form-control {
 }
 
 /* Register Section */
+
 .custom-centered-container {
   display: flex;
   flex-direction: column;
