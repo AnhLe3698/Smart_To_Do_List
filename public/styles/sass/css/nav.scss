@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    top: 0px;
+    /* align-content: stretch; */
+    /* when to add more items in nav */
+    position: fixed !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar {
+    position: fixed !important;
+    display: flex;
+}
+
+.nav-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+a {
+    color: #e8c382;
+}
+
+a:hover {
+    color: #a86b4c;
+    text-decoration: none;
+}
+
+.nav-wrapper button {
+    margin: 5px;
+}
+
+.logged-as {
+    float: left;
+}
