@@ -49,7 +49,6 @@ router.post('/register', (req, res) => {
   db.getUserWithEmail(user['email']).then((bool) => {
     if (bool) {
       // Failed register attempt
-      console.log('Duplicate email');
       res.set('Content-Type', 'text/html');
       return res.send(Buffer.from(`
       <div class="alert alert-warning center-content" role="alert">
@@ -63,7 +62,7 @@ router.post('/register', (req, res) => {
       res.cookie('email', user.email);
       res.cookie('name', user.firstName);
       addUser(user).then((result) => {
-        return res.json(`The following user was added ${result}`);
+        return res.json(`success`);
       });
       ;
     }
@@ -133,19 +132,17 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/profile', (req, res) => {
-  let email = req.body.email;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
   console.log(email, firstName, lastName);
-  console.log(req.cookies['email']);
   // edits the user based on information given
-  db.editUser(email, firstName, lastName, req.cookies['email']).then((result) => {
-
-    res.clearCookie('email');
-    res.clearCookie('name');
-    res.cookie('email', email);
-    res.cookie('name', firstName);
-    res.json(result);
+  db.editUser( firstName, lastName, req.cookies['email']).then((result) => {
+    db.grabInitialList(email).then((data) => {
+      console.log(data)
+      res.clearCookie('name');
+      res.cookie('name', firstName);
+      res.json(data);
+    })
   }).catch(e => res.send(e));
 });
 

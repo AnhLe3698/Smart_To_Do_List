@@ -69,13 +69,13 @@ module.exports = {
   },
 
   // Edit user profile
-  editUser: (user) => {
+  editUser: (firstName, lastName, email) => {
 
-    const values = [user.firstName, user.lastName, user.email, user.oldEmail];
+    const values = [firstName, lastName, email];
 
     let queryString = `UPDATE users
-    SET first_name = $1, last_name = $2, email = $3
-    WHERE email = $4
+    SET first_name = $1, last_name = $2
+    WHERE email = $3
     RETURNING* ;`
 
     return pool.query(queryString, values)
