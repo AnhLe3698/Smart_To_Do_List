@@ -70,11 +70,7 @@ module.exports = {
 
   // Edit user profile
   editUser: (user) => {
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 32d39edbc5dbd9613ff27638efebedca288efd5c
     const values = [user.firstName, user.lastName, user.email, user.oldEmail];
 
     let queryString = `UPDATE users
