@@ -5,9 +5,11 @@ $quaternary: #7d1a0c;
 $quinary: #340a0b;
 $white: #ffffff;
 $outline: #ccc;
+$background: #f5f5f5;
+$full-percent: 100%;
 
-body{
-  background-color: #f5f5f5be;
+body {
+  background-color: $background;
 }
 
 main {
@@ -23,7 +25,7 @@ main {
   width: 260px;
 }
 
-.toDoBox{
+.toDoBox {
   padding: 30px;
   width: 325px;
 }
@@ -52,15 +54,15 @@ li {
   border: 1px solid $outline;
   border-radius: 4px;
   padding: 5% !important;
-  width: 100%;
-  height: 100%;
+  width: $full-percent;
+  height: $full-percent;
   text-overflow: ellipsis;
   white-space: nowrap;
   background-color: $white;
   box-shadow: 5px 5px 5px $outline;
 
   &:hover {
-    background-color: #ffedc4;
+    background-color: $primary;
     overflow: visible;
     color: rgb(38, 38, 38);
   }
@@ -111,21 +113,21 @@ select#search-filter.form-control {
   align-content: space-between;
   flex-wrap: nowrap;
   justify-content: space-between;
-    align-items: baseline;
+  align-items: baseline;
 }
 
 .bg-primary {
-  color: #fff;
-  background-color: #340a0b;
+  color: $white;
+  background-color: $quinary;
 }
 
 .default-button {
-  background-color: #b39d69;
-  color: #fff;
+  background-color: $secondary;
+  color: $white;
 }
 
 .light-brown {
-  color: #a86b4c;
+  color: $tertiary;
 }
 
 .item-search {
