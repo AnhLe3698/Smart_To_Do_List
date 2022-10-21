@@ -69,22 +69,22 @@ module.exports = {
   },
 
   // Edit user profile
-  editUser: (user) => {
-  
-    const values = [user.firstName, user.lastName, user.email, user.oldEmail];
+  editUser: (firstName, lastName, email) => {
+    const values = [firstName, lastName, email];
 
     let queryString = `UPDATE users
-    SET first_name = $1, last_name = $2, email = $3
-    WHERE email = $4
+    SET first_name = $1, last_name = $2
+    WHERE email = $3
     RETURNING* ;`
 
     return pool.query(queryString, values)
-    .then((result) => {
-      return result.rows[0];
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
+      .then((result) => {
+        console.log('results are',result.rows[0])
+        return result.rows[0];
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   },
 
   // This query should add an extra item to items table
@@ -263,7 +263,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
@@ -277,7 +277,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
@@ -294,7 +294,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:',result.rows[0].name, ' is ', result.rows[0].category);
+        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
