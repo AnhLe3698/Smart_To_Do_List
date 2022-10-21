@@ -407,11 +407,11 @@ const registerForm = `
               $('main').empty();
               cookie = getCookie('name');
               $('main').append(listForms);
-              $("#register-button-nav").css("visibility", "hidden");
-              $("#login-button-nav").css("visibility", "hidden");
-              $("#logout-button").css("visibility", "visible");
+              $("#register-button-nav").css("display", "none");
+              $("#login-button-nav").css("display", "none");
+              $("#logout-button").css("display", "block");
               $('.logged-as').text('Logged in as: ' + cookie);
-              $('#edit-profile-button').css("visibility", "visible");
+              $('#edit-profile-button').css("display", "block");
             } else {
               $('main').append($data);
             }
