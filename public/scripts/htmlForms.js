@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+///////////HTML FORMS FOR SPA///////////////
+////////////////////////////////////////////
+
+
+// Lists items function
 const listItems = function (items) {
   let joinString = items.name.replaceAll(' ', '');
   let markup = `
@@ -33,6 +39,7 @@ const listItems = function (items) {
 
 let invalidEmailAlert = `<div class="alert alert-warning center-content" role="alert">Invalid Email</div>`;
 
+// Create the login form, listeners, and append list
 const loginForm = `
     <div class="custom-centered-container">
       <h3>Login</h3>
@@ -99,6 +106,7 @@ const loginForm = `
       });
       </script>
     `;
+
 // Prepend the alert when an item already exists on the list
 let existsAlert = `<div class="alert alert-warning center-content" role="alert">
 Sorry, that item already exists!
@@ -374,7 +382,7 @@ let listForms = `
     </script>
   `;
 
-
+// Register New Users
 const registerForm = `
       <div class="custom-centered-container">
       <h3>Register</h3>
@@ -420,6 +428,7 @@ const registerForm = `
       </script>
     `;
 
+// Editing Profile
 const profileForm = `
     <div class="custom-centered-container">
     <h3>Edit Profile</h3>
@@ -494,6 +503,7 @@ $(document).ready(function () {
     cookie = cookie.replace('%40', '@');
     // Displays user email when logged in
 
+    // Upon Refresh the page displays appropriate nav bar icons
     if(cookie) {
       $("#register-button-nav").css("display", "none");
       $("#login-button-nav").css("display", "none");
@@ -508,6 +518,7 @@ $(document).ready(function () {
       $('#edit-profile-button').css("display", "none");
     }
 
+    // Displays the list items upon page refresh
     $.get('/users', (data) => {
       const errorString = 'Not logged in';
       const $data = data;
