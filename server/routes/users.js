@@ -49,7 +49,6 @@ router.post('/register', (req, res) => {
   db.getUserWithEmail(user['email']).then((bool) => {
     if (bool) {
       // Failed register attempt
-      console.log('Duplicate email');
       res.set('Content-Type', 'text/html');
       return res.send(Buffer.from(`
       <div class="alert alert-warning center-content" role="alert">
@@ -63,7 +62,7 @@ router.post('/register', (req, res) => {
       res.cookie('email', user.email);
       res.cookie('name', user.firstName);
       addUser(user).then((result) => {
-        return res.json(`The following user was added ${result}`);
+        return res.json(`success`);
       });
       ;
     }

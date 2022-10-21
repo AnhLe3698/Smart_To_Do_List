@@ -395,15 +395,23 @@ const registerForm = `
       $('#register-user').unbind().submit((event) => {
         event.preventDefault();
         const formData = new FormData(document.querySelector('#register-user'))
-        const errorString = 'Invalid email';
+        const successString = 'success';
         let email = formData.get('email');
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
         if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
-          $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
+          $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function(data) {
             const $data = data;
-            if ($data === errorString) {
-              $('main').append($data);
+            console.log($data);
+            if (data === successString) {
+              $('main').clear();
+              cookie = getCookie('name');
+              $('main').append(listForms);
+              $("#register-button-nav").css("visibility", "hidden");
+              $("#login-button-nav").css("visibility", "hidden");
+              $("#logout-button").css("visibility", "visible");
+              $('.logged-as').text('Logged in as: ' + cookie);
+              $('#edit-profile-button').css("visibility", "visible");
             } else {
               $.get('/users', (data) => {
                 const $data = data;
@@ -453,10 +461,35 @@ const profileForm = `
         const errorString = 'Invalid';
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
+<<<<<<< HEAD
         $.post('/users/profile', {'firstName': firstName, 'lastName': lastName }).done(function (data) {
           $('main').append(data);
           cookie = getCookie('name');
           window.location.reload();
+=======
+        console.log(email, firstName, lastName);
+        $.post('/users/profile', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function(data) {
+          let $data = data;
+          $('main').empty();
+          $('main').append(listForms);
+            cookie = getCookie('name');
+            data.map(item => {
+              const $item = listItems(item);
+              const category = item.category;
+              if (category === 'movie') {
+                $('.movie').append($item);
+              } else if (category === 'book') {
+                $('.books').append($item);
+              } else if (category === 'product') {
+                $('.products').append($item);
+              } else if (category === 'restaurant') {
+                $('.restaurant').append($item);
+              } else {
+                $('.sort').append($item);
+            };
+          });
+
+>>>>>>> 33e7eec26ecfff74d285b432a9f59ef909d96e31
         });
     });
 </script>
