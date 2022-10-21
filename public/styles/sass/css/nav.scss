@@ -60,11 +60,27 @@ a {
     background-size: contain;
 }
 
+.drop-down-menu {
+    display: none;
+}
+
+.navbar-brand{
+    font-size: 30px;
+  }
+
 @media screen and (max-width: 1024px) {
 
-  
+    .navbar-brand{
+        display: block;
+        text-align: center;
+        font-size: 25px;
+      }
+
+    .drop-down-menu{
+        display: block;
+    }
+
     .logo {
         display: none;
     }
-  
 }
