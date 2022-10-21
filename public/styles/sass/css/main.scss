@@ -1,12 +1,5 @@
-$primary: #e8c382;
-$secondary: #b39d69;
-$tertiary: #a86b4c;
-$quaternary: #7d1a0c;
-$quinary: #340a0b;
-$white: #ffffff;
-$outline: #ccc;
-$background: #f5f5f5;
-$full-percent: 100%;
+@import "variables.scss";
+
 
 body {
   background-color: $background;
@@ -14,15 +7,9 @@ body {
 
 main {
   $top-size: 130px;
-  $left-right-size: 10px;
   padding-top: $top-size;
-  padding-left: $left-right-size;
-  padding-right: $left-right-size;
-}
-
-.logo img {
-  height: 60px;
-  width: 260px;
+  padding-left: $left-right-padding;
+  padding-right: $left-right-padding;
 }
 
 .toDoBox {
@@ -50,7 +37,7 @@ ul {
   flex-wrap: nowrap;
 }
 
-li {
+.todo-list {
   border: 1px solid $outline;
   border-radius: 4px;
   padding: 5% !important;
@@ -116,10 +103,6 @@ select#search-filter.form-control {
   align-items: baseline;
 }
 
-.bg-primary {
-  color: $white;
-  background-color: $quinary;
-}
 
 .default-button {
   background-color: $secondary;

@@ -2,7 +2,7 @@ const listItems = function (items) {
   let joinString = items.name.replaceAll(' ', '');
   let markup = `
   <form>
-    <li class="zzone list-group" id="${joinString}"><div>${items.name}</div>
+    <li class="todo-list zzone list-group" id="${joinString}"><div>${items.name}</div>
       <button id="delete-item${joinString}" type="button" class="btn btn-danger">X</button>
     </li>
 
