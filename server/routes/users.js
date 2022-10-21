@@ -4,7 +4,6 @@
 
 const express = require('express');
 const router = express.Router();
-const searching = require('../helper_functions/searching');
 const { addUser, getUserName, recategorizeItem } = require('./dbQueries');
 const db = require('./dbQueries');
 
@@ -15,7 +14,6 @@ router.post('/login', (req, res) => {
 
     if (bool) {
       // Successful Login
-
       // Set email cookie
       res.cookie('email', email);
       db.getUserName(email).then((name) => {
