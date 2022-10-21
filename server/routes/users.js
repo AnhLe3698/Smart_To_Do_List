@@ -144,7 +144,11 @@ router.post('/profile', (req, res) => {
     res.clearCookie('name');
     //res.cookie('email', email);
     res.cookie('name', firstName);
-    res.json(result);
+
+    db.grabInitialList(req.cookies['email']).then((result) => {
+      res.json(result);
+    }).catch(e => res.send(e))
+
   }).catch(e => res.send(e));
 });
 

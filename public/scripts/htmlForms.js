@@ -404,7 +404,7 @@ const registerForm = `
             const $data = data;
             console.log($data);
             if (data === successString) {
-              $('main').clear();
+              $('main').empty();
               cookie = getCookie('name');
               $('main').append(listForms);
               $("#register-button-nav").css("visibility", "hidden");
@@ -413,26 +413,7 @@ const registerForm = `
               $('.logged-as').text('Logged in as: ' + cookie);
               $('#edit-profile-button').css("visibility", "visible");
             } else {
-              $.get('/users', (data) => {
-                const $data = data;
-                $('main').empty();
-                $('main').append(listForms);
-                  data.map(item => {
-                    const $item = listItems(item);
-                    const category = item.category;
-                    if (category === 'movie') {
-                      $('.movie').append($item);
-                    } else if (category === 'book') {
-                      $('.books').append($item);
-                    } else if (category === 'product') {
-                      $('.products').append($item);
-                    } else if (category === 'restaurant') {
-                      $('.restaurant').append($item);
-                    } else {
-                      $('.sort').append($item);
-                    };
-                  });
-              });
+              $('main').append($data);
             }
           });
         }
@@ -482,6 +463,7 @@ const profileForm = `
             };
           });
           cookie = getCookie('name');
+          $('.logged-as').text('Logged in as: ' + cookie);
         });
     });
 </script>
