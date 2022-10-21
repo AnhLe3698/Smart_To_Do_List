@@ -133,17 +133,17 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/profile', (req, res) => {
-  let email = req.body.email;
+  //let email = req.body.email;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
-  console.log(email, firstName, lastName);
-  console.log(req.cookies['email']);
+  //console.log(firstName, lastName);
+  //console.log(req.cookies['email']);
   // edits the user based on information given
-  db.editUser(email, firstName, lastName, req.cookies['email']).then((result) => {
+  db.editUser(firstName, lastName, req.cookies['email']).then((result) => {
 
-    res.clearCookie('email');
+    //res.clearCookie('email');
     res.clearCookie('name');
-    res.cookie('email', email);
+    //res.cookie('email', email);
     res.cookie('name', firstName);
     res.json(result);
   }).catch(e => res.send(e));

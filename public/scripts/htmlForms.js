@@ -405,10 +405,26 @@ const registerForm = `
             if ($data === errorString) {
               $('main').append($data);
             } else {
-              $('main').append($data);
-              cookie = getCookie('name');
-              window.location.reload();
-              // $('main').append('Login Successful');
+              $.get('/users', (data) => {
+                const $data = data;
+                $('main').empty();
+                $('main').append(listForms);
+                  data.map(item => {
+                    const $item = listItems(item);
+                    const category = item.category;
+                    if (category === 'movie') {
+                      $('.movie').append($item);
+                    } else if (category === 'book') {
+                      $('.books').append($item);
+                    } else if (category === 'product') {
+                      $('.products').append($item);
+                    } else if (category === 'restaurant') {
+                      $('.restaurant').append($item);
+                    } else {
+                      $('.sort').append($item);
+                    };
+                  });
+              });
             }
           });
         }
@@ -421,8 +437,6 @@ const profileForm = `
     <h3>Edit Profile</h3>
     <form id="edit-profile" action="/profile" method="POST">
         <div class="form-group">
-            <label for="email">Email address</label>
-            <input class="form-control" type="email" name="email" placeholder="Enter email" style="width: 300px">
             <label for="first-name">First Name</label>
             <input class="form-control" type="name" name="first-name" placeholder="Enter first Name" style="width: 300px" >
             <label for="first-name">Last Name</label>
@@ -437,12 +451,10 @@ const profileForm = `
         event.preventDefault();
         const formData = new FormData(document.querySelector('#edit-profile'));
         const errorString = 'Invalid';
-        let email = formData.get('email');
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
-        console.log(email, firstName, lastName);
-        $.post('/users/profile', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function (data) {
-          $('main').append($data);
+        $.post('/users/profile', {'firstName': firstName, 'lastName': lastName }).done(function (data) {
+          $('main').append(data);
           cookie = getCookie('name');
           window.location.reload();
         });
