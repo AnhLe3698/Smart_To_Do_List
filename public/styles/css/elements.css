@@ -1,12 +1,7 @@
-.caterino {
-  position: fixed;
-  height: 50px;
-}
-
 .cat {
-  position: absolute;
-  top: -30%;
-  left: 5%;
+  position: fixed;
+  top: 90%;
+  right: 5%;
   height: 100px;
   width: 113px;
 }
