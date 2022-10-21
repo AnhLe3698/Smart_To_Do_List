@@ -462,9 +462,26 @@ const profileForm = `
         let firstName = formData.get('first-name');
         let lastName = formData.get('last-name');
         $.post('/users/profile', {'firstName': firstName, 'lastName': lastName }).done(function (data) {
-          $('main').append(data);
+          let $data = data;
+          $('main').empty();
+          $('main').append(listForms);
+            cookie = getCookie('name');
+            data.map(item => {
+              const $item = listItems(item);
+              const category = item.category;
+              if (category === 'movie') {
+                $('.movie').append($item);
+              } else if (category === 'book') {
+                $('.books').append($item);
+              } else if (category === 'product') {
+                $('.products').append($item);
+              } else if (category === 'restaurant') {
+                $('.restaurant').append($item);
+              } else {
+                $('.sort').append($item);
+            };
+          });
           cookie = getCookie('name');
-          //window.location.reload();
         });
     });
 </script>
