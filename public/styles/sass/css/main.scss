@@ -65,15 +65,6 @@ section.search-section {
   padding: 10px;
 }
 
-input.form-control {
-  width: 500px;
-}
-
-.searchForm {
-  display: flex;
-  justify-content: center;
-}
-
 select#search-filter.form-control {
   width: 150px;
 }
@@ -113,13 +104,6 @@ select#search-filter.form-control {
   color: $tertiary;
 }
 
-.item-search {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  align-items: center;
-}
-
 /* landing page */
 .landing-page {
   display: flex;
@@ -146,3 +130,73 @@ select#search-filter.form-control {
   flex-direction: column;
   align-items: center;
 }
+
+.add-button{
+  height: 50px;
+  width: 50px;
+  font-size: 25px;
+}
+
+.search-form {
+  width: 500px !important; 
+  height: 50px; 
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.item-search {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+}
+
+.add-button {
+  height: 50px;
+  width: 50px; 
+  font-size: 25px;
+}
+
+.add-item{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  align-items: center;
+}
+
+
+@media screen and (max-width: 1024px) {
+
+  .search-form {
+    width: 260px !important; 
+  }
+
+  .add-item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .add-button{
+    margin-left: 2px;
+  }
+
+  .toDoHeader {
+    font-size: 160%;
+  }
+
+  .todo-list {
+    font-size: 120%;
+  }
+ 
+  // .nav-wrapper {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   align-items: center;
+  // }
+
+}
+

@@ -48,10 +48,39 @@ a {
 }
 
 .logged-as {
-    float: left;
+    padding: 5%;
+    text-align: center;
 }
 
-.logo img {
+.logo {
+    background-image: url('../../resources/images/group_logo.png');
     height: 60px;
     width: 260px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.drop-down-menu {
+    display: none;
+}
+
+.navbar-brand{
+    font-size: 30px;
+  }
+
+@media screen and (max-width: 1024px) {
+
+    .navbar-brand{
+        display: block;
+        text-align: center;
+        font-size: 25px;
+      }
+
+    .drop-down-menu{
+        display: block;
+    }
+
+    .logo {
+        display: none;
+    }
 }
