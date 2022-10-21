@@ -54,10 +54,10 @@ const loginForm = `
           // Data we get back from the server
           const $data = data;
           if ($data === errorString) {
-            $("#register-button-nav").css("visibility", "visible");
-            $("#login-button-nav").css("visibility", "visible");
-            $("#logout-button").css("visibility", "hidden");
-            $("#edit-profile-button").css("visibility", "hidden");
+            $("#register-button-nav").css("display", "block");
+            $("#login-button-nav").css("display", "block");
+            $("#logout-button").css("display", "none");
+            $("#edit-profile-button").css("display", "none");
             let alert = $(invalidEmailAlert);
                 $('main').prepend(alert);
                 setTimeout(function () {
@@ -68,11 +68,11 @@ const loginForm = `
             cookie = cookie.replace('%40', '@');
             // Displays user email when logged in
             if(cookie) {
-              $("#register-button-nav").css("visibility", "hidden");
-              $("#login-button-nav").css("visibility", "hidden");
-              $("#logout-button").css("visibility", "visible");
+              $("#register-button-nav").css("display", "none");
+              $("#login-button-nav").css("display", "none");
+              $("#logout-button").css("display", "block");
               $('.logged-as').text('Logged in as: '+ cookie);
-              $("#edit-profile-button").css("visibility", "visible");
+              $("#edit-profile-button").css("display", "block");
             } else {
               $('.logged-as').text('Logged in as:');
             }
@@ -473,17 +473,17 @@ $(document).ready(function () {
     // Displays user email when logged in
 
     if(cookie) {
-      $("#register-button-nav").css("visibility", "hidden");
-      $("#login-button-nav").css("visibility", "hidden");
-      $("#logout-button").css("visibility", "visible");
+      $("#register-button-nav").css("display", "none");
+      $("#login-button-nav").css("display", "none");
+      $("#logout-button").css("display", "block");
       $('.logged-as').text(`Logged in as: ${cookie}`);
-      $('#edit-profile-button').css("visibility", "visible");
+      $('#edit-profile-button').css("display", "block");
     } else {
-      $("#register-button-nav").css("visibility", "visible");
-      $("#login-button-nav").css("visibility", "visible");
-      $("#logout-button").css("visibility", "hidden");
+      $("#register-button-nav").css("display", "block");
+      $("#login-button-nav").css("display", "block");
+      $("#logout-button").css("display", "none");
       $('.logged-as').text(``);
-      $('#edit-profile-button').css("visibility", "hidden");
+      $('#edit-profile-button').css("display", "none");
     }
 
     $.get('/users', (data) => {

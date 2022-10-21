@@ -15,10 +15,10 @@ $(() => {
   $('#logout-button').unbind().on('click', (event) => {
     event.preventDefault();
     $('ul').empty();
-    $("#register-button-nav").css("visibility", "visible");
-    $("#login-button-nav").css("visibility", "visible");
-    $("#logout-button").css("visibility", "hidden");
-    $("#edit-profile-button").css("visibility", "hidden");
+    $("#register-button-nav").css("display", "block");
+    $("#login-button-nav").css("display", "block");
+    $("#logout-button").css("display", "none");
+    $("#edit-profile-button").css("display", "none");
     $('.logged-as').text(``);
     const $landingPage = '<img class="landing-page" src="./resources/images/landingLogo.png" alt="">'
     $("main").empty();
