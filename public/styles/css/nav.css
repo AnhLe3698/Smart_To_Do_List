@@ -20,6 +20,8 @@ nav {
 .navbar {
   position: fixed !important;
   display: flex;
+  color: #ffffff;
+  background-color: #340a0b;
 }
 
 .nav-wrapper {
@@ -32,7 +34,6 @@ nav {
 a {
   color: #e8c382;
 }
-
 a:hover {
   color: #a86b4c;
   text-decoration: none;
@@ -44,4 +45,9 @@ a:hover {
 
 .logged-as {
   float: left;
+}
+
+.logo img {
+  height: 60px;
+  width: 260px;
 }

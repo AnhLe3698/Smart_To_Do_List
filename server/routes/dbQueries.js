@@ -272,7 +272,7 @@ module.exports = {
   },
   recategorizeDB: (item) => {
     const values = [item.name, item.category];
-    let queryString = `UPDATE items SET category = $2 WHERE name = $1 RETURNING *
+    let queryString = `UPDATE data SET category = $2 WHERE name = $1 RETURNING *
     `;
 
     return pool.query(queryString, values)

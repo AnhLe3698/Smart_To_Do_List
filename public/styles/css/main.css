@@ -8,11 +8,6 @@ main {
   padding-right: 10px;
 }
 
-.logo img {
-  height: 60px;
-  width: 260px;
-}
-
 .toDoBox {
   padding: 30px;
   width: 325px;
@@ -38,7 +33,7 @@ ul {
   flex-wrap: nowrap;
 }
 
-li {
+.todo-list {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 5% !important;
@@ -49,7 +44,7 @@ li {
   background-color: #ffffff;
   box-shadow: 5px 5px 5px #ccc;
 }
-li:hover {
+.todo-list:hover {
   background-color: #e8c382;
   overflow: visible;
   color: rgb(38, 38, 38);
@@ -99,11 +94,6 @@ select#search-filter.form-control {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: baseline;
-}
-
-.bg-primary {
-  color: #ffffff;
-  background-color: #340a0b;
 }
 
 .default-button {
