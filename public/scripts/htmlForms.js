@@ -1,3 +1,9 @@
+/////////////////////////////////////////////
+///////////HTML FORMS FOR SPA///////////////
+////////////////////////////////////////////
+
+
+// Lists items function
 const listItems = function (items) {
   let joinString = items.name.replaceAll(' ', '');
   let markup = `
@@ -29,10 +35,11 @@ const listItems = function (items) {
     </script>
      `;
   return markup;
-}
+};
 
 let invalidEmailAlert = `<div class="alert alert-warning center-content" role="alert">Invalid Email</div>`;
 
+// Create the login form, listeners, and append list
 const loginForm = `
     <div class="custom-centered-container">
       <h3>Login</h3>
@@ -99,6 +106,7 @@ const loginForm = `
       });
       </script>
     `;
+
 // Prepend the alert when an item already exists on the list
 let existsAlert = `<div class="alert alert-warning center-content" role="alert">
 Sorry, that item already exists!
@@ -374,7 +382,7 @@ let listForms = `
     </script>
   `;
 
-
+// Register New Users
 const registerForm = `
       <div class="custom-centered-container">
       <h3>Register</h3>
@@ -420,6 +428,7 @@ const registerForm = `
       </script>
     `;
 
+// Editing Profile
 const profileForm = `
     <div class="custom-centered-container">
     <h3>Edit Profile</h3>
@@ -466,76 +475,4 @@ const profileForm = `
         });
     });
 </script>
-    `;
-
-const getCookie = function (cname) {
-  let name = cname + "=";
-  let ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-};
-
-let notLoggedIn = `<div class="alert alert-warning center-content" role="alert">
-    Please login
-    </div>`;
-
-$(document).ready(function () {
-  $(function () {
-
-    let cookie = getCookie('name');
-    cookie = cookie.replace('%40', '@');
-    // Displays user email when logged in
-
-    if(cookie) {
-      $("#register-button-nav").css("display", "none");
-      $("#login-button-nav").css("display", "none");
-      $("#logout-button").css("display", "block");
-      $('.logged-as').text(`Logged in as: ${cookie}`);
-      $('#edit-profile-button').css("display", "block");
-    } else {
-      $("#register-button-nav").css("display", "block");
-      $("#login-button-nav").css("display", "block");
-      $("#logout-button").css("display", "none");
-      $('.logged-as').text(``);
-      $('#edit-profile-button').css("display", "none");
-    }
-
-    $.get('/users', (data) => {
-      const errorString = 'Not logged in';
-      const $data = data;
-      if ($data === errorString) {
-        //$('main').append($data);
-        $('main').prepend(notLoggedIn);
-        const $data = data;
-        let $landingPage = '<img class="landing-page" src="./resources/images/landingLogo.png" alt="">';
-        $("main").append($landingPage);
-      } else {
-        $('main').append(listForms);
-        data.map(item => {
-          const $item = listItems(item);
-          const category = item.category;
-          if (category === 'movie') {
-            $('.movie').append($item);
-          } else if (category === 'book') {
-            $('.books').append($item);
-          } else if (category === 'product') {
-            $('.products').append($item);
-          } else if (category === 'restaurant') {
-            $('.restaurant').append($item);
-          } else {
-            $('.sort').append($item);
-          };
-        });
-      }
-    });
-
-  })
-});
+`;
