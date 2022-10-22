@@ -409,7 +409,6 @@ const registerForm = `
         if (email.length !== 0 && firstName.length !== 0 && lastName.length !== 0) {
           $.post('/users/register', { 'email': email, 'firstName': firstName, 'lastName': lastName }).done(function(data) {
             const $data = data;
-            console.log($data);
             if (data === successString) {
               $('main').empty();
               cookie = getCookie('name');
@@ -444,7 +443,6 @@ const profileForm = `
 </div>
 <script>
     $('#edit-profile').unbind().submit((event) => {
-        console.log('edit profile clicked');
         event.preventDefault();
         const formData = new FormData(document.querySelector('#edit-profile'));
         const errorString = 'Invalid';
