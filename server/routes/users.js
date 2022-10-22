@@ -94,7 +94,6 @@ router.post('/add', (req, res) => {
       db.ifItemExistsButFalse(item.name, email).then((bool) => {
         if(bool) {
           db.updataItemToTrue(item.name, email).then((result) => {
-            console.log(result)
             if (result) {
               item['category'] = result.category;
               item['name'] = result.name;
@@ -130,11 +129,8 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/profile', (req, res) => {
-  //let email = req.body.email;
   let firstName = req.body.firstName;
   let lastName = req.body.lastName;
-  //console.log(firstName, lastName);
-  //console.log(req.cookies['email']);
   // edits the user based on information given
   db.editUser(firstName, lastName, req.cookies['email']).then((result) => {
 
@@ -157,7 +153,6 @@ router.get('/', (req, res) => {
   if (email && email.length !== 0) {
     db.grabInitialList(email).then((data) => {
       if(data.length !== 0) {
-        //console.log(data);
         res.json(data);
       } else {
         res.json('Not logged in');

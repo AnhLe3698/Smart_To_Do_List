@@ -79,7 +79,6 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('results are',result.rows[0])
         return result.rows[0];
       })
       .catch((err) => {
@@ -175,7 +174,6 @@ module.exports = {
   // This query should logically change the status of an active
   // item to an inactive item
   removeItem: (itemName, email) => {
-    console.log('temove item working')
     const values = [itemName, email];
     let queryString = `UPDATE items
     SET is_active = false
@@ -207,7 +205,7 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        //console.log(result);
+
         return result.rows;
       })
       .catch((err) => {
@@ -224,7 +222,6 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category is:', result.rows[0].category);
         return result.rows[0];
       })
       .catch((err) => {
@@ -240,7 +237,6 @@ module.exports = {
         if (result) {
           if (result['rows'].length !== 0) {
             // Returns true if user email is in database
-            console.log(result['rows'][0].first_name);
             return result['rows'][0].first_name;
           } else {
             return null;
@@ -263,7 +259,6 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
@@ -277,7 +272,6 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
@@ -294,7 +288,6 @@ module.exports = {
 
     return pool.query(queryString, values)
       .then((result) => {
-        console.log('this category for:', result.rows[0].name, ' is ', result.rows[0].category);
         return [result.rows[0].name, result.rows[0].category];
       })
       .catch((err) => {
