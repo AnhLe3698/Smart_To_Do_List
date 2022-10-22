@@ -23,7 +23,7 @@ This is a full-stack single page application that intelligently sorts out user i
 !["register"](./readme_images/register.png)
 
 ### ERD
-!["ERD"]./database/ERD_diagram/ERD.png)
+!["ERD"](./database/ERD_diagram/ERD.png)
 
 ## Getting Started
 
