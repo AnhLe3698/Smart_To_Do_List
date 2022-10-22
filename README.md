@@ -8,22 +8,22 @@ This is a full-stack single page application that intelligently sorts out user i
 ## Screenshots
 
 ### Landing page
-!["Log In"](./readme_images/landing-page.png)
+!["land"](./readme_images/landing-page.png)
 
 ### Smart List
-!["Log In"](./readme_images/smart-list.png)
+!["list"](./readme_images/smart-list.png)
 
 ### Drag and Drop to re-categorize
-!["Log In"](./readme_images/drag-drop.png)
+!["Drag Drop"](./readme_images/drag-drop.png)
 
 ### Login
 !["Log In"](./readme_images/login.png)
 
 ### register
-!["Log In"](./readme_images/register.png)
+!["register"](./readme_images/register.png)
 
-### register
-!["Log In"](./readme_images/ERD_mockup.png)
+### ERD
+!["ERD"]./database/ERD_diagram/ERD.png)
 
 ## Getting Started
 
